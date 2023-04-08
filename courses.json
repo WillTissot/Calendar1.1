@@ -1,0 +1,46 @@
+[
+    {
+        "model": "course.course",
+        "pk": 1,
+        "fields": {
+            "code": "CS101",
+            "title": "Introduction to Computer Science",
+            "department": 1,
+            "professor": 1,
+            "credits": 3
+        }
+    },
+    {
+        "model": "course.course",
+        "pk": 2,
+        "fields": {
+            "code": "MATH101",
+            "title": "Calculus I",
+            "department": 2,
+            "professor": 2,
+            "credits": 4
+        }
+    },
+    {
+        "model": "course.course",
+        "pk": 3,
+        "fields": {
+            "code": "PHYS101",
+            "title": "Introductory Physics",
+            "department": 3,
+            "professor": 3,
+            "credits": 3
+        }
+    },
+    {
+        "model": "course.course",
+        "pk": 4,
+        "fields": {
+            "code": "ENGL101",
+            "title": "Composition I",
+            "department": 4,
+            "professor": 4,
+            "credits": 3
+        }
+    }
+]

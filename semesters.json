@@ -1,0 +1,34 @@
+[
+    {
+        "model": "course.semester",
+        "pk": 1,
+        "fields": {
+            "year": 2021,
+            "term": "Fall"
+        }
+    },
+    {
+        "model": "course.semester",
+        "pk": 2,
+        "fields": {
+            "year": 2022,
+            "term": "Spring"
+        }
+    },
+    {
+        "model": "course.semester",
+        "pk": 3,
+        "fields": {
+            "year": 2022,
+            "term": "Summer"
+        }
+    },
+    {
+        "model": "course.semester",
+        "pk": 4,
+        "fields": {
+            "year": 2022,
+            "term": "Fall"
+        }
+    }
+]

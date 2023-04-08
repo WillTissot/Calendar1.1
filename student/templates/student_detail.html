@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+</head>
+<body>
+    <h1>Student Details</h1>
+    <p><strong>Name:</strong> {{ student.name }}</p>
+    <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+    <p><strong>Date of Enrollment:</strong> {{ student.date_of_enrollment }}</p>
+
+  <a href="{% url 'student_update' student.id %}">Edit</a>
+    <a href="{% url 'student_create' %}">Create New Student</a>
+<a href="{% url 'student_list' %}" class="btn btn-secondary">Back</a>
+
+</body>
+</html>
