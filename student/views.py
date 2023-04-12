@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
+
+from course.models import Department
 from .forms import StudentForm
 from .models import Student
 
@@ -21,10 +23,14 @@ def student_detail(request, det_id):
 
 def student_update(request, up_id):
     student = get_object_or_404(Student, id=up_id)
-    form = StudentForm(request.POST or None, instance=student)
-    if form.is_valid():
-        form.save()
-        return redirect('student_detail', det_id=up_id)
+
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('student_detail', det_id=up_id)
+    else:
+        form = StudentForm(instance=student)
     return render(request, 'student_update.html', {'form': form})
 
 
@@ -39,12 +45,19 @@ def student_create(request):
 
             # redirect to the student detail page for the new student object
             return redirect('student_detail', det_id=student.pk)
+        else:
+            # If the form is not valid, print the form errors for debugging
+            print(form.errors)
     else:
         # display a blank form
         form = StudentForm()
 
     # render the create student form template with the form instance
-    context = {'form': form}
+    departments = Department.objects.all()
+    context = {
+                'form': form,
+                'departments': departments
+            }
     return render(request, 'student_create.html', context)
 
 
