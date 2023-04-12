@@ -18,6 +18,9 @@
         <tr>
           <td>{{ professor.user.get_full_name }}</td>
           <td>{{ professor.department.name }}</td>
+          <td>
+            <a href="{% url 'professor_detail' det_id=professor.pk %}">View</a>
+          </td>
         </tr>
       {% empty %}
         <tr>
