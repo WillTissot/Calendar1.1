@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>All Professors</title>
+</head>
+<body>
+  <h1>All Professors</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for professor in professors %}
+        <tr>
+          <td>{{ professor.user.get_full_name }}</td>
+          <td>{{ professor.department.name }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">No professors found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
+
+
+
