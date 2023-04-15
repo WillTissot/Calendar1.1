@@ -69,3 +69,21 @@ class Event(EventAbstract):
     def get_html_url(self):
         url = reverse("calendarapp:event-detail", args=(self.id,))
         return f'<a href="{url}"> {self.title} </a>'
+    
+class EventMember(EventAbstract):
+    """ Event member model """
+
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="events")
+    professor = models.ForeignKey(
+        Professor, on_delete=models.CASCADE, related_name="event_members", null=True
+    )
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, related_name="event_members", null=True
+    )
+
+    # class Meta:
+    #     unique_together = ["event", "student"]
+    #     unique_together = ["event", "professor"]
+
+    def __str__(self):
+        return str(self.user)
