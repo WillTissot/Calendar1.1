@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import student_detail, student_update, student_create, student_list, student_delete
 
+
 urlpatterns = [
     path('student/<int:det_id>/', student_detail, name='student_detail'),
     path('student/update/<int:up_id>/', student_update, name='student_update'),
