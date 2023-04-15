@@ -48,7 +48,6 @@ class EventManager(models.Manager):
 class Event(EventAbstract):
     """ Event model """
 
-    professor = models.OneToOneField(Professor, on_delete=models.CASCADE, related_name="events")
     students = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="events")
     title = models.CharField(max_length=200, unique=True)
     description = models.TextField()
