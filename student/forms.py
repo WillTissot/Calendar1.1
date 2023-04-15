@@ -20,7 +20,7 @@ class StudentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(StudentForm, self).__init__(*args, **kwargs)
         # Set initial values for User fields from related User model
-        if self.instance.user:
+        if self.instance.user_id:
             self.initial['first_name'] = self.instance.user.first_name
             self.initial['last_name'] = self.instance.user.last_name
             self.initial['username'] = self.instance.user.username
