@@ -4,6 +4,7 @@ from django.urls import reverse
 from course.models import Course, Semester
 from professor.models import Professor
 from student.models import Student
+from django.contrib.auth.models import User
 
 # class Enrollment(models.Model):
 #     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -48,7 +49,7 @@ class EventManager(models.Manager):
 class Event(EventAbstract):
     """ Event model """
 
-    students = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="events")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="events", null=True)
     title = models.CharField(max_length=200, unique=True)
     description = models.TextField()
     course = models.ForeignKey(Course, on_delete=models.CASCADE)

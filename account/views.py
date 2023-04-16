@@ -27,6 +27,6 @@ class SignInView(View):
             if user:
                 login(request, user)
                 print("Successful login")
-                return redirect("student:student_list")
+                return redirect("event:calendar")
         context = {"form": forms}
         return render(request, self.template_name, context)
