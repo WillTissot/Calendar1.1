@@ -19,14 +19,13 @@ class SignInView(View):
     def post(self, request, *args, **kwargs):
         forms = self.form_class(request.POST)
         if forms.is_valid():
-            print("form valid")
-            email = forms.cleaned_data["email"]
+            username = forms.cleaned_data["username"]
             password = forms.cleaned_data["password"]
-            user = authenticate(request, username=email, password=password)
+            user = authenticate(request, username=username, password=password)
             print(user)
             if user:
                 login(request, user)
                 print("Successful login")
-                return redirect("event:calendar")
+                return redirect("event:event_list")
         context = {"form": forms}
         return render(request, self.template_name, context)

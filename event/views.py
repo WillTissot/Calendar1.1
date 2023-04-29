@@ -1,44 +1,25 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import generic
-from django.shortcuts import render, redirect
-from event.forms import EventForm
+from .models import Event, Student, Professor
 
-from event.models import Event
+@login_required
+def event_list(request):
+    # Get the logged-in user
+    user = request.user
 
-# Create your views here.
+    # Check if the user is a student
+    if hasattr(user, 'student'):
+        # If the user is a student, get all events associated with their student object
+        events = Event.objects.filter(student=user.student)
 
-class CalendarViewNew(LoginRequiredMixin, generic.View):
-    login_url = "accounts:signin"
-    template_name = "./calendar.html"
-    form_class = EventForm
+    # Otherwise, check if the user is a professor
+    elif hasattr(user, 'professor'):
+        # If the user is a professor, get all events associated with their professor object
+        events = Event.objects.filter(professor=user.professor)
 
-    def get(self, request, *args, **kwargs):
-        forms = self.form_class()
-        events = Event.objects.get_all_events(user=request.user)
-        events_month = Event.objects.get_running_events(user=request.user)
-        event_list = []
-        # start: '2020-09-16T16:00:00'
-        for event in events:
-            event_list.append(
-                {
-                    "title": event.title,
-                    "start": event.start_time.strftime("%Y-%m-%dT%H:%M:%S"),
-                    "end": event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+    # If the user is not a student or a professor, return an empty list of events
+    else:
+        events = []
 
-                }
-            )
-        context = {"form": forms, "events": event_list,
-                   "events_month": events_month}
-        return render(request, self.template_name, context)
-
-    def post(self, request, *args, **kwargs):
-        forms = self.form_class(request.POST)
-        if forms.is_valid():
-            form = forms.save(commit=False)
-            form.user = request.user
-            form.save()
-            return redirect("calendarapp:calendar")
-        context = {"form": forms}
-        return render(request, self.template_name, context)
+    # Render the event list template with the events
+    return render(request, 'events_list.html', {'events': events})

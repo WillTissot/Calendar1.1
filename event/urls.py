@@ -4,5 +4,5 @@ from django.urls import path
 app_name = 'event'
 
 urlpatterns = [
-    path("calender/", views.CalendarViewNew.as_view(), name="calendar"),
+    path('myevents/', views.event_list, name='event_list'),
 ]

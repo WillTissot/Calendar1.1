@@ -6,85 +6,40 @@ from professor.models import Professor
 from student.models import Student
 from django.contrib.auth.models import User
 
-# class Enrollment(models.Model):
-#     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-#     class_entry = models.ForeignKey(Class, on_delete=models.CASCADE)
-#     enrollment_date = models.DateField(auto_now_add=True)
 
-#     class Meta:
-#         unique_together = ['student', 'class_entry']
-
-#     def __str__(self):
-#         return f"{self.student} - {self.class_entry}"
-    
-
-class EventAbstract(models.Model):
-    """ Event abstract model """
-
-    is_active = models.BooleanField(default=True)
-    is_deleted = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-
-class EventManager(models.Manager):
-    """ Event manager """
-
-    def get_all_events(self, user):
-        events = Event.objects.filter(user=user, is_active=True, is_deleted=False)
-        return events
-
-    def get_running_events(self, user):
-        running_events = Event.objects.filter(
-            user=user,
-            is_active=True,
-            is_deleted=False,
-            end_time__gte=datetime.now().date(),
-        ).order_by("start_time")
-        return running_events
-
-
-class Event(EventAbstract):
+class Event(models.Model):
     """ Event model """
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="events", null=True)
-    title = models.CharField(max_length=200, unique=True)
-    description = models.TextField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="events", null=True)
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE, related_name="events", null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     room_number = models.CharField(max_length=10)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-
-    objects = EventManager()
+    is_active = models.BooleanField(default=True)
+    is_deleted = models.BooleanField(default=False)
+    is_online = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse("calendarapp:event-detail", args=(self.id,))
+# class EventManager(models.Manager):
+#     """ Event manager """
 
-    @property
-    def get_html_url(self):
-        url = reverse("calendarapp:event-detail", args=(self.id,))
-        return f'<a href="{url}"> {self.title} </a>'
+#     def get_all_events(self, user):
+#         events = Event.objects.filter(user=user, is_active=True, is_deleted=False)
+#         return events
+
+#     def get_running_events(self, user):
+#         running_events = Event.objects.filter(
+#             user=user,
+#             is_active=True,
+#             is_deleted=False,
+#             end_time__gte=datetime.now().date(),
+#         ).order_by("start_time")
+#         return running_events
+
     
-class EventMember(EventAbstract):
-    """ Event member model """
-
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="events")
-    professor = models.ForeignKey(
-        Professor, on_delete=models.CASCADE, related_name="event_members", null=True
-    )
-    student = models.ForeignKey(
-        Student, on_delete=models.CASCADE, related_name="event_members", null=True
-    )
-
-    # class Meta:
-    #     unique_together = ["event", "student"]
-    #     unique_together = ["event", "professor"]
-
-    def __str__(self):
-        return str(self.user)
