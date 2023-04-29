@@ -23,3 +23,13 @@ def event_list(request):
 
     # Render the event list template with the events
     return render(request, 'events_list.html', {'events': events})
+
+@login_required
+def dashboard(request):
+    student = request.user.student # assuming your User model has a OneToOneField to a Student model
+    
+    context = {
+        'student': student,
+    }
+    
+    return render(request, 'dashboard.html', context)

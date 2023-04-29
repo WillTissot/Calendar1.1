@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+</head>
+<body>
+	<h1>Welcome, {{ student.user.first_name }} {{ student.user.last_name }}</h1>
+	<nav>
+		<ul>
+			<li><a href="{% url 'event:event_list' %}">See My Events</a></li>
+			<li><a href="">Enroll to a Course</a></li>
+			<li><a href="">See My Profile</a></li>
+		</ul>
+	</nav>
+</body>
+</html>
