@@ -9,9 +9,9 @@
   <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
   <p><strong>Department:</strong> {{ student.department.name }}</p>
 
-  <a href="{% url 'student_update' student.id %}">Edit</a>
-    <a href="{% url 'student_create' %}">Create New Student</a>
-<a href="{% url 'student_list' %}" class="btn btn-secondary">Back</a>
+  <a href="{% url 'student:student_update' student.id %}">Edit</a>
+    <a href="{% url 'student:student_create' %}">Create New Student</a>
+<a href="{% url 'student:student_list' %}" class="btn btn-secondary">Back</a>
 
 </body>
 </html>

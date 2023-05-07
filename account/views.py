@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
-from .forms import SignInForm
+from .forms import ProfessorSignUpForm, SignInForm, StudentSignUpForm
 
 class SignInView(View):
     """ User registration view """
@@ -29,3 +29,23 @@ class SignInView(View):
                 return redirect("event:dashboard")
         context = {"form": forms}
         return render(request, self.template_name, context)
+    
+def student_signup(request):
+    if request.method == 'POST':
+        form = StudentSignUpForm(request.POST)
+        if form.is_valid():
+            student = form.save()
+            return redirect('student:student_detail', det_id=student.pk)
+    else:
+        form = StudentSignUpForm()
+    return render(request, 'signup.html', {'form': form})
+
+def professor_signup(request):
+    if request.method == 'POST':
+        form = ProfessorSignUpForm(request.POST)
+        if form.is_valid():
+            professor = form.save()
+            return redirect('professor:professor_detail', prof_id=professor.pk)
+    else:
+        form = StudentSignUpForm()
+    return render(request, 'signup.html', {'form': form})

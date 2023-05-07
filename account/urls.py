@@ -6,7 +6,8 @@ app_name = "accounts"
 
 
 urlpatterns = [
-    #path("signup/", views.SignUpView.as_view(), name="signup"),
+    path("studentsignup/", views.student_signup, name="studentsignup"),
+    path("professorsignup/", views.professor_signup, name="professorsignup"),
     path("signin/", views.SignInView.as_view(), name="signin"),
     #path("signout/", views.signout, name="signout"),
     #path("redirect-to-other-app/", views.redirect_to_other_app, name="student")

@@ -11,7 +11,7 @@
     <form action="{% url 'professor_delete' prof_id=professor.id %}" method="post">
       {% csrf_token %}
       <input type="submit" value="Delete" class="btn btn-danger">
-      <a href="{% url 'professor_list' %}" class="btn btn-secondary">Back</a>
+      <a href="{% url 'professor:professor_list' %}" class="btn btn-secondary">Back</a>
     </form>
   </div>
 </body>

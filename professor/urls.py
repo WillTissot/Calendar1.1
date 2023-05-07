@@ -2,6 +2,7 @@ from django.urls import path
 
 from professor.views import professor_create, professor_delete, professor_list, professor_detail, professor_update
 
+app_name = "professor"
 
 urlpatterns = [
     path('professors/', professor_list, name='professor_list'),

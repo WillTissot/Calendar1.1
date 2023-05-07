@@ -21,9 +21,9 @@
           <td>{{ student.date_of_birth }}</td>
           <td>{{ student.department.name }}</td>
           <td>
-            <a href="{% url 'student_detail' det_id=student.pk %}">View</a>
-            <a href="{% url 'student_update' up_id=student.pk %}">Edit</a>
-            <a href="{% url 'student_delete' del_id=student.pk %}">Delete</a>
+            <a href="{% url 'student:student_detail' det_id=student.pk %}">View</a>
+            <a href="{% url 'student:student_update' up_id=student.pk %}">Edit</a>
+            <a href="{% url 'student:student_delete' del_id=student.pk %}">Delete</a>
           </td>
         </tr>
       {% empty %}

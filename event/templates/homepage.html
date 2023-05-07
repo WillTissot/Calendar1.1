@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+</head>
+<body>
+  <h1>Welcome to my Website</h1>
+  <p>Thank you for visiting my website!</p>
+  <div>
+    <a href="{% url 'account:signin' %}"><button>Sign In</button></a>
+    <a href="{% url 'account:signup' %}"><button>Sign Up</button></a>
+  </div>
+</body>
+</html>
