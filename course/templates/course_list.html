@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All courses</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+            <th>Code</th>
+            <th>Title</th>
+            <th>Department</th>
+            <th>Professor</th>
+            <th>Credits</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.code }}</td>
+                <td>{{ course.title }}</td>
+                <td>{{ course.department.name }}</td>
+                <td>{{ course.professor.user.last_name }}</td>
+                <td>{{ course.credits }}</td>
+                <td>
+                    <a href="{% url 'course:course_detail' cou_id=course.pk %}">View</a>
+                    <a href="{% url 'course:course_update' cou_id=course.pk %}">Edit</a>
+                    <a href="{% url 'course:course_delete' cou_id=course.pk %}">Delete</a>
+                  </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+
+        {% if request.META.HTTP_REFERER %}
+            <a href="{{ request.META.HTTP_REFERER }}">Back</a>
+        {% endif %}
+    </table>
+</body>

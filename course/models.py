@@ -10,17 +10,6 @@ class Department(models.Model):
         return self.name
 
 
-class Course(models.Model):
-    code = models.CharField(max_length=10)
-    title = models.CharField(max_length=200)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    professor = models.ForeignKey('professor.Professor', on_delete=models.CASCADE, default=0)
-    credits = models.PositiveIntegerField()
-
-    def __str__(self):
-        return f"{self.code} - {self.title}"
-
-
 class Semester(models.Model):
     SEMESTER_CHOICES = [
         ('Fall', 'Fall'),
@@ -32,3 +21,16 @@ class Semester(models.Model):
 
     def __str__(self):
         return f"{self.term} {self.year}"
+
+class Course(models.Model):
+    code = models.CharField(max_length=10)
+    title = models.CharField(max_length=200)
+    department = models.ForeignKey(Department, on_delete=models.DO_NOTHING)
+    professor = models.ForeignKey('professor.Professor', on_delete=models.DO_NOTHING, default=0)
+    credits = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.code} - {self.title}"
+
+
+
