@@ -25,8 +25,11 @@ class SignInView(View):
             print(user)
             if user:
                 login(request, user)
-                print("Successful login")
-                return redirect("event:dashboard")
+                if user.is_superuser:
+                    return redirect("event:adminpage")
+                else:
+                    return redirect("event:dashboard")
+                
         context = {"form": forms}
         return render(request, self.template_name, context)
     

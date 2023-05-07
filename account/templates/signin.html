@@ -12,6 +12,10 @@
       <label for="password">Password:</label>
       <input type="password" name="password" required><br><br>
       <input type="submit" value="Sign In">
+
+      {% if request.META.HTTP_REFERER %}
+        <a href="{{ request.META.HTTP_REFERER }}">Back</a>
+      {% endif %}
     </form>
   </body>
 </html>

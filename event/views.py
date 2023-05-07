@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Event, Student, Professor
+from django.contrib.auth.decorators import user_passes_test
 
 @login_required
 def event_list(request):
@@ -37,4 +38,8 @@ def dashboard(request):
 def homepage(request):
     return render(request, 'homepage.html')
 
+
+@user_passes_test(lambda u: u.is_superuser)
+def adminpage(request):
+    return render(request, 'adminpage.html')
 
