@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome, Secretary/Admin!</title>
+</head>
+<body>
+  <h1>Welcome, Admin!</h1>
+  <p>Thank you for logging in as an administrator. You have access to the administrative panel.</p>
+  <p>Please use the navigation links to manage the website's content:</p>
+  <ul>
+    <li><a href="{% url 'student:student_list' %}">Blog</a></li>
+    <li><a href="{% url 'profesor:professor_list' %}">Shop</a></li>
+  </ul>
+</body>
+</html>

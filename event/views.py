@@ -33,3 +33,8 @@ def dashboard(request):
     }
     
     return render(request, 'dashboard.html', context)
+
+def homepage(request):
+    return render(request, 'homepage.html')
+
+

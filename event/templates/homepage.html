@@ -1,15 +1,19 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Homepage</title>
+    <title>Homepage of the lost</title>
 </head>
 <body>
-  <h1>Welcome to my Website</h1>
-  <p>Thank you for visiting my website!</p>
+  <h1>Welcome to my amazing application.</h1>
+  <h4>I am Xena The Warrior Princess. Let me guide you through you semesters.</h4>
+  <img src="{% static 'xena.jpg' %}">
+  <p>Thank you for visiting my academic calendar(lame)!</p>
   <div>
-    <a href="{% url 'account:signin' %}"><button>Sign In</button></a>
-    <a href="{% url 'account:signup' %}"><button>Sign Up</button></a>
+    <a href="{% url 'accounts:signin' %}"><button>Sign In</button></a>
+    <a href="{% url 'accounts:studentsignup' %}"><button>Sign Up</button></a>
   </div>
 </body>
 </html>
