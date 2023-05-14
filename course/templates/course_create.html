@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create Student</title>
+    <title>Create Course</title>
 </head>
 <body>
-  <h1>Create Student</h1>
+  <h1>Create Course</h1>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Submit</button>
   </form>
   
+  {% if request.META.HTTP_REFERER %}
+  <a href="{{ request.META.HTTP_REFERER }}">Back</a>
+{% endif %}
 </body>
 </html>

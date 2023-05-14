@@ -29,17 +29,17 @@ def course_update(request, cou_id):
         form = CourseForm(request.POST, instance=course)
         if form.is_valid():
             form.save()
-            return redirect('professor_detail', cou_id=cou_id)
+            return redirect('course:course_detail', cou_id=cou_id)
     else:
         form = CourseForm(instance=course)
-    return render(request, 'professor_update.html', {'form': form})
+    return render(request, 'course_update.html', {'form': form})
 
 def course_delete(request, cou_id):
     course = get_object_or_404(Course, id=cou_id)
 
     if request.method == 'POST':
         course.delete()
-        return redirect('course_list')
+        return redirect('course:course_list')
 
     context = {
         'course': course
@@ -57,7 +57,7 @@ def course_create(request):
             course = form.save()
 
             # redirect to the student detail page for the new student object
-            return redirect('course_detail', cou_id=course.pk)
+            return redirect('course:course_detail', cou_id=course.pk)
         else:
             # If the form is not valid, print the form errors for debugging
             print(form.errors)

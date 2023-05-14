@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Details</title>
+</head>
+<body>
+  <h1>Course Detail</h1>
+  <p><strong>Code:</strong> {{ course.code }}</p>
+  <p><strong>Title:</strong> {{ course.title }}</p>
+  <p><strong>Department:</strong> {{ course.department.name }}</p>
+  <p><strong>Professor:</strong> {{ course.professor.user.first_name }}  {{ course.professor.user.last_name }}</p>
+  <p><strong>Credits:</strong> {{ course.credits }}</p>
+
+  <a href="{% url 'course:course_update' course.id %}">Edit</a>
+    <a href="{% url 'course:course_create' %}">Create New Course</a>
+
+{% if request.META.HTTP_REFERER %}
+<a href="{{ request.META.HTTP_REFERER }}">Back</a>
+{% endif %}
+
+</body>
+</html>
