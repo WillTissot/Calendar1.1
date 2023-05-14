@@ -1,0 +1,83 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Admin Events</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/students_pop_up.css' %}">
+    <script src="{% static 'js/students_pop_up.js' %}"></script>
+</head>
+<body>
+    <h1>All Admin Events</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Students</th>
+                <th>Professor</th>
+                <th>Course</th>
+                <th>Semester</th>
+                <th>Room Number</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Is Active</th>
+                <th>Is Deleted</th>
+                <th>Is Online</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td><button class="btn-show-students" data-ev-id="{{ event.pk }}">{{ event.pk }}</button></td>
+                    <td>{{ event.professor }}</td>
+                    <td>{{ event.course }}</td>
+                    <td>{{ event.semester }}</td>
+                    <td>{{ event.room_number }}</td>
+                    <td>{{ event.start_time }}</td>
+                    <td>{{ event.end_time }}</td>
+                    <td>{{ event.is_active }}</td>
+                    <td>{{ event.is_deleted }}</td>
+                    <td>{{ event.is_online }}</td>
+                    <td>{{ event.created_at }}</td>
+                    <td>{{ event.updated_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <div id="popup-container">
+        <p>This is the pop-up content.</p>
+    </div>
+
+    {% if request.META.HTTP_REFERER %}
+    <a href="{{ request.META.HTTP_REFERER }}">Back</a>
+  {% endif %}
+</body>
+</html>
+
+
+
+<script>
+
+    window.onload = function() {
+        const showStudentsButtons = document.querySelectorAll('.btn-show-students');
+        showStudentsButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const evId = button.dataset.evId;
+                searchStudents(evId);
+            });
+        });
+    }
+
+    function searchStudents(evId) {
+        let temp = -1;
+        if (evId) {
+            temp = evId;  // Use placeholder value if evId is empty
+        } 
+        console.log(evId);
+        const url = `/secretary/events/${temp}/get/students/`;
+        window.open(url, 'width=600,height=400');
+    }
+</script>

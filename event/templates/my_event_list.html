@@ -1,42 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All Events</title>
+    <title>All Admin Events</title>
 </head>
 <body>
-    <h1>All Events</h1>
+    <h1>All Admin Events</h1>
     <table>
         <thead>
             <tr>
-                <th>Student</th>
                 <th>Professor</th>
                 <th>Course</th>
                 <th>Semester</th>
                 <th>Room Number</th>
                 <th>Start Time</th>
                 <th>End Time</th>
-                <th>Is Active</th>
-                <th>Is Deleted</th>
                 <th>Is Online</th>
-                <th>Created At</th>
-                <th>Updated At</th>
             </tr>
         </thead>
         <tbody>
             {% for event in events %}
                 <tr>
-                    <td>{{ event.student }}</td>
                     <td>{{ event.professor }}</td>
-                    <td>{{ event.course }}</td>
-                    <td>{{ event.semester }}</td>
+                    <td>{{ event.course.title }}</td>
+                    <td>{{ event.semester.term }} {{ event.semester.year }}</td>
                     <td>{{ event.room_number }}</td>
                     <td>{{ event.start_time }}</td>
                     <td>{{ event.end_time }}</td>
-                    <td>{{ event.is_active }}</td>
-                    <td>{{ event.is_deleted }}</td>
                     <td>{{ event.is_online }}</td>
-                    <td>{{ event.created_at }}</td>
-                    <td>{{ event.updated_at }}</td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Details</title>
+</head>
+<body>
+    <h1>Event Details</h1>
+    <p><strong>Professor:</strong> {{ event.professor.user.first_name }} {{ event.professor.user.last_name }}</p>
+    <p><strong>Course:</strong> {{ event.course.title }}</p>
+    <p><strong>Semester:</strong> {{ event.semester.term }} {{ event.semester.year }}</p>
+    <p><strong>Room Number:</strong> {{ event.room_number }}</p>
+    <p><strong>Start Time:</strong> {{ event.start_time }}</p>
+    <p><strong>End Time:</strong> {{ event.end_time }}</p>
+    <p><strong>Is Active:</strong> {{ event.is_active }}</p>
+    <p><strong>Is Deleted:</strong> {{ event.is_deleted }}</p>
+    <p><strong>Is Online:</strong> {{ event.is_online }}</p>
+    <p><strong>Created At:</strong> {{ event.created_at }}</p>
+    <p><strong>Updated At:</strong> {{ event.updated_at }}</p>
+    <br>
+    <a href="{% url 'event:event_list' %}">Back to All Events</a>
+</body>
+</html>
