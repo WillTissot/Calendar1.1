@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from course.models import Department
 from .forms import StudentForm
-from .models import Student
+from .models import Student, EnrolledStudentsOnCourse
+from course.models import Course
 
 
 def student_list(request):
@@ -43,7 +44,7 @@ def student_create(request):
             student = form.save()
 
             # redirect to the student detail page for the new student object
-            return redirect('student_detail', det_id=student.pk)
+            return redirect('student:student_detail', det_id=student.pk)
         else:
             # If the form is not valid, print the form errors for debugging
             print(form.errors)
@@ -71,3 +72,35 @@ def student_delete(request, del_id):
         'student': student
     }
     return render(request, 'student_delete.html', context)
+
+def enroll_To_Courses(request):
+    _method = request.POST.get('_method')
+    if _method == 'POST':
+        course_id = request.POST.get('course_id')
+        student = request.user.student
+        course = get_object_or_404(Course, id=course_id)
+        EnrolledStudentsOnCourse.objects.create(student=student, course=course)
+        return redirect('student:enroll_to_courses') 
+    elif _method == 'DELETE':
+        course_id = request.POST.get('course_id')
+        student = request.user.student
+        course = get_object_or_404(Course, id=course_id)
+
+        enrollment = EnrolledStudentsOnCourse.objects.filter(student=student, course=course).first()
+        if enrollment:
+            enrollment.delete()
+
+        return redirect('student:enroll_to_courses') 
+    else:
+        courses = Course.objects.all()
+        enrolled_calendarCourses = EnrolledStudentsOnCourse.objects.filter(student=request.user.student)
+        enrolled_course_ids = enrolled_calendarCourses.values_list('course_id', flat=True)
+        enrolled_courses = courses.filter(id__in=enrolled_course_ids)
+        available_courses = courses.exclude(id__in=enrolled_course_ids)
+
+        context = {
+            'availableCourses': available_courses,
+            'enrolledCourses' : enrolled_courses
+        }
+
+        return render(request, 'enroll_to_course.html', context)
