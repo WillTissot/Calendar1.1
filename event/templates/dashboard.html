@@ -12,5 +12,9 @@
 			<li><a href="">See My Profile</a></li>
 		</ul>
 	</nav>
+	
+	{% if user.is_authenticated %}
+		<a href="{% url 'accounts:logout' %}">Logout</a>
+	{% endif %}
 </body>
 </html>

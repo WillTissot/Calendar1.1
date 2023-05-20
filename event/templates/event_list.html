@@ -29,7 +29,7 @@
         <tbody>
             {% for event in events %}
                 <tr>
-                    <td><button class="btn-show-students" data-ev-id="{{ event.pk }}">{{ event.pk }}</button></td>
+                    <td><button class="btn-show-students" data-ev-id="{{ event.pk }}">Show Enrolled Students</button></td>
                     <td>{{ event.professor }}</td>
                     <td>{{ event.course }}</td>
                     <td>{{ event.semester }}</td>
@@ -41,6 +41,11 @@
                     <td>{{ event.is_online }}</td>
                     <td>{{ event.created_at }}</td>
                     <td>{{ event.updated_at }}</td>
+                    <td>
+                        <a href="{% url 'event:event_detail' ev_id=event.pk %}">View</a>
+                        <a href="{% url 'event:event_update' ev_id=event.pk %}">Edit</a>
+                        <a href="{% url 'event:event_delete' ev_id=event.pk %}">Delete</a>
+                      </td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -52,8 +57,11 @@
     </div>
 
     {% if request.META.HTTP_REFERER %}
-    <a href="{{ request.META.HTTP_REFERER }}">Back</a>
-  {% endif %}
+        <a href="{{ request.META.HTTP_REFERER }}">Back</a>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'accounts:logout' %}">Logout</a>
+    {% endif %}
 </body>
 </html>
 
@@ -78,6 +86,7 @@
         } 
         console.log(evId);
         const url = `/secretary/events/${temp}/get/students/`;
-        window.open(url, 'width=600,height=400');
+        const windowFeatures = 'width=600,height=400,resizable,scrollbars';
+        window.open(url, '_blank', windowFeatures);
     }
 </script>

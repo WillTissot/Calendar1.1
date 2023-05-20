@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 # Create your models here.
 class Department(models.Model):
     name = models.CharField(max_length=100)
@@ -22,6 +21,15 @@ class Semester(models.Model):
     def __str__(self):
         return f"{self.term} {self.year}"
 
+class DayChoices(models.IntegerChoices):
+    MONDAY = 1, 'Monday'
+    TUESDAY = 2, 'Tuesday'
+    WEDNESDAY = 3, 'Wednesday'
+    THURSDAY = 4, 'Thursday'
+    FRIDAY = 5, 'Friday'
+    SATURDAY = 6, 'Saturday'
+    SUNDAY = 7, 'Sunday'
+
 class Course(models.Model):
     code = models.CharField(max_length=10)
     title = models.CharField(max_length=200)
@@ -31,6 +39,19 @@ class Course(models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.title}"
+
+class CalendarCourse(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
+    semester = models.ForeignKey(Semester, on_delete=models.DO_NOTHING)
+    room_number = models.CharField(max_length=10)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    day = models.IntegerField(choices=DayChoices.choices, default=DayChoices.SUNDAY)
+    is_active = models.BooleanField(default=True)
+    is_deleted = models.BooleanField(default=False)
+    is_online = models.BooleanField(default=False)
+
+
 
 
 

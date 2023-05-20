@@ -1,7 +1,8 @@
 from django.urls import reverse
 from django.views.generic import View
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from .forms import ProfessorSignUpForm, SignInForm, StudentSignUpForm
 
@@ -52,3 +53,8 @@ def professor_signup(request):
     else:
         form = StudentSignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+@login_required
+def signout(request):
+    logout(request)
+    return redirect('event:homepage')
