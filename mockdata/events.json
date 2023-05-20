@@ -2,37 +2,46 @@
     {
         "model": "event.event",
         "pk": 1,
-        "fields":{
-            "student_id": 8,
-            "professor_id": 3,
-            "course_id": 1,
-            "semester_id": 1,
-            "room_number": "101",
-            "start_time": "2023-05-01T10:00:00Z",
-            "end_time": "2023-05-01T11:30:00Z",
-            "is_active": true,
-            "is_deleted": false,
-            "is_online": true,
-            "created_at": "2023-05-01T08:00:00Z",
-            "updated_at": "2023-05-01T08:30:00Z"
+        "fields": {
+            "calendarCourse": 3,
+            "created_at": "2023-05-01T10:30:00Z",
+            "updated_at": "2023-05-01T11:45:00Z"
         }
     },
     {
         "model": "event.event",
         "pk": 2,
-        "fields":{
-            "student_id": 8,
-            "professor_id": 2,
-            "course_id": 2,
-            "semester_id": 1,
-            "room_number": "101",
-            "start_time": "2023-05-01T10:00:00Z",
-            "end_time": "2023-05-01T11:30:00Z",
-            "is_active": true,
-            "is_deleted": false,
-            "is_online": true,
-            "created_at": "2023-05-01T08:00:00Z",
-            "updated_at": "2023-05-01T08:30:00Z"
+        "fields": {
+            "calendarCourse": 1,
+            "created_at": "2023-05-02T09:00:00Z",
+            "updated_at": "2023-05-02T10:15:00Z"
         }
-      }
+    },
+    {
+        "model": "event.event",
+        "pk": 3,
+        "fields": {
+            "calendarCourse": 2,
+            "created_at": "2023-05-03T13:30:00Z",
+            "updated_at": "2023-05-03T14:45:00Z"
+        }
+    },
+    {
+        "model": "event.event",
+        "pk": 4,
+        "fields": {
+            "calendarCourse": 3,
+            "created_at": "2023-05-04T11:00:00Z",
+            "updated_at": "2023-05-04T12:15:00Z"
+        }
+    },
+    {
+        "model": "event.event",
+        "pk": 5,
+        "fields": {
+            "calendarCourse": 4,
+            "created_at": "2023-05-05T14:00:00Z",
+            "updated_at": "2023-05-05T15:15:00Z"
+        }
+    }
 ]

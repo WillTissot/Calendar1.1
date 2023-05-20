@@ -1,9 +1,9 @@
 from django.forms import ModelForm, DateInput
 from django import forms
-from course.models import Course, Semester
-
 from event.models import Event
-from professor.models import Professor
 
 
-
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ['calendarCourse']

@@ -5,15 +5,15 @@
 </head>
 <body>
     <h1>Event Details</h1>
-    <p><strong>Professor:</strong> {{ event.professor.user.first_name }} {{ event.professor.user.last_name }}</p>
-    <p><strong>Course:</strong> {{ event.course.title }}</p>
-    <p><strong>Semester:</strong> {{ event.semester.term }} {{ event.semester.year }}</p>
-    <p><strong>Room Number:</strong> {{ event.room_number }}</p>
-    <p><strong>Start Time:</strong> {{ event.start_time }}</p>
-    <p><strong>End Time:</strong> {{ event.end_time }}</p>
-    <p><strong>Is Active:</strong> {{ event.is_active }}</p>
-    <p><strong>Is Deleted:</strong> {{ event.is_deleted }}</p>
-    <p><strong>Is Online:</strong> {{ event.is_online }}</p>
+    <p><strong>Professor:</strong> {{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</p>
+    <p><strong>Course:</strong> {{ event.calendarCourse.course.title }}</p>
+    <p><strong>Semester:</strong> {{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</p>
+    <p><strong>Room Number:</strong> {{ event.calendarCourse.room_number }}</p>
+    <p><strong>Start Time:</strong> {{ event.calendarCourse.start_time }}</p>
+    <p><strong>End Time:</strong> {{ event.calendarCourse.end_time }}</p>
+    <p><strong>Is Active:</strong> {{ event.calendarCourse.is_active }}</p>
+    <p><strong>Is Deleted:</strong> {{ event.calendarCourse.is_deleted }}</p>
+    <p><strong>Is Online:</strong> {{ event.calendarCourse.is_online }}</p>
     <p><strong>Created At:</strong> {{ event.created_at }}</p>
     <p><strong>Updated At:</strong> {{ event.updated_at }}</p>
     <br>

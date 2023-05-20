@@ -20,13 +20,13 @@
         <tbody>
             {% for event in events %}
                 <tr>
-                    <td>{{ event.professor }}</td>
-                    <td>{{ event.course.title }}</td>
-                    <td>{{ event.semester.term }} {{ event.semester.year }}</td>
-                    <td>{{ event.room_number }}</td>
-                    <td>{{ event.start_time }}</td>
-                    <td>{{ event.end_time }}</td>
-                    <td>{{ event.is_online }}</td>
+                    <td>{{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</td>
+                    <td>{{ event.calendarCourse.course.title }}</td>
+                    <td>{{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</td>
+                    <td>{{ event.calendarCourse.room_number }}</td>
+                    <td>{{ event.calendarCourse.start_time }}</td>
+                    <td>{{ event.calendarCourse.end_time }}</td>
+                    <td>{{ event.calendarCourse.is_online }}</td>
                 </tr>
             {% endfor %}
         </tbody>

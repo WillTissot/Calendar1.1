@@ -1,7 +1,7 @@
 from django import forms
 
 from professor.models import Professor
-from .models import Course, Department, Semester
+from .models import Course, Department, Semester, CalendarCourse
 
 class CourseForm(forms.ModelForm):
 
@@ -15,3 +15,9 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ['code', 'title', 'department', 'professor', 'credits']
+
+
+class CalendarCourseForm(forms.ModelForm):
+    class Meta:
+        model = CalendarCourse
+        fields = ['course', 'semester', 'room_number', 'start_time', 'end_time', 'day', 'is_active', 'is_deleted', 'is_online']
