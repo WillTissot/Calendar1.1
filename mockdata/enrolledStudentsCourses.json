@@ -1,0 +1,82 @@
+[
+    {
+        "model": "student.enrolledstudentsoncourse",
+        "pk": 1,
+        "fields": {
+            "course": 1,
+            "student": 1
+        }
+    },
+    {
+        "model": "student.enrolledstudentsoncourse",
+        "pk": 2,
+        "fields": {
+            "course": 2,
+            "student": 2
+        }
+    },
+    {
+        "model": "student.enrolledstudentsoncourse",
+        "pk": 3,
+        "fields": {
+            "course": 3,
+            "student": 3
+        }
+    },
+    {
+        "model": "student.enrolledstudentsoncourse",
+        "pk": 4,
+        "fields": {
+            "course": 4,
+            "student": 4
+        }
+    },
+    {
+        "model": "student.enrolledstudentsoncourse",
+        "pk": 5,
+        "fields": {
+            "course": 1,
+            "student": 2
+        }
+    },
+    {
+        "model": "student.enrolledstudentsoncourse",
+        "pk": 6,
+        "fields": {
+            "course": 2,
+            "student": 3
+        }
+    },
+    {
+        "model": "student.enrolledstudentsoncourse",
+        "pk": 7,
+        "fields": {
+            "course": 3,
+            "student": 4
+        }
+    },
+    {
+        "model": "student.enrolledstudentsoncourse",
+        "pk": 8,
+        "fields": {
+            "course": 4,
+            "student": 1
+        }
+    },
+    {
+        "model": "student.enrolledstudentsoncourse",
+        "pk": 9,
+        "fields": {
+            "course": 1,
+            "student": 3
+        }
+    },
+    {
+        "model": "student.enrolledstudentsoncourse",
+        "pk": 10,
+        "fields": {
+            "course": 2,
+            "student": 4
+        }
+    }
+]
