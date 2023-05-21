@@ -48,7 +48,7 @@ class Course(models.Model):
 
 class CalendarCourse(models.Model):
     course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
-    semester = models.ForeignKey(Semester, on_delete=models.DO_NOTHING)
+    calendarSemester = models.ForeignKey(CalendarSemester, on_delete=models.DO_NOTHING, null=True)
     room_number = models.CharField(max_length=10)
     start_time = models.TimeField()
     end_time = models.TimeField()

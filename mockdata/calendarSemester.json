@@ -1,0 +1,56 @@
+[
+    {
+        "model": "course.calendarsemester",
+        "pk": 1,
+        "fields": {
+            "semester": 1,
+            "startDate": "2022-08-01",
+            "endDate": "2022-12-31"
+        }
+    },
+    {
+        "model": "course.calendarsemester",
+        "pk": 2,
+        "fields": {
+            "semester": 2,
+            "startDate": "2023-01-01",
+            "endDate": "2023-05-31"
+        }
+    },
+    {
+        "model": "course.calendarsemester",
+        "pk": 3,
+        "fields": {
+            "semester": 3,
+            "startDate": "2023-06-01",
+            "endDate": "2023-08-31"
+        }
+    },
+    {
+        "model": "course.calendarsemester",
+        "pk": 4,
+        "fields": {
+            "semester": 4,
+            "startDate": "2023-09-01",
+            "endDate": "2023-12-31"
+        }
+    },
+    {
+        "model": "course.calendarsemester",
+        "pk": 5,
+        "fields": {
+            "semester": 1,
+            "startDate": "2024-01-01",
+            "endDate": "2024-05-31"
+        }
+    },
+    {
+        "model": "course.calendarsemester",
+        "pk": 6,
+        "fields": {
+            "semester": 2,
+            "startDate": "2024-06-01",
+            "endDate": "2024-08-31"
+        }
+    }
+]

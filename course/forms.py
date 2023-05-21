@@ -19,7 +19,7 @@ class CourseForm(forms.ModelForm):
 class CalendarCourseForm(forms.ModelForm):
     class Meta:
         model = CalendarCourse
-        fields = ['course', 'semester', 'room_number', 'start_time', 'end_time', 'day', 'is_active', 'is_deleted', 'is_online']
+        fields = ['course', 'calendarSemester', 'room_number', 'start_time', 'end_time', 'day', 'is_active', 'is_deleted', 'is_online']
 
 
 class CalendarSemesterForm(forms.ModelForm):

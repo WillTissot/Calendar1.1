@@ -32,9 +32,7 @@
         </tbody>
     </table>
 
-    {% if request.META.HTTP_REFERER %}
-        <a href="{{ request.META.HTTP_REFERER }}">Back</a>
-    {% endif %}
+    <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
     {% if user.is_authenticated %}
         <a href="{% url 'accounts:logout' %}">Logout</a>
     {% endif %}

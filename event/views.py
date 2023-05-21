@@ -9,26 +9,13 @@ from django.contrib.auth.decorators import user_passes_test
 
 @login_required
 def event_list(request):
-    # Get the logged-in user
-    user = request.user
-
-    # Check if the user is a student
+    user= request.user
     if hasattr(user, 'student'):
-        # If the user is a student, get all events associated with their student object
-        events = Event.objects.filter(calendarCourse__course__student__user_id=user_id)
-        
-
-    # Otherwise, check if the user is a professor
+        events = Event.objects.filter(calendarCourse__course__student__user_id=user.id)
     elif hasattr(user, 'professor'):
-        # If the user is a professor, get all events associated with their professor object
-        events = Event.objects.filter(calendarCourse__course__professor__user_id=user_id)
-        
-
-    # If the user is not a student or a professor, return an empty list of events
+        events = Event.objects.filter(calendarCourse__course__professor__user_id=user.id)
     else:
         events = []
-
-    # Render the event list template with the events
     return render(request, 'my_event_list.html', {'events': events})
 
 @login_required
