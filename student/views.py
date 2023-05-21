@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from course.models import Department
 from .forms import StudentForm
 from .models import Student, EnrolledStudentsOnCourse
-from course.models import Course
+from course.models import Course, CalendarCourse
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
 
@@ -108,5 +108,49 @@ def enroll_To_Courses(request):
         }
 
         return render(request, 'enroll_to_course.html', context)
+
+def update_calendar(request):
+    student = request.user.student
+    enrolledCourses = EnrolledStudentsOnCourse.objects.filter(student=student)
+    course_ids = enrolledCourses.values_list('course_id', flat=True)
+    calendar_course = CalendarCourse.objects.filter(id__in=course_ids)
+    x = 1
+
+
+
+    # if request.method == 'POST':
+    #     form = EventForm(request.POST)
+    #     if form.is_valid():
+    #         event = form.save(commit=False)
+    #         calendar_course = CalendarCourse.objects.filter(course__enrolled_students=request.user.student).first()
+    #         event.calendarCourse = calendar_course
+    #         event.full_clean()
+
+    #         current_date = datetime.now().date()
+    #         semester_start_date = calendar_course.semester.startDate
+    #         semester_end_date = calendar_course.semester.endDate
+
+    #         if current_date < semester_start_date:
+    #             week_start_date = semester_start_date
+    #         else:
+    #             week_start_date = semester_start_date + timedelta(days=(7 - semester_start_date.weekday()))
+
+    #         while week_start_date <= semester_end_date:
+    #             new_event = Event(
+    #                 calendarCourse=calendar_course,
+    #                 start_date=week_start_date,
+    #                 end_date=week_start_date + timedelta(days=6)
+    #             )
+    #             new_event.save()
+    #             week_start_date += timedelta(days=7)
+
+    #         return redirect('event_list')  # Redirect to event list or any other page
+    # else:
+    #     form = EventForm()
+
+    # context = {
+    #     'form': form
+    # }
+    # return render(request, 'create_event.html', context)
 
 
