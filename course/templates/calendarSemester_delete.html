@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Delete CalendarSemester</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Delete CalendarSemester</h1>
+    <p>Are you sure you want to delete {{ calendarSemester.semester.term }} {{ calendarSemester.semester.year }}?</p>
+    <form action="{% url 'course:calendarSemester_delete' sem_id=calendarSemester.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Delete" class="btn btn-danger">
+      <a href="{% url 'course:calendarSemester_list' %}" class="btn btn-secondary">Back</a>
+    </form>
+  </div>
+</body>
+</html>

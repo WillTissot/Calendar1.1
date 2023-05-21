@@ -1,0 +1,35 @@
+<!-- calendar_semesters.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calendar Semesters</title>
+</head>
+<body>
+    <h1>Calendar Semesters</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Semester</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for calendarSemester in calendarSemesters %}
+            <tr>
+                <td>{{ calendarSemester.semester.term }} {{ calendarSemester.semester.year }}</td>
+                <td>{{ calendarSemester.startDate }}</td>
+                <td>{{ calendarSemester.endDate }}</td>
+                <td>
+                    <a href="{% url 'course:calendarSemester_detail' sem_id=calendarSemester.pk %}">View</a>
+                    <a href="{% url 'course:calendarSemester_update' sem_id=calendarSemester.pk %}">Edit</a>
+                    <a href="{% url 'course:calendarSemester_delete' sem_id=calendarSemester.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

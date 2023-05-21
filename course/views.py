@@ -1,11 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from course.forms import CourseForm
-
-from course.models import Course, Department
+from course.forms import CourseForm, CalendarSemesterForm
+from course.models import Course, Department, CalendarCourse, Semester, CalendarSemester
 from professor.models import Professor
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-
+@user_passes_test(lambda u: u.is_superuser)
 def course_list(request):
     courses = Course.objects.all()
     context = {
@@ -15,13 +15,10 @@ def course_list(request):
 
 
 def course_detail(request, cou_id):
-    # Retrieve the student object with the provided id
     course = get_object_or_404(Course, id=cou_id)
-
-    # Render the student detail template with the student object as context
     return render(request, 'course_detail.html', {'course': course})
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def course_update(request, cou_id):
     course = get_object_or_404(Course, id=cou_id)
 
@@ -34,6 +31,7 @@ def course_update(request, cou_id):
         form = CourseForm(instance=course)
     return render(request, 'course_update.html', {'form': form})
 
+@user_passes_test(lambda u: u.is_superuser)
 def course_delete(request, cou_id):
     course = get_object_or_404(Course, id=cou_id)
 
@@ -46,26 +44,19 @@ def course_delete(request, cou_id):
     }
     return render(request, 'course_delete.html', context)
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def course_create(request):
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request
         form = CourseForm(request.POST)
 
         if form.is_valid():
-            # create a new student object from the form data
             course = form.save()
-
-            # redirect to the student detail page for the new student object
             return redirect('course:course_detail', cou_id=course.pk)
         else:
-            # If the form is not valid, print the form errors for debugging
             print(form.errors)
     else:
-        # display a blank form
         form = CourseForm()
 
-    # render the create student form template with the form instance
     departments = Department.objects.all()
     professors = Professor.objects.all()
     context = {
@@ -74,3 +65,66 @@ def course_create(request):
                 'professors' : professors
             }
     return render(request, 'course_create.html', context)
+
+
+
+#create calendar semesters
+
+@user_passes_test(lambda u: u.is_superuser)
+def calendarsemester_list(request):
+    calendarSemesters = CalendarSemester.objects.all()
+    context = {
+        'calendarSemesters': calendarSemesters
+    }
+    return render(request, 'calendarSemester_list.html', context)
+
+def calendarsemester_detail(request, sem_id):
+    calendarSemester = get_object_or_404(CalendarSemester, id=sem_id)
+    return render(request, 'calendarSemester_detail.html', {'calendarSemester': calendarSemester})
+
+@user_passes_test(lambda u: u.is_superuser)
+def calendarsemester_update(request, sem_id):
+    calendarSemester = get_object_or_404(CalendarSemester, id=sem_id)
+
+    if request.method == 'POST':
+        form = CalendarSemesterForm(request.POST, instance=calendarSemester)
+        if form.is_valid():
+            form.save()
+            return redirect('course:calendarSemester_detail', sem_id=sem_id)
+    else:
+        form = CalendarSemesterForm(instance=calendarSemester)
+    return render(request, 'calendarSemester_update.html', {'form': form})
+
+@user_passes_test(lambda u: u.is_superuser)
+def calendarsemester_create(request):
+    if request.method == 'POST':
+        form = CalendarSemesterForm(request.POST)
+
+        if form.is_valid():
+            calendarSemester = form.save()
+            return redirect('course:calendarSemester_detail', sem_id=calendarSemester.pk)
+        else:
+            print(form.errors)
+    else:
+        form = CalendarSemesterForm()
+
+    semesters = Semester.objects.all()
+    context = {
+                'form': form,
+                'semesters': semesters
+            }
+    return render(request, 'calendarSemester_create.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def calendarsemester_delete(request, sem_id):
+    calSemester = get_object_or_404(CalendarSemester, id=sem_id)
+
+    if request.method == 'POST':
+        calSemester.delete()
+        return redirect('course:calendarSemester_list')
+
+    context = {
+        'calendarSemester': calSemester
+    }
+    return render(request, 'calendarSemester_delete.html', context)

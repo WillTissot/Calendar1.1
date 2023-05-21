@@ -12,6 +12,7 @@
     <li><a href="{% url 'student:student_list' %}">See All Students</a></li>
     <li><a href="{% url 'professor:professor_list' %}">See All Professors</a></li>
     <li><a href="{% url 'course:course_list' %}">See All Courses</a></li>
+    <li><a href="{% url 'course:calendarSemester_list' %}">See All Calendar Semesters</a></li>
     <li><a href="{% url 'event:sec_event_list' %}">See All Events</a></li>
   </ul>
   {% if user.is_authenticated %}

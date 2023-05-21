@@ -13,6 +13,7 @@ class Semester(models.Model):
     SEMESTER_CHOICES = [
         ('Fall', 'Fall'),
         ('Spring', 'Spring'),
+        ('Winter', 'Winter'),
         ('Summer', 'Summer')
     ]
     year = models.IntegerField()
@@ -20,6 +21,11 @@ class Semester(models.Model):
 
     def __str__(self):
         return f"{self.term} {self.year}"
+
+class CalendarSemester(models.Model):
+    semester = models.ForeignKey(Semester, on_delete=models.DO_NOTHING)
+    startDate = models.DateField()
+    endDate = models.DateField()
 
 class DayChoices(models.IntegerChoices):
     MONDAY = 1, 'Monday'

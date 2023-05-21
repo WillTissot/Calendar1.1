@@ -3,8 +3,10 @@ from course.models import Department
 from .forms import StudentForm
 from .models import Student, EnrolledStudentsOnCourse
 from course.models import Course
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def student_list(request):
     students = Student.objects.all()
     context = {
@@ -33,7 +35,7 @@ def student_update(request, up_id):
         form = StudentForm(instance=student)
     return render(request, 'student_update.html', {'form': form})
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def student_create(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request
@@ -60,7 +62,7 @@ def student_create(request):
             }
     return render(request, 'student_create.html', context)
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def student_delete(request, del_id):
     student = get_object_or_404(Student, id=del_id)
 
@@ -73,6 +75,8 @@ def student_delete(request, del_id):
     }
     return render(request, 'student_delete.html', context)
 
+
+@login_required
 def enroll_To_Courses(request):
     _method = request.POST.get('_method')
     if _method == 'POST':
@@ -104,3 +108,5 @@ def enroll_To_Courses(request):
         }
 
         return render(request, 'enroll_to_course.html', context)
+
+
