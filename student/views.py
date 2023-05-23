@@ -113,6 +113,14 @@ def enroll_To_Courses(request):
         return render(request, 'enroll_to_course.html', context)
 
 def update_calendar(request):
+    deleteEvents(request)
+    createEvents(request)
+
+def deleteEvents(request):
+    user= request.user
+    events = Event.objects.filter(calendarCourse__course__enrolledstudentsoncourse__student__user_id=user.id).delete()
+
+def createEvents(request):
     student = request.user.student
     enrolledCourses = EnrolledStudentsOnCourse.objects.filter(student=student)
     course_ids = enrolledCourses.values_list('course_id', flat=True)
@@ -138,9 +146,9 @@ def update_calendar(request):
             created_at= datetime.now(),
             date = nextEventsStartDate
             )
-            print(newEvent)
             newEvent.save()
             nextEventsStartDate += timedelta(days=7)
+    
 
     # if request.method == 'POST':
     #     form = EventForm(request.POST)
