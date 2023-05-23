@@ -2,9 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from course.models import Department
 from .forms import StudentForm
 from .models import Student, EnrolledStudentsOnCourse
+from event.models import Event
 from course.models import Course, CalendarCourse
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
+from datetime import date, timedelta, datetime
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def student_list(request):
@@ -113,10 +116,31 @@ def update_calendar(request):
     student = request.user.student
     enrolledCourses = EnrolledStudentsOnCourse.objects.filter(student=student)
     course_ids = enrolledCourses.values_list('course_id', flat=True)
-    calendar_course = CalendarCourse.objects.filter(id__in=course_ids)
+    calendar_courses = CalendarCourse.objects.filter(id__in=course_ids)
     x = 1
 
+    for calCourse in calendar_courses:
+        calSemStartDate = calCourse.calendarSemester.startDate
+        day = calCourse.day
+        calSemEndDate = calCourse.calendarSemester.endDate
+        currentDate = datetime.now().date()
 
+        if currentDate < calSemStartDate:
+            x = calSemStartDate.isoweekday()
+            timed = timedelta(days=(day - calSemStartDate.isoweekday() + 7) % 7)
+            nextEventsStartDate = calSemStartDate + timed
+        else:
+            creatingEventsStartDate = currentDate + timedelta(days=(day - currentDate.isoweekday() + 7) % 7)
+
+        while nextEventsStartDate <= calSemEndDate:
+            newEvent = Event(
+            calendarCourse=calCourse,
+            created_at= datetime.now(),
+            date = nextEventsStartDate
+            )
+            print(newEvent)
+            newEvent.save()
+            nextEventsStartDate += timedelta(days=7)
 
     # if request.method == 'POST':
     #     form = EventForm(request.POST)

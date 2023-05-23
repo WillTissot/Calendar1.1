@@ -15,9 +15,10 @@ class Event(models.Model):
     calendarCourse = models.ForeignKey(CalendarCourse, on_delete=models.DO_NOTHING, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    date = models.DateField(null=True)
 
     def __str__(self):
-        return self.title
+        return self
 
 
 @dataclass

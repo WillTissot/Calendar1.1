@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import user_passes_test
 def event_list(request):
     user= request.user
     if hasattr(user, 'student'):
-        events = Event.objects.filter(calendarCourse__course__student__user_id=user.id)
+        events = Event.objects.filter(calendarCourse__course__enrolledstudentsoncourse__student__user_id=user.id)
     elif hasattr(user, 'professor'):
         events = Event.objects.filter(calendarCourse__course__professor__user_id=user.id)
     else:
