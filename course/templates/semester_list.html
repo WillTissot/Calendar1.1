@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All courses</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+            <th>Term</th>
+            <th>Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for semester in semesters %}
+            <tr>
+                <td>{{ semester.term }}</td>
+                <td>{{ semester.year }}</td>
+                <td>
+                    <a href="{% url 'course:semester_detail' sem_id=semester.pk %}">View</a>
+                    <a href="{% url 'course:semester_update' sem_id=semester.pk %}">Edit</a>
+                    <a href="{% url 'course:semester_delete' sem_id=semester.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+
+        {% if request.META.HTTP_REFERER %}
+            <a href="{{ request.META.HTTP_REFERER }}">Back</a>
+        {% endif %}
+    </table>
+</body>

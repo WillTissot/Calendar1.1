@@ -17,7 +17,7 @@ class Semester(models.Model):
         ('Summer', 'Summer')
     ]
     year = models.IntegerField()
-    term = models.CharField(max_length=6, choices=SEMESTER_CHOICES)
+    term = models.CharField(max_length=10, choices=SEMESTER_CHOICES)
 
     def __str__(self):
         return f"{self.term} {self.year}"

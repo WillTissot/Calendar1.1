@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Semester Details</title>
+</head>
+<body>
+  <h1>Semester Detail</h1>
+  <p><strong>Term:</strong> {{ semester.term }}</p>
+  <p><strong>Year:</strong> {{ semester.year }}</p>
+
+  <a href="{% url 'course:semester_update' semester.id %}">Edit</a>
+  <a href="{% url 'course:semester_create' %}">Create New Course</a>
+
+{% if request.META.HTTP_REFERER %}
+<a href="{{ request.META.HTTP_REFERER }}">Back</a>
+{% endif %}
+
+</body>
+</html>

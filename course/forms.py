@@ -40,3 +40,11 @@ class CalendarSemesterForm(forms.ModelForm):
         model = CalendarSemester
         fields = ['semester', 'startDate', 'endDate']
 
+class SemesterForm(forms.ModelForm):
+    class Meta:
+        model = Semester
+        fields = ['year', 'term']
+        widgets = {
+            'term': forms.Select(choices=Semester.SEMESTER_CHOICES),
+        }
+

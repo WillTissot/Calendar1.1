@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from course.forms import CourseForm, CalendarSemesterForm, CalendarCourseForm
+from course.forms import CourseForm, CalendarSemesterForm, CalendarCourseForm, SemesterForm
 from course.models import Course, Department, CalendarCourse, Semester, CalendarSemester
 from professor.models import Professor
 from django.contrib.auth.decorators import user_passes_test
@@ -123,6 +123,65 @@ def calendarcourse_delete(request, cal_id):
         'calendarCourse': calCourse
     }
     return render(request, 'calendarCourse_delete.html', context)
+
+
+#semester CRUD
+
+@user_passes_test(lambda u: u.is_superuser)
+def semester_list(request):
+    semesters = Semester.objects.all()
+    context = {
+        'semesters': semesters
+    }
+    return render(request, 'semester_list.html', context)
+
+def semester_detail(request, sem_id):
+    semester = get_object_or_404(Semester, id=sem_id)
+    return render(request, 'semester_detail.html', {'semester': semester})
+
+@user_passes_test(lambda u: u.is_superuser)
+def semester_update(request, sem_id):
+    semester = get_object_or_404(Semester, id=sem_id)
+
+    if request.method == 'POST':
+        form = SemesterForm(request.POST, instance=semester)
+        if form.is_valid():
+            form.save()
+            return redirect('course:semester_detail', sem_id=sem_id)
+    else:
+        form = SemesterForm(instance=semester)
+    return render(request, 'semester_update.html', {'form': form})
+
+def semester_create(request):
+    if request.method == 'POST':
+        form = SemesterForm(request.POST)
+
+        if form.is_valid():
+            semester = form.save()
+            return redirect('course:semester_detail', sem_id=semester.pk)
+        else:
+            print(form.errors)
+    else:
+        form = SemesterForm()
+
+    context = {
+                'form': form
+            }
+    return render(request, 'semester_create.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def semester_delete(request, sem_id):
+    semester = get_object_or_404(Semester, id=sem_id)
+
+    if request.method == 'POST':
+        semester.delete()
+        return redirect('course:semester_list')
+
+    context = {
+        'semester': semester
+    }
+    return render(request, 'semester_delete.html', context)
+
 
 #calendar semesters CRUD
 
