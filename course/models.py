@@ -26,6 +26,9 @@ class CalendarSemester(models.Model):
     semester = models.ForeignKey(Semester, on_delete=models.DO_NOTHING)
     startDate = models.DateField()
     endDate = models.DateField()
+ 
+    def __str__(self):
+        return f"{self.semester.term} {self.semester.year}"
 
 class DayChoices(models.IntegerChoices):
     MONDAY = 1, 'Monday'

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calendar Course Details</title>
+</head>
+<body>
+    <h1>Calendar Course Details</h1>
+    
+    <p>Course: {{ calendarCourse.course.title }}</p>
+    <p>Term: {{ calendarCourse.calendarSemester.semester.term }}</p>
+    <p>Year: {{ calendarCourse.calendarSemester.semester.year }}</p>
+    <p>Semester StartDate: {{ calendarCourse.calendarSemester.startDate }}</p>
+    <p>Semester EndDate: {{ calendarCourse.calendarSemester.endDate }}</p>
+    <p>Room Number: {{ calendarCourse.room_number }}</p>
+    <p>Start Time: {{ calendarCourse.start_time }}</p>
+    <p>End Time: {{ calendarCourse.end_time }}</p>
+    <p>Day: {{ calendarCourse.get_day_display }}</p>
+    <p>Is Active: {% if calendarCourse.is_active %}Yes{% else %}No{% endif %}</p>
+    <p>Is Online: {% if calendarCourse.is_online %}Yes{% else %}No{% endif %}</p>
+    <p>Is Deleted: {% if calendarCourse.is_deleted %}Yes{% else %}No{% endif %}</p>
+</body>
+</html>

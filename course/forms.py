@@ -1,6 +1,6 @@
 from django import forms
 from professor.models import Professor
-from .models import Course, Department, Semester, CalendarCourse, CalendarSemester
+from .models import Course, Department, Semester, CalendarCourse, CalendarSemester, DayChoices
 
 class CourseForm(forms.ModelForm):
 
@@ -17,6 +17,15 @@ class CourseForm(forms.ModelForm):
 
 
 class CalendarCourseForm(forms.ModelForm):
+    course = forms.ModelChoiceField(queryset=Course.objects.all())
+    calendarSemester = forms.ModelChoiceField(queryset=CalendarSemester.objects.all())
+    start_time = forms.TimeInput()
+    end_time = forms.TimeInput()
+    day = forms.ChoiceField(choices=DayChoices.choices)
+    is_active = forms.BooleanField(required=False, initial=True)
+    is_deleted = forms.BooleanField(required=False, initial=False)
+    is_online = forms.BooleanField(required=False, initial=False)
+
     class Meta:
         model = CalendarCourse
         fields = ['course', 'calendarSemester', 'room_number', 'start_time', 'end_time', 'day', 'is_active', 'is_deleted', 'is_online']

@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from course.forms import CourseForm, CalendarSemesterForm
+from course.forms import CourseForm, CalendarSemesterForm, CalendarCourseForm
 from course.models import Course, Department, CalendarCourse, Semester, CalendarSemester
 from professor.models import Professor
 from django.contrib.auth.decorators import user_passes_test
@@ -66,9 +66,65 @@ def course_create(request):
             }
     return render(request, 'course_create.html', context)
 
+#calendar course CRUD
 
+@user_passes_test(lambda u: u.is_superuser)
+def calendarcourse_list(request):
+    calendarCourses = CalendarCourse.objects.all()
+    context = {
+        'calendarCourses': calendarCourses
+    }
+    return render(request, 'calendarCourse_list.html', context)
 
-#create calendar semesters
+def calendarcourse_detail(request, cal_id):
+    calendarCourse = get_object_or_404(CalendarCourse, id=cal_id)
+    return render(request, 'calendarCourse_detail.html', {'calendarCourse': calendarCourse})
+
+@user_passes_test(lambda u: u.is_superuser)
+def calendarcourse_update(request, cal_id):
+    calendarCourse = get_object_or_404(CalendarCourse, id=cal_id)
+
+    if request.method == 'POST':
+        form = CalendarCourseForm(request.POST, instance=calendarCourse)
+        if form.is_valid():
+            form.save()
+            return redirect('course:calendarcourse_detail', cal_id=cal_id)
+    else:
+        form = CalendarCourseForm(instance=calendarCourse)
+    return render(request, 'calendarcourse_update.html', {'form': form})
+
+@user_passes_test(lambda u: u.is_superuser)
+def calendarcourse_create(request):
+    if request.method == 'POST':
+        form = CalendarCourseForm(request.POST)
+
+        if form.is_valid():
+            calendarCourse = form.save()
+            return redirect('course:calendarcourse_detail', cal_id=calendarCourse.pk)
+        else:
+            print(form.errors)
+    else:
+        form = CalendarCourseForm()
+
+    context = {
+                'form': form
+            }
+    return render(request, 'calendarCourse_create.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def calendarcourse_delete(request, cal_id):
+    calCourse = get_object_or_404(CalendarCourse, id=cal_id)
+
+    if request.method == 'POST':
+        calCourse.delete()
+        return redirect('course:calendarcourse_list')
+
+    context = {
+        'calendarCourse': calCourse
+    }
+    return render(request, 'calendarCourse_delete.html', context)
+
+#calendar semesters CRUD
 
 @user_passes_test(lambda u: u.is_superuser)
 def calendarsemester_list(request):

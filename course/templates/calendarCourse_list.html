@@ -1,0 +1,52 @@
+<!-- calendar_semesters.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calendar Courses</title>
+</head>
+<body>
+    <h1>Calendar Courses</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Term</th>
+                <th>Year</th>
+                <th>Semester StartDate</th>
+                <th>Semester EndDate</th>
+                <th>Room Number</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Is Active</th>
+                <th>Is Online</th>
+                <th>Is Deleted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for calendarCourse in calendarCourses %}
+            <tr>
+                <td>{{ calendarCourse.course.title }}</td>
+                <td>{{ calendarCourse.calendarSemester.semester.term }}</td>
+                <td>{{ calendarCourse.calendarSemester.semester.year }}</td>
+                <td>{{ calendarCourse.calendarSemester.startDate }}</td>
+                <td>{{ calendarCourse.calendarSemester.endDate }}</td>
+                <td>{{ calendarCourse.room_number }}</td>
+                <td>{{ calendarCourse.start_time }}</td>
+                <td>{{ calendarCourse.end_time }}</td>
+                <td>{{ calendarCourse.get_day_display }}</td>
+                <td>{% if calendarCourse.is_active %}Yes{% else %}No{% endif %}</td>
+                <td>{% if calendarCourse.is_online %}Yes{% else %}No{% endif %}</td>
+                <td>{% if calendarCourse.is_deleted %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <a href="{% url 'course:calendarcourse_detail' cal_id=calendarCourse.pk %}">View</a>
+                    <a href="{% url 'course:calendarcourse_update' cal_id=calendarCourse.pk %}">Edit</a>
+                    <a href="{% url 'course:calendarcourse_delete' cal_id=calendarCourse.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -81,6 +81,7 @@ def student_delete(request, del_id):
 
 @login_required
 def enroll_To_Courses(request):
+    user= request.user
     _method = request.POST.get('_method')
     if _method == 'POST':
         course_id = request.POST.get('course_id')
@@ -92,6 +93,10 @@ def enroll_To_Courses(request):
         course_id = request.POST.get('course_id')
         student = request.user.student
         course = get_object_or_404(Course, id=course_id)
+
+        events = Event.objects.filter(calendarCourse__course__enrolledstudentsoncourse__student__user_id=user.id, calendarCourse__course__id = course_id)
+        if events:
+            events.delete()
 
         enrollment = EnrolledStudentsOnCourse.objects.filter(student=student, course=course).first()
         if enrollment:
@@ -118,7 +123,8 @@ def update_calendar(request):
 
 def deleteEvents(request):
     user= request.user
-    events = Event.objects.filter(calendarCourse__course__enrolledstudentsoncourse__student__user_id=user.id).delete()
+    events = Event.objects.filter(calendarCourse__course__enrolledstudentsoncourse__student__user_id=user.id)
+    events.prefetch_related('calendarCourse__course__enrolledstudentsoncourse__student').delete()
 
 def createEvents(request):
     student = request.user.student
@@ -138,7 +144,7 @@ def createEvents(request):
             timed = timedelta(days=(day - calSemStartDate.isoweekday() + 7) % 7)
             nextEventsStartDate = calSemStartDate + timed
         else:
-            creatingEventsStartDate = currentDate + timedelta(days=(day - currentDate.isoweekday() + 7) % 7)
+            nextEventsStartDate = currentDate + timedelta(days=(day - currentDate.isoweekday() + 7) % 7)
 
         while nextEventsStartDate <= calSemEndDate:
             newEvent = Event(
@@ -149,40 +155,5 @@ def createEvents(request):
             newEvent.save()
             nextEventsStartDate += timedelta(days=7)
     
-
-    # if request.method == 'POST':
-    #     form = EventForm(request.POST)
-    #     if form.is_valid():
-    #         event = form.save(commit=False)
-    #         calendar_course = CalendarCourse.objects.filter(course__enrolled_students=request.user.student).first()
-    #         event.calendarCourse = calendar_course
-    #         event.full_clean()
-
-    #         current_date = datetime.now().date()
-    #         semester_start_date = calendar_course.semester.startDate
-    #         semester_end_date = calendar_course.semester.endDate
-
-    #         if current_date < semester_start_date:
-    #             week_start_date = semester_start_date
-    #         else:
-    #             week_start_date = semester_start_date + timedelta(days=(7 - semester_start_date.weekday()))
-
-    #         while week_start_date <= semester_end_date:
-    #             new_event = Event(
-    #                 calendarCourse=calendar_course,
-    #                 start_date=week_start_date,
-    #                 end_date=week_start_date + timedelta(days=6)
-    #             )
-    #             new_event.save()
-    #             week_start_date += timedelta(days=7)
-
-    #         return redirect('event_list')  # Redirect to event list or any other page
-    # else:
-    #     form = EventForm()
-
-    # context = {
-    #     'form': form
-    # }
-    # return render(request, 'create_event.html', context)
 
 
