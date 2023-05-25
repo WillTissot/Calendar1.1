@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from course.models import Department
 from .forms import StudentForm
-from .models import Student, EnrolledStudentsOnCourse
+from .models import Student, EnrolledStudentsOnCourse, EnrolledStudentsOnCalendarCourse
 from event.models import Event
 from course.models import Course, CalendarCourse
 from django.contrib.auth.decorators import user_passes_test
@@ -93,11 +93,6 @@ def enroll_To_Courses(request):
         course_id = request.POST.get('course_id')
         student = request.user.student
         course = get_object_or_404(Course, id=course_id)
-
-        events = Event.objects.filter(calendarCourse__course__enrolledstudentsoncourse__student__user_id=user.id, calendarCourse__course__id = course_id)
-        if events:
-            events.delete()
-
         enrollment = EnrolledStudentsOnCourse.objects.filter(student=student, course=course).first()
         if enrollment:
             enrollment.delete()
@@ -118,7 +113,7 @@ def enroll_To_Courses(request):
         return render(request, 'enroll_to_course.html', context)
 
 def update_calendar(request):
-    deleteEvents(request)
+    #deleteEvents(request)
     createEvents(request)
 
 def deleteEvents(request):
@@ -128,10 +123,8 @@ def deleteEvents(request):
 
 def createEvents(request):
     student = request.user.student
-    enrolledCourses = EnrolledStudentsOnCourse.objects.filter(student=student)
-    course_ids = enrolledCourses.values_list('course_id', flat=True)
-    calendar_courses = CalendarCourse.objects.filter(id__in=course_ids)
-    x = 1
+    enrolledCalCourse = EnrolledStudentsOnCalendarCourse.objects.filter(student=student)
+    calendar_courses = CalendarCourse.objects.filter(id__in=[enrolled.calendarCourse_id for enrolled in enrolledCalCourse])
 
     for calCourse in calendar_courses:
         calSemStartDate = calCourse.calendarSemester.startDate
@@ -154,6 +147,35 @@ def createEvents(request):
             )
             newEvent.save()
             nextEventsStartDate += timedelta(days=7)
+
+@login_required
+def Add_Course_To_Calendar(request):
+    _method = request.POST.get('_method')
+    student = request.user.student
+    if _method == 'POST':
+        calCourseId = request.POST.get('calCourseId')
+        calendarCourse = get_object_or_404(CalendarCourse, id=calCourseId)
+        studenEnrolledToCalCourse = EnrolledStudentsOnCalendarCourse(
+            student = student,
+            calendarCourse = calendarCourse
+        )
+        studenEnrolledToCalCourse.save()
+        return redirect('student:enroll_to_courses') 
+    elif request.method == 'GET':
+        enrolledCalCourses = EnrolledStudentsOnCalendarCourse.objects.filter(student=student)
+        enrolledCourses = EnrolledStudentsOnCourse.objects.filter(student=student)
+        enrolledCourseIds = [course.course_id for course in enrolledCourses]
+        calendarCoursesAll = CalendarCourse.objects.filter(course_id__in=enrolledCourseIds)
+        calendarCourses = calendarCoursesAll.exclude(id__in=[enrolled.calendarCourse_id for enrolled in enrolledCalCourses])
+        context = {
+            'calendarCourses' : calendarCourses
+        }
+        return render(request, 'calendarCourseListStudent.html', context)
+    
+    
+    
+
+
     
 
 

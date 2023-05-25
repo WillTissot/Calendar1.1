@@ -12,7 +12,7 @@
                 <th>Course Title</th>
                 <th>Course Code</th>
                 <th>Semester</th>
-                <th>Enroll</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -45,7 +45,8 @@
                 <th>Course Title</th>
                 <th>Course Code</th>
                 <th>Semester</th>
-                <th>Unenroll</th>
+                <th>Action</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -62,6 +63,7 @@
                             <button type="submit">Unenroll</button>
                         </form>
                     </td>
+                    <td><a href="{% url 'student:add_to_calendar' %}" class="btn btn-secondary">Add To My Calendarr</a></td>
                 </tr>
             {% empty %}
                 <tr>

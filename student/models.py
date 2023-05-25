@@ -14,3 +14,7 @@ class Student(models.Model):
 class EnrolledStudentsOnCourse(models.Model):
     course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
     student = models.ForeignKey(Student, on_delete=models.DO_NOTHING)
+
+class EnrolledStudentsOnCalendarCourse(models.Model):
+    calendarCourse = models.ForeignKey(CalendarCourse, on_delete=models.DO_NOTHING)
+    student = models.ForeignKey(Student, on_delete=models.DO_NOTHING)
