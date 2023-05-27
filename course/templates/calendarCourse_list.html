@@ -43,6 +43,7 @@
                     <a href="{% url 'course:calendarcourse_detail' cal_id=calendarCourse.pk %}">View</a>
                     <a href="{% url 'course:calendarcourse_update' cal_id=calendarCourse.pk %}">Edit</a>
                     <a href="{% url 'course:calendarcourse_delete' cal_id=calendarCourse.pk %}">Delete</a>
+                    <a href="{% url 'event:create_calendar_event' cal_id=calendarCourse.pk %}">Create Events</a>
                 </td>
             </tr>
             {% endfor %}

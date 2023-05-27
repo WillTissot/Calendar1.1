@@ -154,7 +154,6 @@ def createEvents(request):
         enrolledCalCourse.onCalendar = True
         enrolledCalCourse.save()
         
-
 @login_required
 def Add_Course_To_Calendar(request):
     _method = request.POST.get('_method')

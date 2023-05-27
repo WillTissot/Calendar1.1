@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from course.models import Course
-
+from course.models import Course, CalendarCourse
+from datetime import date, timedelta, datetime
 from event.forms import EventForm
 from .models import Event, Student, Professor
 from student.models import EnrolledStudentsOnCourse, EnrolledStudentsOnCalendarCourse
@@ -20,12 +20,18 @@ def event_list(request):
 
 @login_required
 def dashboard(request):
-    student = request.user.student # assuming your User model has a OneToOneField to a Student model
-    
-    context = {
-        'student': student,
-    }
-    
+    user= request.user
+
+    if hasattr(user, 'student'):
+        student = request.user.student 
+        context = {
+            'student': student,
+        }
+    elif hasattr(user, 'professor'):
+        professor = request.user.professor 
+        context = {
+            'professor': professor,
+        }
     return render(request, 'dashboard.html', context)
 
 def homepage(request):
@@ -121,3 +127,27 @@ def event_create(request):
             }
     return render(request, 'event_create.html', context)
 
+@user_passes_test(lambda u: u.is_superuser)
+def create_calendar_event(request, cal_id):
+    calCourse = get_object_or_404(CalendarCourse, id = cal_id )
+    calSemStartDate = calCourse.calendarSemester.startDate
+    day = calCourse.day
+    calSemEndDate = calCourse.calendarSemester.endDate
+    currentDate = datetime.now().date()
+
+    if currentDate < calSemStartDate:
+        timed = timedelta(days=(day - calSemStartDate.isoweekday() + 7) % 7)
+        nextEventsStartDate = calSemStartDate + timed
+    else:
+        nextEventsStartDate = currentDate + timedelta(days=(day - currentDate.isoweekday() + 7) % 7)
+
+    while nextEventsStartDate <= calSemEndDate:
+        newEvent = Event(
+        calendarCourse=calCourse,
+        created_at= datetime.now(),
+        date = nextEventsStartDate
+        )
+        newEvent.save()
+        nextEventsStartDate += timedelta(days=7)
+    
+    redirect('course:calendarcourse_list')

@@ -4,13 +4,22 @@
 	<title>Dashboard</title>
 </head>
 <body>
-	<h1>Welcome, {{ student.user.first_name }} {{ student.user.last_name }}</h1>
+	{% if student %}
+		<h1>Welcome, {{ student.user.first_name }} {{ student.user.last_name }}</h1>
+	{% endif %}
+	{% if professor %}
+		<h1>Welcome, {{ professor.user.first_name }} {{ professor.user.last_name }}</h1>
+	{% endif %}
 	<nav>
 		<ul>
 			<li><a href="{% url 'event:my_event_list' %}">See My Events</a></li>
-			<li><a href="{% url 'student:enroll_to_courses' %}">Enroll to a Course</a></li>
+			{% if student %}
+				<li><a href="{% url 'student:enroll_to_courses' %}">Enroll to a Course</a></li>
+			{% endif %}
 			<li><a href="">See My Profile</a></li>
-			<li><a href="{% url 'student:update_calendar' %}">Update My Calendar</a></li>
+			{% if student %}
+				<li><a href="{% url 'student:update_calendar' %}">Update My Calendar</a></li>
+			{% endif %}
 		</ul>
 	</nav>
 	
