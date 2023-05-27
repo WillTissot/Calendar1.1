@@ -94,6 +94,8 @@ def enroll_To_Courses(request):
         student = request.user.student
         course = get_object_or_404(Course, id=course_id)
         enrollment = EnrolledStudentsOnCourse.objects.filter(student=student, course=course).first()
+        enrolledCalCourses = EnrolledStudentsOnCalendarCourse.objects.filter(student=student, calendarCourse__course_id=course_id)
+        enrolledCalCourses.delete()
         if enrollment:
             enrollment.delete()
 
@@ -123,7 +125,7 @@ def deleteEvents(request):
 
 def createEvents(request):
     student = request.user.student
-    enrolledCalCourse = EnrolledStudentsOnCalendarCourse.objects.filter(student=student)
+    enrolledCalCourse = EnrolledStudentsOnCalendarCourse.objects.filter(student=student, onCalendar=False)
     calendar_courses = CalendarCourse.objects.filter(id__in=[enrolled.calendarCourse_id for enrolled in enrolledCalCourse])
 
     for calCourse in calendar_courses:
@@ -147,6 +149,11 @@ def createEvents(request):
             )
             newEvent.save()
             nextEventsStartDate += timedelta(days=7)
+
+        enrolledCalCourse = get_object_or_404(EnrolledStudentsOnCalendarCourse, calendarCourse = calCourse)
+        enrolledCalCourse.onCalendar = True
+        enrolledCalCourse.save()
+        
 
 @login_required
 def Add_Course_To_Calendar(request):

@@ -18,3 +18,4 @@ class EnrolledStudentsOnCourse(models.Model):
 class EnrolledStudentsOnCalendarCourse(models.Model):
     calendarCourse = models.ForeignKey(CalendarCourse, on_delete=models.DO_NOTHING)
     student = models.ForeignKey(Student, on_delete=models.DO_NOTHING)
+    onCalendar = models.BooleanField(default=False, null=True)

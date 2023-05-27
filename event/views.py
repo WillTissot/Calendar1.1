@@ -4,14 +4,14 @@ from course.models import Course
 
 from event.forms import EventForm
 from .models import Event, Student, Professor
-from student.models import EnrolledStudentsOnCourse
+from student.models import EnrolledStudentsOnCourse, EnrolledStudentsOnCalendarCourse
 from django.contrib.auth.decorators import user_passes_test
 
 @login_required
 def event_list(request):
     user= request.user
     if hasattr(user, 'student'):
-        events = Event.objects.filter(calendarCourse__course__enrolledstudentsoncourse__student__user_id=user.id)
+        events = Event.objects.filter(calendarCourse__enrolledstudentsoncalendarcourse__student=user.student).distinct()
     elif hasattr(user, 'professor'):
         events = Event.objects.filter(calendarCourse__course__professor__user_id=user.id)
     else:
@@ -47,8 +47,8 @@ def sec_event_list(request):
 @user_passes_test(lambda u: u.is_superuser)
 def get_students(request, ev_id):
     event = get_object_or_404(Event, id=ev_id)
-    course = event.calendarCourse.course
-    enrolled_students = EnrolledStudentsOnCourse.objects.filter(course=course)
+    calCourse = event.calendarCourse
+    enrolled_students = EnrolledStudentsOnCalendarCourse.objects.filter(calendarCourse=calCourse)
     student_ids = enrolled_students.values_list('student_id', flat=True)
     students = Student.objects.filter(id__in=student_ids)
 
