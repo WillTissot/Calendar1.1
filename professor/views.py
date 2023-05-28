@@ -1,7 +1,7 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from course.models import Department
 from professor.forms import ProfessorForm
-
+from event.models import Event
 from professor.models import Professor
 
 # Create your views here.
@@ -70,3 +70,13 @@ def professor_create(request):
                 'departments': departments
             }
     return render(request, 'professor_create.html', context)
+
+def request_event_change(request, ev_id):
+    if request.method == "POST":
+        event = get_object_or_404(Event, id=ev_id)
+    else:
+        event = get_object_or_404(Event, id=ev_id)
+        calCouId = event.calendarCourse.id
+        return redirect('course:calendarcourse_update', cal_id=calCouId)
+
+        

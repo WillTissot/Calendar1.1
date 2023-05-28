@@ -151,3 +151,6 @@ def create_calendar_event(request, cal_id):
         nextEventsStartDate += timedelta(days=7)
     
     redirect('course:calendarcourse_list')
+
+def create_change_request(request):
+    change = x 

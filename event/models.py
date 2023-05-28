@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.db import models
 from django.urls import reverse
-from course.models import Course, Semester
+from course.models import Course, Semester, DayChoices
 from professor.models import Professor
 from student.models import Student
 from course.models import CalendarCourse
@@ -10,16 +10,24 @@ from dataclasses import dataclass
 from enum import Enum
 
 
+
+class Change(models.Model):
+    room_number = models.CharField(max_length=10)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    day = models.IntegerField(choices=DayChoices.choices, default=DayChoices.SUNDAY)
+    is_online = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
+
 class Event(models.Model):
-    """ Event model """
     calendarCourse = models.ForeignKey(CalendarCourse, on_delete=models.DO_NOTHING, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     date = models.DateField(null=True)
+    change = models.ForeignKey(Change, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self
-
 
 @dataclass
 class DayMonth:

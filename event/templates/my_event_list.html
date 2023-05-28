@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All Admin Events</title>
+    <title>My Events</title>
 </head>
 <body>
-    <h1>All Admin Events</h1>
+    <h1>My Events</h1>
     <table>
         <thead>
             <tr>
@@ -16,6 +16,8 @@
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Is Online</th>
+                <th>Action</th>
+                <th>Change</th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +31,12 @@
                     <td>{{ event.calendarCourse.start_time }}</td>
                     <td>{{ event.calendarCourse.end_time }}</td>
                     <td>{{ event.calendarCourse.is_online }}</td>
+                    {% if user.professor %}
+                        <td><a href="{% url 'professor:request_event_change' ev_id=event.pk %}">Change Event</a></td>
+                    {% endif %}
+                    {% if event.change %}
+                        <p>change</p>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
