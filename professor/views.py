@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render, reverse
-from course.models import Department
+from course.models import Department, CalendarCourse
+from course.forms import CalendarCourseProfForm
 from professor.forms import ProfessorForm
-from event.models import Event
+from event.models import Event, Change
 from professor.models import Professor
 
 # Create your views here.
@@ -72,11 +73,27 @@ def professor_create(request):
     return render(request, 'professor_create.html', context)
 
 def request_event_change(request, ev_id):
+    event = get_object_or_404(Event, id=ev_id)
+    calCouId = event.calendarCourse.id
+    calendarCourse = get_object_or_404(CalendarCourse, id=calCouId)
     if request.method == "POST":
-        event = get_object_or_404(Event, id=ev_id)
+        form = CalendarCourseProfForm(request.POST, instance=calendarCourse)
+        if form.is_valid():
+            if not request.user.is_staff:
+                change = Change(
+                    room_number = form.cleaned_data['room_number'],
+                    start_time = form.cleaned_data['start_time'],
+                    end_time = form.cleaned_data['end_time'],
+                    day = form.cleaned_data['day'],
+                    is_online = form.cleaned_data['is_online'],
+                    is_approved = False
+                )
+                change.save()
+                event = get_object_or_404(Event, id=ev_id)
+                event.changes.add(change)
+                return redirect('event:my_event_list')
     else:
-        event = get_object_or_404(Event, id=ev_id)
-        calCouId = event.calendarCourse.id
-        return redirect('course:calendarcourse_update', cal_id=calCouId)
+        form = CalendarCourseProfForm(instance=calendarCourse)
+        return render(request, 'calendarcourse_update.html', {'form': form})
 
         

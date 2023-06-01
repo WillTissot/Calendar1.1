@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.db import models
 from django.urls import reverse
-from course.models import Course, Semester, DayChoices
+from course.models import Course, Semester, DayChoices, CalendarCourse
 from professor.models import Professor
 from student.models import Student
 from course.models import CalendarCourse
@@ -24,7 +24,7 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     date = models.DateField(null=True)
-    change = models.ForeignKey(Change, on_delete=models.CASCADE, null=True)
+    changes = models.ManyToManyField(Change)
 
     def __str__(self):
         return self

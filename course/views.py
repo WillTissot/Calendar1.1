@@ -84,34 +84,16 @@ def calendarcourse_detail(request, cal_id):
 #@user_passes_test(lambda u: u.is_superuser)
 def calendarcourse_update(request, cal_id):
     calendarCourse = get_object_or_404(CalendarCourse, id=cal_id)
-
     if request.method == 'POST':
         if request.user.is_staff:
             form = CalendarCourseForm(request.POST, instance=calendarCourse)
-        else:
-            form = CalendarCourseProfForm(request.POST, instance=calendarCourse)
         if form.is_valid():
-            if not request.user.is_staff:
-                change = Change(
-                    room_number = form.cleaned_data['room_number'],
-                    start_time = form.cleaned_data['start_time'],
-                    end_time = form.cleaned_data['end_time'],
-                    day = form.cleaned_data['day'],
-                    is_online = form.cleaned_data['is_online'],
-                    is_approved = False
-                )
-                change.save()
-                return redirect('event:my_event_list')
-            else:
-                form.save()
-                return redirect('course:calendarcourse_detail', cal_id=cal_id)
+            form.save()
+            return redirect('course:calendarcourse_detail', cal_id=cal_id)
         else:
             print(form.errors)
     else:
-        if request.user.is_staff:
-            form = CalendarCourseForm(instance=calendarCourse)
-        else:
-            form = CalendarCourseProfForm(instance=calendarCourse)
+        form = CalendarCourseForm(instance=calendarCourse)
 
     return render(request, 'calendarcourse_update.html', {'form': form})
 
