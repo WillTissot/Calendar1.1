@@ -26,19 +26,29 @@ class CalendarCourseForm(forms.ModelForm):
     is_deleted = forms.BooleanField(required=False, initial=False)
     is_online = forms.BooleanField(required=False, initial=False)
 
-    def __init__(self, user, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        
-        if user.professor:
+    class Meta:
+        model = CalendarCourse
+        fields = ['course', 'calendarSemester', 'room_number', 'start_time', 'end_time', 'day', 'is_active', 'is_deleted', 'is_online']
+
+class CalendarCourseProfForm(CalendarCourseForm):
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
             self.fields['course'].widget.attrs['disabled'] = True
             self.fields['calendarSemester'].widget.attrs['disabled'] = True
             self.fields['is_active'].widget = forms.HiddenInput()
             self.fields['is_deleted'].widget = forms.HiddenInput()
 
-
-    class Meta:
-        model = CalendarCourse
-        fields = ['course', 'calendarSemester', 'room_number', 'start_time', 'end_time', 'day', 'is_active', 'is_deleted', 'is_online']
+        def clean(self):
+            cleaned_data = super().clean()
+            
+            # Remove validation errors for specific fields
+            if 'course' in self._errors:
+                del self._errors['course']
+            if 'calendarSemester' in self._errors:
+                del self._errors['calendarSemester']
+            
+            return cleaned_data
 
 
 class CalendarSemesterForm(forms.ModelForm):

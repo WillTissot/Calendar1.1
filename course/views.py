@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from course.forms import CourseForm, CalendarSemesterForm, CalendarCourseForm, SemesterForm
+from course.forms import CourseForm, CalendarSemesterForm, CalendarCourseForm, SemesterForm, CalendarCourseProfForm
 from course.models import Course, Department, CalendarCourse, Semester, CalendarSemester
 from professor.models import Professor
+from event.models import Change
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
 
@@ -85,9 +86,12 @@ def calendarcourse_update(request, cal_id):
     calendarCourse = get_object_or_404(CalendarCourse, id=cal_id)
 
     if request.method == 'POST':
-        form = CalendarCourseForm(request.POST, instance=calendarCourse, user=request.user)
+        if request.user.is_staff:
+            form = CalendarCourseForm(request.POST, instance=calendarCourse)
+        else:
+            form = CalendarCourseProfForm(request.POST, instance=calendarCourse)
         if form.is_valid():
-            if request.user.is_staff:
+            if not request.user.is_staff:
                 change = Change(
                     room_number = form.cleaned_data['room_number'],
                     start_time = form.cleaned_data['start_time'],
@@ -97,12 +101,18 @@ def calendarcourse_update(request, cal_id):
                     is_approved = False
                 )
                 change.save()
-                redirect('event:my_event_list')
+                return redirect('event:my_event_list')
             else:
                 form.save()
                 return redirect('course:calendarcourse_detail', cal_id=cal_id)
+        else:
+            print(form.errors)
     else:
-        form = CalendarCourseForm(instance=calendarCourse, user=request.user)
+        if request.user.is_staff:
+            form = CalendarCourseForm(instance=calendarCourse)
+        else:
+            form = CalendarCourseProfForm(instance=calendarCourse)
+
     return render(request, 'calendarcourse_update.html', {'form': form})
 
 @user_passes_test(lambda u: u.is_superuser)
