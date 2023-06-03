@@ -15,4 +15,5 @@ urlpatterns = [
     path('event/update/<int:ev_id>/', views.event_update, name='event_update'),
     path('event/delete/<int:ev_id>/', views.event_delete, name='event_delete'),
     path('event/create/calendar/event/<int:cal_id>/', views.create_calendar_event, name='create_calendar_event'),
+    path('secretary/events/changes/action/', views.get_all_requests, name='get_all_requests'),
 ]

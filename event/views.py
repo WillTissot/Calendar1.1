@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from course.models import Course, CalendarCourse
 from datetime import date, timedelta, datetime
 from event.forms import EventForm
-from .models import Event, Student, Professor
+from .models import Event, Student, Professor, Change
 from student.models import EnrolledStudentsOnCourse, EnrolledStudentsOnCalendarCourse
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models import Count
+
 
 @login_required
 def event_list(request):
@@ -160,5 +162,28 @@ def create_calendar_event(request, cal_id):
     
     redirect('course:calendarcourse_list')
 
-def create_change_request(request):
-    change = x 
+@user_passes_test(lambda u: u.is_superuser)
+def get_all_requests(request):
+    if request.method == 'GET':
+        events = Event.objects.annotate(num_changes=Count('changes')).filter(num_changes__gt=0)
+        context = {
+            'events' : events
+        }
+        return render(request, 'my_event_list.html', context)
+    elif request.method == 'POST':
+        changeId = request.POST.get('changeId')
+        action = request.POST.get('action')
+        eventId = request.POST.get('eventId')
+        event = get_object_or_404(Event, id = eventId)
+        change = get_object_or_404(Change, id = changeId)
+        if action == 'Approve':
+            change.is_approved = True
+            change.is_pending = False
+        elif action == 'Reject':
+            change.is_pending = False
+            change.is_approved = False
+        change.save()
+        context = {
+            'event' : event
+        }
+        return render(request, 'changes_popup.html', context)

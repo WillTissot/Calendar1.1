@@ -35,6 +35,9 @@
                         <td><a href="{% url 'professor:request_event_change' ev_id=event.pk %}">Change Event</a></td>
                         <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes</button></td>
                     {% endif %}
+                    {% if user.is_superuser %}
+                        <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes To Approve</button></td>
+                    {% endif %}
                     {% if event.changes.all %}
                         <p>change</p>
                     {% endif %}

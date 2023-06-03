@@ -54,6 +54,26 @@
                     <td>{{ change.is_online}}</td>
                     <td>{{ change.is_approved}}</td>
                     <td>{{ change.is_pending}}</td>
+                    {% if user.is_superuser %}
+                        <td>
+                            <form method="post" action="{% url 'event:get_all_requests' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="Approve">
+                                <input type="hidden" name="changeId" value="{{ change.pk }}">
+                                <input type="hidden" name="eventId" value="{{ event.pk }}">
+                                <button type="submit">Approve</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" action="{% url 'event:get_all_requests' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="Reject">
+                                <input type="hidden" name="changeId" value="{{ change.pk }}">
+                                <input type="hidden" name="eventId" value="{{ event.pk }}">
+                                <button type="submit">Reject</button>
+                            </form>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
