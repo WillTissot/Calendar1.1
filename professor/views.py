@@ -4,6 +4,7 @@ from course.forms import CalendarCourseProfForm
 from professor.forms import ProfessorForm
 from event.models import Event, Change
 from professor.models import Professor
+from datetime import datetime
 
 # Create your views here.
 
@@ -87,7 +88,8 @@ def request_event_change(request, ev_id):
                     date = form.cleaned_data['date'],
                     is_online = form.cleaned_data['is_online'],
                     is_approved = False,
-                    is_pending = True
+                    is_pending = True,
+                    date_created = datetime.now()
                 )
                 change.save()
                 event = get_object_or_404(Event, id=ev_id)

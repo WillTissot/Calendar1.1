@@ -1,3 +1,5 @@
+{% load myfilters %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,11 +28,23 @@
                     <td>{{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</td>
                     <td>{{ event.calendarCourse.course.title }}</td>
                     <td>{{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</td>
-                    <td>{{ event.calendarCourse.room_number }}</td>
-                    <td>{{ event.date }}</td>
-                    <td>{{ event.calendarCourse.start_time }}</td>
-                    <td>{{ event.calendarCourse.end_time }}</td>
-                    <td>{{ event.calendarCourse.is_online }}</td>
+                    {% with recentChange=event|filter_changes %}
+                        {% if recentChange %}
+                            <td>{{ recentChange.room_number }}</td>
+                            <td>{{ recentChange.date }}</td>
+                            <td>{{ recentChange.start_time }}</td>
+                            <td>{{ recentChange.end_time }}</td>
+                            <td>{{ recentChange.is_online }}</td>
+                        {% else %}
+                            <td>{{ event.calendarCourse.room_number }}</td>
+                            <td>{{ event.date }}</td>
+                            <td>{{ event.calendarCourse.start_time }}</td>
+                            <td>{{ event.calendarCourse.end_time }}</td>
+                            <td>{{ event.calendarCourse.is_online }}</td>
+                            <td></td>
+                        {% endif %}
+                    {% endwith %}
+
                     {% if user.professor %}
                         <td><a href="{% url 'professor:request_event_change' ev_id=event.pk %}">Change Event</a></td>
                         <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes</button></td>

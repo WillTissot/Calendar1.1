@@ -7,6 +7,9 @@ from .models import Event, Student, Professor, Change
 from student.models import EnrolledStudentsOnCourse, EnrolledStudentsOnCalendarCourse
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Count
+from django import template
+
+
 
 
 @login_required
