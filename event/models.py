@@ -19,6 +19,7 @@ class Change(models.Model):
     is_online = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
     is_pending = models.BooleanField(default=False)
+    date_created = models.DateTimeField(null=True)
 
 class Event(models.Model):
     calendarCourse = models.ForeignKey(CalendarCourse, on_delete=models.DO_NOTHING, null=True)
