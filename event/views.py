@@ -64,6 +64,14 @@ def get_students(request, ev_id):
     }
     return render(request, 'student_popup.html', context)
 
+#@user_passes_test(lambda u: u.is_superuser)
+def get_changes(request, ev_id):
+    event = get_object_or_404(Event, id=ev_id)
+    context = {
+        'event': event
+    }
+    return render(request, 'changes_popup.html', context)
+
 @user_passes_test(lambda u: u.is_superuser)
 def event_detail(request, ev_id):
     # Retrieve the student object with the provided id

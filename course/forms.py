@@ -31,11 +31,13 @@ class CalendarCourseForm(forms.ModelForm):
         fields = ['course', 'calendarSemester', 'room_number', 'start_time', 'end_time', 'day', 'is_active', 'is_deleted', 'is_online']
 
 class CalendarCourseProfForm(CalendarCourseForm):
+        date = forms.DateField(required=False)
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             self.fields['course'].widget.attrs['disabled'] = True
             self.fields['calendarSemester'].widget.attrs['disabled'] = True
+            self.fields['day'].widget.attrs['disabled'] = True
             self.fields['is_active'].widget = forms.HiddenInput()
             self.fields['is_deleted'].widget = forms.HiddenInput()
 
@@ -47,6 +49,8 @@ class CalendarCourseProfForm(CalendarCourseForm):
                 del self._errors['course']
             if 'calendarSemester' in self._errors:
                 del self._errors['calendarSemester']
+            if 'day' in self._errors:
+                del self._errors['day']
             
             return cleaned_data
 

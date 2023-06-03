@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Requested Changes</title>
+</head>
+<body>
+    <h1>Requested Changes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Semester</th>
+                <th>Room Number</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Is Online</th>
+                <th>Action</th>
+                <th>Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ event.calendarCourse.course.title }}</td>
+                <td>{{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</td>
+                <td>{{ event.calendarCourse.room_number }}</td>
+                <td>{{ event.date }}</td>
+                <td>{{ event.calendarCourse.start_time }}</td>
+                <td>{{ event.calendarCourse.end_time }}</td>
+                <td>{{ event.calendarCourse.is_online }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Changes</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Date</th>
+                <th>Is Online</th>
+                <th>Is Approved</th>
+                <th>Is Pending</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for change in event.changes.all %}
+                <tr>
+                    <td>{{ change.room_number}}</td>
+                    <td>{{ change.start_time}}</td>
+                    <td>{{ change.end_time}}</td>
+                    <td>{{ change.date}}</td>
+                    <td>{{ change.is_online}}</td>
+                    <td>{{ change.is_approved}}</td>
+                    <td>{{ change.is_pending}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+

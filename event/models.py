@@ -15,9 +15,10 @@ class Change(models.Model):
     room_number = models.CharField(max_length=10)
     start_time = models.TimeField()
     end_time = models.TimeField()
-    day = models.IntegerField(choices=DayChoices.choices, default=DayChoices.SUNDAY)
+    date = models.DateTimeField(null=True)
     is_online = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
+    is_pending = models.BooleanField(default=False)
 
 class Event(models.Model):
     calendarCourse = models.ForeignKey(CalendarCourse, on_delete=models.DO_NOTHING, null=True)

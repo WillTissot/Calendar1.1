@@ -84,9 +84,10 @@ def request_event_change(request, ev_id):
                     room_number = form.cleaned_data['room_number'],
                     start_time = form.cleaned_data['start_time'],
                     end_time = form.cleaned_data['end_time'],
-                    day = form.cleaned_data['day'],
+                    date = form.cleaned_data['date'],
                     is_online = form.cleaned_data['is_online'],
-                    is_approved = False
+                    is_approved = False,
+                    is_pending = True
                 )
                 change.save()
                 event = get_object_or_404(Event, id=ev_id)
@@ -94,6 +95,11 @@ def request_event_change(request, ev_id):
                 return redirect('event:my_event_list')
     else:
         form = CalendarCourseProfForm(instance=calendarCourse)
-        return render(request, 'calendarcourse_update.html', {'form': form})
+        eventDate = event.date
+        context={
+            'form' : form,
+            'eventDate' : eventDate
+        }
+        return render(request, 'calendarcourse_update.html', context)
 
         

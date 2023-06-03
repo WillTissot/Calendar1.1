@@ -33,8 +33,9 @@
                     <td>{{ event.calendarCourse.is_online }}</td>
                     {% if user.professor %}
                         <td><a href="{% url 'professor:request_event_change' ev_id=event.pk %}">Change Event</a></td>
+                        <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes</button></td>
                     {% endif %}
-                    {% if event.change %}
+                    {% if event.changes.all %}
                         <p>change</p>
                     {% endif %}
                 </tr>
@@ -48,3 +49,28 @@
     {% endif %}
 </body>
 </html>
+
+<script>
+
+    window.onload = function() {
+        const showChangesButtons = document.querySelectorAll('.btn-show-changes');
+        showChangesButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const evId = button.dataset.evId;
+                seeChanges(evId);
+            });
+        });
+    }
+
+    function seeChanges(evId) {
+        let temp = -1;
+        if (evId) {
+            temp = evId;  // Use placeholder value if evId is empty
+        } 
+        console.log(evId);
+        const url = `/professor/events/${temp}/get/changes/`;
+        const windowFeatures = 'width=600,height=400,resizable,scrollbars';
+        window.open(url, '_blank', windowFeatures);
+    }
+</script>
+

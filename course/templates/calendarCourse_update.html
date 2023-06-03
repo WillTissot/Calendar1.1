@@ -8,6 +8,7 @@
   <form method="post">  
     {% csrf_token %}
     {{ form.as_p }}
+    {{ eventDate}}
     <button type="submit">Update</button>
 </form>
 <a href="{% url 'course:calendarcourse_list' %}" class="btn btn-secondary">Back</a>
