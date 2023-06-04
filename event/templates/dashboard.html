@@ -12,15 +12,17 @@
 	{% endif %}
 	<nav>
 		<ul>
-			<li><a href="{% url 'event:my_event_list' %}">See My Events</a></li>
-			{% if student %}
-				<li><a href="{% url 'student:enroll_to_courses' %}">Enroll to a Course</a></li>
-				<li><a href="{% url 'student:get_enrolled_cal_courses' %}">See Enrolled Cal Courses</a></li>
+			{% if user.is_active %}
+				<li><a href="{% url 'event:my_event_list' %}">See My Events</a></li>
+				{% if student %}
+					<li><a href="{% url 'student:enroll_to_courses' %}">Enroll to a Course</a></li>
+					<li><a href="{% url 'student:get_enrolled_cal_courses' %}">See Enrolled Cal Courses</a></li>
+				{% endif %}
+				{% if professor %}
+				<li><a href="{% url 'professor:get_cal_courses' %}">My Calendar Courses</a></li>
+				{% endif %}
 			{% endif %}
 			<li><a href="{% url 'accounts:myprofile' %}">My Account</a></li>
-			{% if professor %}
-				<li><a href="{% url 'professor:get_cal_courses' %}">My Calendar Courses</a></li>
-			{% endif %}
 		</ul>
 	</nav>
 	

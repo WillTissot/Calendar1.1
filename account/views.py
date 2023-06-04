@@ -23,15 +23,19 @@ class SignInView(View):
             username = forms.cleaned_data["username"]
             password = forms.cleaned_data["password"]
             user = authenticate(request, username=username, password=password)
-            print(user)
             if user:
                 login(request, user)
                 if user.is_superuser:
                     return redirect("event:adminpage")
                 else:
                     return redirect("event:dashboard")
+            else:
+                message = "Invalid username/password or you account is not authenticated yet!"
                 
-        context = {"form": forms}
+        context = {
+            'form' : forms,
+            'message' : message
+            }
         return render(request, self.template_name, context)
     
 def student_signup(request):

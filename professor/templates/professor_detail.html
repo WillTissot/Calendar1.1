@@ -7,7 +7,13 @@
   <h1>Professor Detail</h1>
   <p><strong>Name:</strong> {{ professor.user.get_full_name }}</p>
   <p><strong>Department:</strong> {{ professor.department.name }}</p>
-  <a href="{% url 'professor:professor_list' %}" class="btn btn-secondary">Back</a>
+  {% if user.is_superuser %}
+    <a href="{% url 'professor:professor_list' %}" class="btn btn-secondary">Back</a>
+  {% elif user.is_active %}
+    <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
+  {% else %}
+    <a href="{% url 'event:homepage' %}" class="btn btn-secondary">Back</a>
+  {% endif %}
 
 </body>
 </html>

@@ -21,7 +21,7 @@ def event_list(request):
         events = []
     return render(request, 'my_event_list.html', {'events': events})
 
-@user_passes_test(lambda u: u.is_active)
+@login_required
 def dashboard(request):
     user= request.user
 

@@ -14,5 +14,10 @@
       <input type="submit" value="Sign In">
     </form>
     <a href="{% url 'event:homepage' %}" class="btn btn-secondary">Back</a>
+    {% if message %}
+      <ul class="messages">
+        <li>{{message}}</li>
+      </ul>
+    {% endif %}
   </body>
 </html>
