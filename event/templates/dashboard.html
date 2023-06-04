@@ -18,8 +18,8 @@
 				<li><a href="{% url 'student:get_enrolled_cal_courses' %}">See Enrolled Cal Courses</a></li>
 			{% endif %}
 			<li><a href="">See My Profile</a></li>
-			{% if student %}
-				<li><a href="{% url 'student:update_calendar' %}">Update My Calendar</a></li>
+			{% if professor %}
+				<li><a href="{% url 'professor:get_cal_courses' %}">My Calendar Courses</a></li>
 			{% endif %}
 		</ul>
 	</nav>

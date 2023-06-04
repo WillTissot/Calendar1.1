@@ -1,4 +1,5 @@
 {% load static %}
+{% load myfilters %}
 
 <!DOCTYPE html>
 <html>
@@ -34,20 +35,31 @@
                     <td>{{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</td>
                     <td>{{ event.calendarCourse.course.title }}<td>
                     <td>{{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</td>
-                    <td>{{ event.calendarCourse.room_number }}</td>
-                    <td>{{ event.date }}</td>
-                    <td>{{ event.calendarCourse.start_time }}</td>
-                    <td>{{ event.calendarCourse.end_time }}</td>
+                    {% with recentChange=event|filter_changes %}
+                    {% if recentChange %}
+                        <td>{{ recentChange.room_number }}</td>
+                        <td>{{ recentChange.date }}</td>
+                        <td>{{ recentChange.start_time }}</td>
+                        <td>{{ recentChange.end_time }}</td>
+                        <td>{{ recentChange.is_online }}</td>
+                    {% else %}
+                        <td>{{ event.calendarCourse.room_number }}</td>
+                        <td>{{ event.date }}</td>
+                        <td>{{ event.calendarCourse.start_time }}</td>
+                        <td>{{ event.calendarCourse.end_time }}</td>
+                        <td>{{ event.calendarCourse.is_online }}</td>
+                        <td></td>
+                    {% endif %}
                     <td>{{ event.calendarCourse.is_active }}</td>
                     <td>{{ event.calendarCourse.is_deleted }}</td>
-                    <td>{{ event.calendarCourse.is_online }}</td>
                     <td>{{ event.created_at }}</td>
                     <td>{{ event.updated_at }}</td>
+                {% endwith %}
                     <td>
                         <a href="{% url 'event:event_detail' ev_id=event.pk %}">View</a>
                         <a href="{% url 'event:event_update' ev_id=event.pk %}">Edit</a>
                         <a href="{% url 'event:event_delete' ev_id=event.pk %}">Delete</a>
-                      </td>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

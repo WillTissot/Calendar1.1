@@ -104,4 +104,12 @@ def request_event_change(request, ev_id):
         }
         return render(request, 'calendarcourse_update.html', context)
 
+def Get_Cal_Courses(request):
+    professor = request.user.professor
+    calCourses = CalendarCourse.objects.filter(course__professor=professor)
+    context = {
+        'calendarCourses' : calCourses
+    }
+
+    return render(request, 'calendarCourse_list.html', context)
         

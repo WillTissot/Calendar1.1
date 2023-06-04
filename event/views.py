@@ -16,7 +16,7 @@ from django import template
 def event_list(request):
     user= request.user
     if hasattr(user, 'student'):
-        events = Event.objects.filter(calendarCourse__enrolledstudentsoncalendarcourse__student=user.student).distinct()
+        events = Event.objects.filter(calendarCourse__enrolledstudentsoncalendarcourse__student=user.student)
     elif hasattr(user, 'professor'):
         events = Event.objects.filter(calendarCourse__course__professor__user_id=user.id)
     else:
