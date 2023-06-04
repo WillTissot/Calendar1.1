@@ -11,8 +11,6 @@
     <button type="submit">Submit</button>
   </form>
   
-  {% if request.META.HTTP_REFERER %}
-  <a href="{{ request.META.HTTP_REFERER }}">Back</a>
-{% endif %}
+  <a href="{% url 'course:calendarcourse_list' %}" class="btn btn-secondary">Back</a>
 </body>
 </html>

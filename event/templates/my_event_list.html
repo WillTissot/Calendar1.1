@@ -52,15 +52,16 @@
                     {% if user.is_superuser %}
                         <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes To Approve</button></td>
                     {% endif %}
-                    {% if event.changes.all %}
-                        <p>change</p>
-                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
+    {% if user.is_superuser %}
+        <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+    {% else %}
+        <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
+    {% endif %}
     {% if user.is_authenticated %}
         <a href="{% url 'accounts:logout' %}">Logout</a>
     {% endif %}

@@ -30,10 +30,7 @@
             </tr>
             {% endfor %}
         </tbody>
-
-
-        {% if request.META.HTTP_REFERER %}
-            <a href="{{ request.META.HTTP_REFERER }}">Back</a>
-        {% endif %}
     </table>
+    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'course:course_create' %}">Create New Course</a>
 </body>

@@ -31,9 +31,8 @@
       {% endfor %}
     </tbody>
   </table>
-  {% if request.META.HTTP_REFERER %}
-  <a href="{{ request.META.HTTP_REFERER }}">Back</a>
-{% endif %}
+  <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+  <a href="{% url 'professor:professor_create' %}">Create New Professor</a>
 </body>
 </html>
 

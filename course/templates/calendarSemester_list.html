@@ -31,5 +31,7 @@
             {% endfor %}
         </tbody>
     </table>
+    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'course:calendarSemester_create' %}">Create New Calendar Semester</a>
 </body>
 </html>

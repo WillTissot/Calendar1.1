@@ -18,5 +18,6 @@
     <p>Is Active: {% if calendarCourse.is_active %}Yes{% else %}No{% endif %}</p>
     <p>Is Online: {% if calendarCourse.is_online %}Yes{% else %}No{% endif %}</p>
     <p>Is Deleted: {% if calendarCourse.is_deleted %}Yes{% else %}No{% endif %}</p>
+    <a href="{% url 'course:calendarcourse_list' %}" class="btn btn-secondary">Back</a>
 </body>
 </html>

@@ -58,9 +58,7 @@
         <p>This is the pop-up content.</p>
     </div>
 
-    {% if request.META.HTTP_REFERER %}
-        <a href="{{ request.META.HTTP_REFERER }}">Back</a>
-    {% endif %}
+    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
     {% if user.is_authenticated %}
         <a href="{% url 'accounts:logout' %}">Logout</a>
     {% endif %}
