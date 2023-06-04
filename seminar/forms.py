@@ -1,5 +1,5 @@
 from django import forms
-from .models import Seminar
+from .models import Seminar, CalendarSeminar
 
 
 class SeminarForm(forms.ModelForm):
@@ -12,3 +12,13 @@ class SeminarForm(forms.ModelForm):
     class Meta:
         model = Seminar
         fields = ['title', 'is_online', 'url', 'speaker_fullname', 'location']
+
+class CalendarSeminarForm(forms.ModelForm):
+    seminar = forms.ModelChoiceField(queryset=Seminar.objects.all())
+    start_time = forms.TimeInput()
+    end_time = forms.TimeInput()
+    date = forms.DateInput()
+
+    class Meta:
+        model = CalendarSeminar
+        fields = ['seminar', 'start_time', 'end_time', 'date']

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Calendar Seminar</title>
+</head>
+<body>
+  <h1>Edit Calendar Seminar</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+</form>
+<a href="{% url 'seminar:calendarseminar_list' %}" class="btn btn-secondary">Back</a>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calendar Seminars List</title>
+</head>
+<body>
+  <h1>Calendar Seminars</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>URL</th>
+        <th>Speaker</th>
+        <th>Location</th>
+        <th>Online</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for calendarseminar in calendarseminars %}
+      <tr>
+        <td>{{ calendarseminar.seminar.title }}</td>
+        <td>{{ calendarseminar.seminar.url }}</td>
+        <td>{{ calendarseminar.seminar.speaker_fullname }}</td>
+        <td>{{ calendarseminar.seminar.location }}</td>
+        <td>{% if calendarseminar.seminar.is_online %}Yes{% else %}No{% endif %}</td>
+        <td>{{ calendarseminar.date }}</td>
+        <td>{{ calendarseminar.start_time }}</td>
+        <td>{{ calendarseminar.end_time }}</td>
+        <td>
+            <a href="{% url 'seminar:calendarseminar_detail' calendarseminar.id %}">View</a>
+            <a href="{% url 'seminar:calendarseminar_update' calendarseminar.id %}">Edit</a>
+            <a href="{% url 'seminar:calendarseminar_delete' calendarseminar.id %}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  
+  {% if user.is_superuser %}
+    <a href="{% url 'seminar:calendarseminar_create' %}">Add New Calendar Seminar</a>
+    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+  {% endif %}
+
+</body>
+</html>

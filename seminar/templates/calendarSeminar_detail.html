@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seminar Calendar Details</title>
+</head>
+<body>
+  <h1>Seminar Calendar Detail</h1>
+  <p><strong>Title:</strong> {{ calendarseminar.seminar.title }}</p>
+  <p><strong>Url:</strong> {{ calendarseminar.seminar.url }}</p>
+  <p><strong>Speaker:</strong> {{ calendarseminar.seminar.speaker_fullname }}</p>
+  <p><strong>Location:</strong> {{ calendarseminar.seminar.location }}</p>
+  <p>Online: {% if calendarseminar.seminar.is_online %}Yes{% else %}No{% endif %}</p>
+  <p><strong>Date:</strong> {{ calendarseminar.date }}</p>
+  <p><strong>StartTime:</strong> {{ calendarseminar.start_time }}</p>
+  <p><strong>EndTime:</strong> {{ calendarseminar.end_time }}</p>
+
+  <a href="{% url 'seminar:calendarseminar_update' calendarseminar.id %}">Edit</a>
+  <a href="{% url 'seminar:calendarseminar_list' %}" class="btn btn-secondary">Back</a>
+
+</body>
+</html>
