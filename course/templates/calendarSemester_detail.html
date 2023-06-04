@@ -9,5 +9,6 @@
     <h2>Semester: {{ calendarSemester.semester.term }} {{ calendarSemester.semester.year }}</h2>
     <p>Start Date: {{ calendarSemester.startDate }}</p>
     <p>End Date: {{ calendarSemester.endDate }}</p>
+    <a href="{% url 'course:calendarSemester_list' %}" class="btn btn-secondary">Back</a>
 </body>
 </html>

@@ -14,9 +14,7 @@
   <a href="{% url 'course:course_update' course.id %}">Edit</a>
     <a href="{% url 'course:course_create' %}">Create New Course</a>
 
-{% if request.META.HTTP_REFERER %}
-<a href="{{ request.META.HTTP_REFERER }}">Back</a>
-{% endif %}
+    <a href="{% url 'course:course_list' %}" class="btn btn-secondary">Back</a>
 
 </body>
 </html>
