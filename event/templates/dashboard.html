@@ -17,7 +17,7 @@
 				<li><a href="{% url 'student:enroll_to_courses' %}">Enroll to a Course</a></li>
 				<li><a href="{% url 'student:get_enrolled_cal_courses' %}">See Enrolled Cal Courses</a></li>
 			{% endif %}
-			<li><a href="">See My Profile</a></li>
+			<li><a href="{% url 'accounts:myprofile' %}">My Account</a></li>
 			{% if professor %}
 				<li><a href="{% url 'professor:get_cal_courses' %}">My Calendar Courses</a></li>
 			{% endif %}

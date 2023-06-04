@@ -10,7 +10,9 @@
     {{ form.as_p }}
     <button type="submit">Update</button>
 </form>
-<a href="{% url 'student:student_list' %}" class="btn btn-secondary">Back</a>
+{% if user.is_superuser %}
+  <a href="{% url 'student:student_list' %}" class="btn btn-secondary">Back</a>
+{% endif %}
 
 </body>
 </html>

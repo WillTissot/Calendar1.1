@@ -58,3 +58,11 @@ def professor_signup(request):
 def signout(request):
     logout(request)
     return redirect('event:homepage')
+
+@login_required
+def see_my_profile(request):
+    user = request.user
+    if hasattr(user, 'student'):
+        return redirect('student:student_detail', det_id=user.student.pk)
+    else:
+        return redirect('professor:professor_detail', prof_id=user.professor.pk)

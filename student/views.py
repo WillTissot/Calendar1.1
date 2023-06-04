@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from course.models import Department
-from .forms import StudentForm
+from .forms import StudentForm, StudentMyAccountForm
 from .models import Student, EnrolledStudentsOnCourse, EnrolledStudentsOnCalendarCourse
 from event.models import Event
 from course.models import Course, CalendarCourse
@@ -30,12 +30,18 @@ def student_update(request, up_id):
     student = get_object_or_404(Student, id=up_id)
 
     if request.method == 'POST':
-        form = StudentForm(request.POST, instance=student)
+        if request.user.is_superuser:
+            form = StudentForm(request.POST, instance=student)
+        else:
+            form = StudentMyAccountForm(request.POST, instance=student)
         if form.is_valid():
             form.save()
-            return redirect('student_detail', det_id=up_id)
+            return redirect('student:student_detail', det_id=up_id)
     else:
-        form = StudentForm(instance=student)
+        if request.user.is_superuser:
+            form = StudentForm(instance=student)
+        else:
+            form = StudentMyAccountForm(instance=student)
     return render(request, 'student_update.html', {'form': form})
 
 @user_passes_test(lambda u: u.is_superuser)
