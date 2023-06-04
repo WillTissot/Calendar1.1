@@ -6,6 +6,7 @@ from event.models import Event
 from course.models import Course, CalendarCourse
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 from datetime import date, timedelta, datetime
 
 
@@ -36,6 +37,7 @@ def student_update(request, up_id):
             form = StudentMyAccountForm(request.POST, instance=student)
         if form.is_valid():
             form.save()
+            update_session_auth_hash(request, request.user)
             return redirect('student:student_detail', det_id=up_id)
     else:
         if request.user.is_superuser:

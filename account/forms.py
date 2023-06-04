@@ -45,6 +45,7 @@ class ProfessorSignUpForm(forms.ModelForm):
             last_name=self.cleaned_data['last_name'],
             email=self.cleaned_data['email'],
             password=self.cleaned_data['password1'],
+            is_active = False
         )
         professor = Professor.objects.create(
             user=user,
@@ -87,6 +88,7 @@ class StudentSignUpForm(forms.ModelForm):
             last_name=self.cleaned_data['last_name'],
             email=self.cleaned_data['email'],
             password=self.cleaned_data['password1'],
+            is_active = False
         )
         student = Student.objects.create(
             user=user,

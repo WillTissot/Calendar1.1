@@ -8,9 +8,7 @@ from student.models import EnrolledStudentsOnCourse, EnrolledStudentsOnCalendarC
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Count
 from django import template
-
-
-
+from django.contrib.auth.models import User
 
 @login_required
 def event_list(request):
@@ -23,7 +21,7 @@ def event_list(request):
         events = []
     return render(request, 'my_event_list.html', {'events': events})
 
-@login_required
+@user_passes_test(lambda u: u.is_active)
 def dashboard(request):
     user= request.user
 
@@ -69,7 +67,7 @@ def get_students(request, ev_id):
     }
     return render(request, 'student_popup.html', context)
 
-#@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser)
 def get_changes(request, ev_id):
     event = get_object_or_404(Event, id=ev_id)
     context = {
@@ -190,3 +188,19 @@ def get_all_requests(request):
             'event' : event
         }
         return render(request, 'changes_popup.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def validate_user(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        user = get_object_or_404(User, id=user_id)
+        user.is_active = True
+        user.save()
+        return redirect('event:users_approve')
+    else:
+        users = User.objects.filter(is_active = False)
+        context = {
+            'users' : users
+        }
+        return render(request, 'users.html', context)

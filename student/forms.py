@@ -110,19 +110,18 @@ class StudentForm(SimpleStudentForm):
         
         return super().save(commit=commit)
 
-class StudentMyAccountForm(SimpleStudentForm):
+class StudentMyAccountForm(forms.ModelForm):
     username = forms.CharField(max_length=30)
     password1 = forms.CharField(widget=forms.PasswordInput, required=False)
     password2 = forms.CharField(widget=forms.PasswordInput, required=False)
 
+    class Meta:
+        model = Student
+        fields = ('username', 'password1')
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['department'].widget.attrs['disabled'] = True
-        self.fields['is_active'].widget.attrs['disabled'] = True
-        self.fields['date_of_birth'].widget.attrs['disabled'] = True
-        self.fields['first_name'].widget.attrs['disabled'] = True
-        self.fields['last_name'].widget.attrs['disabled'] = True
-        self.fields['email'].widget.attrs['disabled'] = True
+        self.initial['username'] = self.instance.user.username
         self.initial['password1'] = None
         self.initial['password2'] = None
 
@@ -137,16 +136,6 @@ class StudentMyAccountForm(SimpleStudentForm):
 
     def clean(self):
         cleaned_data = super().clean()
-
-        preserved_fields = ['department', 'is_active', 'date_of_birth', 'first_name', 'last_name', 'email']
-        
-        for field in preserved_fields:
-            if field in self.fields and field in self.initial:
-                if field == 'department':
-                    cleaned_data[field] = get_object_or_404(Department, id = self.initial[field])
-                else:
-                    cleaned_data[field] = self.initial[field]
-
 
         # Remove validation errors for specific fields
         if 'department' in self._errors:
@@ -166,11 +155,7 @@ class StudentMyAccountForm(SimpleStudentForm):
 
     def save(self, commit=True):
         password1 = self.cleaned_data['password1']
-        first_name = self.cleaned_data['first_name']
-        last_name = self.cleaned_data['last_name']
         username = self.cleaned_data['username']
-        email = self.cleaned_data['email']
-        is_active = self.cleaned_data['is_active']
 
         if not self.instance.pk:
             user = User.objects.create_user(
@@ -186,13 +171,8 @@ class StudentMyAccountForm(SimpleStudentForm):
             # Instance already exists, it's an update operation
             user = self.instance.user
             user.username = username
-            user.first_name = first_name
-            user.last_name = last_name
-            user.email = email
-            user.is_active = is_active
             if password1:
                 user.set_password(password1) 
             user.save()
 
-        
         return super().save(commit=commit)

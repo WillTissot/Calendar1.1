@@ -17,6 +17,7 @@
     <li><a href="{% url 'course:calendarcourse_list' %}">See All Calendar Courses</a></li>
     <li><a href="{% url 'event:sec_event_list' %}">See All Events</a></li>
     <li><a href="{% url 'event:get_all_requests' %}">See Change Events Request</a></li>
+    <li><a href="{% url 'event:users_approve' %}">Approve Users</a></li>
   </ul>
   {% if user.is_authenticated %}
     <a href="{% url 'accounts:logout' %}">Logout</a>
