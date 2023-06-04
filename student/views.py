@@ -87,7 +87,7 @@ def student_delete(request, del_id):
     return render(request, 'student_delete.html', context)
 
 
-@login_required
+@user_passes_test(lambda u: u.is_active)
 def enroll_To_Courses(request):
     user= request.user
     _method = request.POST.get('_method')
@@ -122,50 +122,51 @@ def enroll_To_Courses(request):
 
         return render(request, 'enroll_to_course.html', context)
 
-def update_calendar(request):
-    #deleteEvents(request)
-    createEvents(request)
+# @user_passes_test(lambda u: u.is_active)
+# def update_calendar(request):
+#     #deleteEvents(request)
+#     createEvents(request)
 
-def deleteEvents(request):
-    user= request.user
-    events = Event.objects.filter(calendarCourse__course__enrolledstudentsoncourse__student__user_id=user.id)
-    events.prefetch_related('calendarCourse__course__enrolledstudentsoncourse__student').delete()
+# def deleteEvents(request):
+#     user= request.user
+#     events = Event.objects.filter(calendarCourse__course__enrolledstudentsoncourse__student__user_id=user.id)
+#     events.prefetch_related('calendarCourse__course__enrolledstudentsoncourse__student').delete()
 
-@login_required
-def createEvents(request):
-    student = request.user.student
-    enrolledCalCourse = EnrolledStudentsOnCalendarCourse.objects.filter(student=student, onCalendar=False)
-    calendar_courses = CalendarCourse.objects.filter(id__in=[enrolled.calendarCourse_id for enrolled in enrolledCalCourse])
+# @user_passes_test(lambda u: u.is_active)
+# def createEvents(request):
+#     student = request.user.student
+#     enrolledCalCourse = EnrolledStudentsOnCalendarCourse.objects.filter(student=student, onCalendar=False)
+#     calendar_courses = CalendarCourse.objects.filter(id__in=[enrolled.calendarCourse_id for enrolled in enrolledCalCourse])
 
-    for calCourse in calendar_courses:
-        calSemStartDate = calCourse.calendarSemester.startDate
-        day = calCourse.day
-        calSemEndDate = calCourse.calendarSemester.endDate
-        currentDate = datetime.now().date()
+#     for calCourse in calendar_courses:
+#         calSemStartDate = calCourse.calendarSemester.startDate
+#         day = calCourse.day
+#         calSemEndDate = calCourse.calendarSemester.endDate
+#         currentDate = datetime.now().date()
 
-        if currentDate < calSemStartDate:
-            x = calSemStartDate.isoweekday()
-            timed = timedelta(days=(day - calSemStartDate.isoweekday() + 7) % 7)
-            nextEventsStartDate = calSemStartDate + timed
-        else:
-            nextEventsStartDate = currentDate + timedelta(days=(day - currentDate.isoweekday() + 7) % 7)
+#         if currentDate < calSemStartDate:
+#             x = calSemStartDate.isoweekday()
+#             timed = timedelta(days=(day - calSemStartDate.isoweekday() + 7) % 7)
+#             nextEventsStartDate = calSemStartDate + timed
+#         else:
+#             nextEventsStartDate = currentDate + timedelta(days=(day - currentDate.isoweekday() + 7) % 7)
 
-        while nextEventsStartDate <= calSemEndDate:
-            newEvent = Event(
-            calendarCourse=calCourse,
-            created_at= datetime.now(),
-            date = nextEventsStartDate
-            )
-            newEvent.save()
-            nextEventsStartDate += timedelta(days=7)
+#         while nextEventsStartDate <= calSemEndDate:
+#             newEvent = Event(
+#             calendarCourse=calCourse,
+#             created_at= datetime.now(),
+#             date = nextEventsStartDate
+#             )
+#             newEvent.save()
+#             nextEventsStartDate += timedelta(days=7)
 
-        enrolledCalCourse = get_object_or_404(EnrolledStudentsOnCalendarCourse, calendarCourse = calCourse)
-        enrolledCalCourse.onCalendar = True
-        enrolledCalCourse.save()
+#         enrolledCalCourse = get_object_or_404(EnrolledStudentsOnCalendarCourse, calendarCourse = calCourse)
+#         enrolledCalCourse.onCalendar = True
+#         enrolledCalCourse.save()
 
-    return redirect('event:dashboard') 
+#     return redirect('event:dashboard') 
 
-@login_required
+@user_passes_test(lambda u: u.is_active)
 def Add_Course_To_Calendar(request):
     _method = request.POST.get('_method')
     student = request.user.student
@@ -190,7 +191,7 @@ def Add_Course_To_Calendar(request):
         return render(request, 'calendarCourseListStudent.html', context)
 
 
-@login_required
+@user_passes_test(lambda u: u.is_active)
 def Get_Enrolled_Cal_Courses(request):
     student = request.user.student
     enrolledCalCourses = EnrolledStudentsOnCalendarCourse.objects.filter(student=student)

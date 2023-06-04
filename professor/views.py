@@ -5,9 +5,12 @@ from professor.forms import ProfessorForm
 from event.models import Event, Change
 from professor.models import Professor
 from datetime import datetime
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+@user_passes_test(lambda u: u.is_superuser)
 def professor_list(request):
     professors = Professor.objects.all()
     context = {
@@ -34,6 +37,7 @@ def professor_update(request, prof_id):
         form = ProfessorForm(instance=professor)
     return render(request, 'professor_update.html', {'form': form})
 
+@user_passes_test(lambda u: u.is_superuser)
 def professor_delete(request, prof_id):
     professor = get_object_or_404(Professor, id=prof_id)
 
@@ -46,7 +50,7 @@ def professor_delete(request, prof_id):
     }
     return render(request, 'professor_delete.html', context)
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def professor_create(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request
@@ -73,6 +77,7 @@ def professor_create(request):
             }
     return render(request, 'professor_create.html', context)
 
+@user_passes_test(lambda u: u.is_active)
 def request_event_change(request, ev_id):
     event = get_object_or_404(Event, id=ev_id)
     calCouId = event.calendarCourse.id

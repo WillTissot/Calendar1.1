@@ -42,7 +42,12 @@ def student_signup(request):
             return redirect('student:student_detail', det_id=student.pk)
     else:
         form = StudentSignUpForm()
-    return render(request, 'signup.html', {'form': form})
+
+    context = {
+        'form' : form,
+        'is_stud' : True
+    }
+    return render(request, 'signup.html', context)
 
 def professor_signup(request):
     if request.method == 'POST':
@@ -51,8 +56,13 @@ def professor_signup(request):
             professor = form.save()
             return redirect('professor:professor_detail', prof_id=professor.pk)
     else:
-        form = StudentSignUpForm()
-    return render(request, 'signup.html', {'form': form})
+        form = ProfessorSignUpForm()
+
+    context = {
+        'form' : form,
+        'is_prod' : True
+    }
+    return render(request, 'signup.html', context)
 
 @login_required
 def signout(request):

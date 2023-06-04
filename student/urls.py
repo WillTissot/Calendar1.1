@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import student_detail, student_update, student_create, student_list, student_delete, enroll_To_Courses, update_calendar,Add_Course_To_Calendar, Get_Enrolled_Cal_Courses
+from .views import student_detail, student_update, student_create, student_list, student_delete, enroll_To_Courses,Add_Course_To_Calendar, Get_Enrolled_Cal_Courses
 
 
 app_name = "student"
@@ -11,7 +11,6 @@ urlpatterns = [
     path('students/', student_list, name='student_list'),
     path('student/delete/<int:del_id>/', student_delete, name='student_delete'),
     path('student/enrolltocourses', enroll_To_Courses, name='enroll_to_courses'),
-    path('student/update', update_calendar, name='update_calendar'),
     path('student/add/to/calendar', Add_Course_To_Calendar, name='add_to_calendar'),
     path('student/get/enrolled/calendarcourses', Get_Enrolled_Cal_Courses, name='get_enrolled_cal_courses'),
 ]

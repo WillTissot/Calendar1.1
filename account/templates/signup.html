@@ -1,40 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Student/Professor Sign Up</title>
+    <title>Create User</title>
 </head>
 <body>
-  <h2>Student/Professor Sign Up</h2>
+  {% if is_stud %}
+    <h1>Signing up as student</h1>
+  {% else %}
+    <h1>Signing up as professor</h1>
+  {% endif %}
   <form method="post">
     {% csrf_token %}
-    <label for="{{ form.username.id_for_label }}">First name:</label>
-    {{ form.first_name }}
-    <br>
-    <label for="{{ form.username.id_for_label }}">Last name:</label>
-    {{ form.last_name }}
-    <br>
-    <label for="{{ form.username.id_for_label }}">Username:</label>
-    {{ form.username }}
-    <br>
-    <label for="{{ form.password1.id_for_label }}">Password:</label>
-    {{ form.password1 }}
-    <br>
-    <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
-    {{ form.password2 }}
-    <br>
-    <label for="{{ form.email.id_for_label }}">Email:</label>
-    {{ form.email }}
-    <br>
-    <label for="{{ form.date_of_birth.id_for_label }}">Date of Birth:</label>
-    {{ form.date_of_birth }}
-    <br>
-    <label for="{{ form.department.id_for_label }}">Department:</label>
-    {{ form.department }}
-    <br>
-    <button type="submit">Sign Up</button>
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
   </form>
-
   <a href="{% url 'event:homepage' %}" class="btn btn-secondary">Back</a>
 </body>
 </html>
