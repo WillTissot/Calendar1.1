@@ -1,0 +1,36 @@
+[
+    {
+      "model": "seminar.seminar",
+      "pk": 1,
+      "fields": {
+        "title": "Introduction to Python",
+        "is_online": true,
+        "url": "https://example.com/intro-to-python",
+        "speaker_fullname": "John Doe",
+        "location": null
+      }
+    },
+    {
+      "model": "seminar.seminar",
+      "pk": 2,
+      "fields": {
+        "title": "Web Development Workshop",
+        "is_online": false,
+        "url": null,
+        "speaker_fullname": "Jane Smith",
+        "location": "Conference Room A"
+      }
+    },
+    {
+      "model": "seminar.seminar",
+      "pk": 3,
+      "fields": {
+        "title": "Data Science Conference",
+        "is_online": true,
+        "url": "https://example.com/data-science-conference",
+        "speaker_fullname": "Alex Johnson",
+        "location": null
+      }
+    }
+  ]
+  

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Delete Seminar</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Delete Seminar</h1>
+    <p>Are you sure you want to delete {{ course.title }}?</p>
+    <form action="{% url 'seminar:seminar_delete' seminar_id=seminar.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Delete" class="btn btn-danger">
+      <a href="{% url 'seminar:seminar_list' %}" class="btn btn-secondary">Back</a>
+    </form>
+  </div>
+</body>
+</html>

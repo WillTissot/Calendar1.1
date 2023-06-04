@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Seminars</title>
+</head>
+<body>
+  <h1>All Seminars</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>URL</th>
+        <th>Speaker</th>
+        <th>Location</th>
+        <th>Online</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for seminar in seminars %}
+      <tr>
+        <td>{{ seminar.title }}</td>
+        <td>{{ seminar.url }}</td>
+        <td>{{ seminar.speaker_fullname }}</td>
+        <td>{{ seminar.location }}</td>
+        <td>{% if seminar.is_online %}Yes{% else %}No{% endif %}</td>
+        <td>
+          <a href="{% url 'seminar:seminar_detail' seminar.id %}">View</a>
+          <a href="{% url 'seminar:seminar_update' seminar.id %}">Edit</a>
+          <a href="{% url 'seminar:seminar_delete' seminar.id %}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if user.is_superuser %}
+    <a href="{% url 'seminar:seminar_create' %}">Create Seminar</a>
+    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+  {% endif %}
+
+</body>
+</html>

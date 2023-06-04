@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seminar Details</title>
+</head>
+<body>
+  <h1>Seminar Detail</h1>
+  <p><strong>Title:</strong> {{ seminar.title }}</p>
+  <p><strong>Url:</strong> {{ seminar.url }}</p>
+  <p><strong>Speaker:</strong> {{ seminar.speaker_fullname }}</p>
+  <p><strong>Location:</strong> {{ seminar.location }}</p>
+  <p>Online: {% if seminar.is_online %}Yes{% else %}No{% endif %}</p>
+
+  <a href="{% url 'seminar:seminar_update' seminar.id %}">Edit</a>
+  <a href="{% url 'seminar:seminar_list' %}" class="btn btn-secondary">Back</a>
+
+</body>
+</html>

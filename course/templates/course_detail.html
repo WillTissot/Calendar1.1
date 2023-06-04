@@ -12,9 +12,7 @@
   <p><strong>Credits:</strong> {{ course.credits }}</p>
 
   <a href="{% url 'course:course_update' course.id %}">Edit</a>
-    <a href="{% url 'course:course_create' %}">Create New Course</a>
-
-    <a href="{% url 'course:course_list' %}" class="btn btn-secondary">Back</a>
+  <a href="{% url 'course:course_list' %}" class="btn btn-secondary">Back</a>
 
 </body>
 </html>
