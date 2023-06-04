@@ -123,6 +123,7 @@ def deleteEvents(request):
     events = Event.objects.filter(calendarCourse__course__enrolledstudentsoncourse__student__user_id=user.id)
     events.prefetch_related('calendarCourse__course__enrolledstudentsoncourse__student').delete()
 
+@login_required
 def createEvents(request):
     student = request.user.student
     enrolledCalCourse = EnrolledStudentsOnCalendarCourse.objects.filter(student=student, onCalendar=False)
@@ -153,7 +154,9 @@ def createEvents(request):
         enrolledCalCourse = get_object_or_404(EnrolledStudentsOnCalendarCourse, calendarCourse = calCourse)
         enrolledCalCourse.onCalendar = True
         enrolledCalCourse.save()
-        
+
+    return redirect('event:dashboard') 
+
 @login_required
 def Add_Course_To_Calendar(request):
     _method = request.POST.get('_method')
@@ -177,7 +180,20 @@ def Add_Course_To_Calendar(request):
             'calendarCourses' : calendarCourses
         }
         return render(request, 'calendarCourseListStudent.html', context)
-    
+
+
+@login_required
+def Get_Enrolled_Cal_Courses(request):
+    student = request.user.student
+    enrolledCalCourses = EnrolledStudentsOnCalendarCourse.objects.filter(student=student)
+    enrolledCalCourseIds = [calCourse.calendarCourse_id for calCourse in enrolledCalCourses]
+    calendarCoursesAll = CalendarCourse.objects.filter(id__in=enrolledCalCourseIds)
+
+    context = {
+        'calendarCourses': calendarCoursesAll
+    }
+
+    return render(request, 'calendarCourse_list.html', context)
     
     
 

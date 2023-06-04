@@ -19,9 +19,11 @@
                 <th>Room Number</th>
                 <th>Start Time</th>
                 <th>End Time</th>
-                <th>Is Active</th>
                 <th>Is Online</th>
-                <th>Is Deleted</th>
+                {% if user.is_superuser %}
+                    <th>Is Active</th>
+                    <th>Is Deleted</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -36,20 +38,26 @@
                 <td>{{ calendarCourse.start_time }}</td>
                 <td>{{ calendarCourse.end_time }}</td>
                 <td>{{ calendarCourse.get_day_display }}</td>
-                <td>{% if calendarCourse.is_active %}Yes{% else %}No{% endif %}</td>
                 <td>{% if calendarCourse.is_online %}Yes{% else %}No{% endif %}</td>
-                <td>{% if calendarCourse.is_deleted %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <a href="{% url 'course:calendarcourse_detail' cal_id=calendarCourse.pk %}">View</a>
-                    <a href="{% url 'course:calendarcourse_update' cal_id=calendarCourse.pk %}">Edit</a>
-                    <a href="{% url 'course:calendarcourse_delete' cal_id=calendarCourse.pk %}">Delete</a>
-                    <a href="{% url 'event:create_calendar_event' cal_id=calendarCourse.pk %}">Create Events</a>
-                </td>
+                {% if user.is_superuser %}
+                    <td>{% if calendarCourse.is_active %}Yes{% else %}No{% endif %}</td>
+                    <td>{% if calendarCourse.is_deleted %}Yes{% else %}No{% endif %}</td>
+                    <td>
+                        <a href="{% url 'course:calendarcourse_detail' cal_id=calendarCourse.pk %}">View</a>
+                        <a href="{% url 'course:calendarcourse_update' cal_id=calendarCourse.pk %}">Edit</a>
+                        <a href="{% url 'course:calendarcourse_delete' cal_id=calendarCourse.pk %}">Delete</a>
+                        <a href="{% url 'event:create_calendar_event' cal_id=calendarCourse.pk %}">Create Events</a>
+                    </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
-    <a href="{% url 'course:calendarcourse_create' %}" class="btn btn-secondary">Create New CalendaCourse</a>
+    {% if user.is_superuser %}
+        <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+        <a href="{% url 'course:calendarcourse_create' %}" class="btn btn-secondary">Create New CalendaCourse</a>
+    {% else %}
+        <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
+    {% endif %}
 </body>
 </html>
