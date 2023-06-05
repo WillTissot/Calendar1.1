@@ -10,6 +10,7 @@
 </head>
 <body>
     <h1>All Admin Events</h1>
+    <h2>Calendar Courses</h2>
     <table>
         <thead>
             <tr>
@@ -29,9 +30,8 @@
             </tr>
         </thead>
         <tbody>
-            {% for event in events %}
+            {% for event in calCourseEvents %}
                 <tr>
-                    <td><button class="btn-show-students" data-ev-id="{{ event.pk }}">Show Enrolled Students</button></td>
                     <td>{{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</td>
                     <td>{{ event.calendarCourse.course.title }}<td>
                     <td>{{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</td>
@@ -55,6 +55,7 @@
                     <td>{{ event.created_at }}</td>
                     <td>{{ event.updated_at }}</td>
                 {% endwith %}
+                    <td><button class="btn-show-students" data-ev-id="{{ event.pk }}">Show Enrolled Students</button></td>
                     <td>
                         <a href="{% url 'event:event_detail' ev_id=event.pk %}">View</a>
                         <a href="{% url 'event:event_update' ev_id=event.pk %}">Edit</a>
@@ -65,6 +66,56 @@
         </tbody>
     </table>
 
+
+    <h2>Calendar Courses</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Url</th>
+                <th>Speaker</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Is Online</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in calSeminarEvents %}
+                <tr>
+                    <td>{{ event.calendarSeminar.seminar.title }}</td>
+                    <td>{{ event.calendarSeminar.seminar.url }}<td>
+                    <td>{{ event.calendarSeminar.seminar.speaker_fullname }}</td>
+                    <td>{{ event.calendarSeminar.seminar.location }}</td>
+                    {% with recentChange=event|filter_changes %}
+                        {% if recentChange %}
+                            <td>{{ recentChange.date }}</td>
+                            <td>{{ recentChange.start_time }}</td>
+                            <td>{{ recentChange.end_time }}</td>
+                            <td>{{ recentChange.is_online }}</td>
+                        {% else %}
+                            <td>{{ event.calendarSeminar.seminar.date }}</td>
+                            <td>{{ event.calendarCourse.start_time }}</td>
+                            <td>{{ event.calendarCourse.end_time }}</td>
+                            <td>{{ event.calendarSeminar.seminar.is_online }}</td>
+                            <td></td>
+                        {% endif %}
+                            <td>{{ event.created_at }}</td>
+                            <td>{{ event.updated_at }}</td>
+                    {% endwith %}
+                    <td>
+                        <a href="{% url 'event:event_detail' ev_id=event.pk %}">View</a>
+                        <a href="{% url 'event:event_update' ev_id=event.pk %}">Edit</a>
+                        <a href="{% url 'event:event_delete' ev_id=event.pk %}">Delete</a>
+                    </td>
+                    <td><button class="btn-show-students" data-ev-id="{{ event.pk }}" data-ev-kind="calendarseminar">Show Enrolled Students</button></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <div id="popup-container">
         <p>This is the pop-up content.</p>
@@ -86,19 +137,27 @@
         showStudentsButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const evId = button.dataset.evId;
-                searchStudents(evId);
+                const evKind = button.dataset.evKind
+                searchStudents(evId, evKind);
             });
         });
     }
 
-    function searchStudents(evId) {
+    function searchStudents(evId, evKind) {
         let temp = -1;
         if (evId) {
             temp = evId;  // Use placeholder value if evId is empty
         } 
         console.log(evId);
-        const url = `/secretary/events/${temp}/get/students/`;
-        const windowFeatures = 'width=600,height=400,resizable,scrollbars';
-        window.open(url, '_blank', windowFeatures);
+        if (evKind === 'calendarseminar'){
+            const url = `/event/${temp}/calendar/seminar/get/students/`;
+            const windowFeatures = 'width=600,height=400,resizable,scrollbars';
+            window.open(url, '_blank', windowFeatures);
+        }
+        else{
+            const url = `/secretary/events/${temp}/get/students/`;
+            const windowFeatures = 'width=600,height=400,resizable,scrollbars';
+            window.open(url, '_blank', windowFeatures);
+        }
     }
 </script>

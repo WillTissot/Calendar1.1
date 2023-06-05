@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
 from .forms import SeminarForm, CalendarSeminarForm
 from .models import Seminar, CalendarSeminar, EnrolledStudentToCalendarSeminars
+from event.models import Event
+from datetime import datetime
+from student.models import Student
 
 
 # Seminar CRUD.
@@ -152,6 +155,37 @@ def enroll_to_calendar_seminar(request):
         'calendarseminars' : studentsCalSeminars
     }
     return render(request, 'attending_seminars.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def create_calendar_event(request, calSeminar_id):
+    calendarSeminar = get_object_or_404(CalendarSeminar, id = calSeminar_id)
+    newEvent = Event(
+        calendarSeminar=calendarSeminar,
+        created_at= datetime.now(),
+        date=calendarSeminar.date
+    )
+    newEvent.save()
+    return redirect('seminar:calendarseminar_list')
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def get_students(request, ev_id):
+    event = get_object_or_404(Event, id=ev_id)
+    calSeminar = event.calendarSeminar
+    enrollments = EnrolledStudentToCalendarSeminars.objects.filter(calendarSeminar=calSeminar)
+    studentIds = []
+    for enrollment in enrollments:
+        students = enrollment.students.all()
+        for student in students:
+            studentIds.append(student.id)
+
+    students = Student.objects.filter(id__in=studentIds)
+
+    context = {
+        'students': students,
+        'event' : event
+    }
+    return render(request, 'student_popup.html', context)
 
 
 

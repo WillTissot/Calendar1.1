@@ -47,9 +47,11 @@ def adminpage(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def sec_event_list(request):
-    events = Event.objects.all()
+    calCourseEvents = Event.objects.filter(calendarSeminar__isnull=True)
+    calSeminarEvents = Event.objects.filter(calendarCourse__isnull=True)
     context = {
-        'events': events
+        'calCourseEvents': calCourseEvents,
+        'calSeminarEvents' : calSeminarEvents
     }
     return render(request, 'event_list.html', context)
 
@@ -161,7 +163,7 @@ def create_calendar_event(request, cal_id):
         newEvent.save()
         nextEventsStartDate += timedelta(days=7)
     
-    redirect('course:calendarcourse_list')
+    return redirect('course:calendarcourse_list')
 
 @user_passes_test(lambda u: u.is_superuser)
 def get_all_requests(request):
