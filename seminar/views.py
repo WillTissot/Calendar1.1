@@ -159,12 +159,15 @@ def enroll_to_calendar_seminar(request):
 @user_passes_test(lambda u: u.is_superuser)
 def create_calendar_event(request, calSeminar_id):
     calendarSeminar = get_object_or_404(CalendarSeminar, id = calSeminar_id)
-    newEvent = Event(
-        calendarSeminar=calendarSeminar,
-        created_at= datetime.now(),
-        date=calendarSeminar.date
-    )
-    newEvent.save()
+    if not calendarSeminar.onCalendar:
+        newEvent = Event(
+            calendarSeminar=calendarSeminar,
+            created_at= datetime.now(),
+            date=calendarSeminar.date
+        )
+        newEvent.save()
+        calendarSeminar.onCalendar = True
+        calendarSeminar.save()
     return redirect('seminar:calendarseminar_list')
 
 

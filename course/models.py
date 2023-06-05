@@ -59,7 +59,7 @@ class CalendarCourse(models.Model):
     is_active = models.BooleanField(default=True)
     is_deleted = models.BooleanField(default=False)
     is_online = models.BooleanField(default=False)
-
+    onCalendar = models.BooleanField(null=True)
 
 
 

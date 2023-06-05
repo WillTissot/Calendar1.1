@@ -143,25 +143,29 @@ def event_create(request):
 @user_passes_test(lambda u: u.is_superuser)
 def create_calendar_event(request, cal_id):
     calCourse = get_object_or_404(CalendarCourse, id = cal_id )
-    calSemStartDate = calCourse.calendarSemester.startDate
-    day = calCourse.day
-    calSemEndDate = calCourse.calendarSemester.endDate
-    currentDate = datetime.now().date()
+    if not calCourse.onCalendar:
+        calSemStartDate = calCourse.calendarSemester.startDate
+        day = calCourse.day
+        calSemEndDate = calCourse.calendarSemester.endDate
+        currentDate = datetime.now().date()
 
-    if currentDate < calSemStartDate:
-        timed = timedelta(days=(day - calSemStartDate.isoweekday() + 7) % 7)
-        nextEventsStartDate = calSemStartDate + timed
-    else:
-        nextEventsStartDate = currentDate + timedelta(days=(day - currentDate.isoweekday() + 7) % 7)
+        if currentDate < calSemStartDate:
+            timed = timedelta(days=(day - calSemStartDate.isoweekday() + 7) % 7)
+            nextEventsStartDate = calSemStartDate + timed
+        else:
+            nextEventsStartDate = currentDate + timedelta(days=(day - currentDate.isoweekday() + 7) % 7)
 
-    while nextEventsStartDate <= calSemEndDate:
-        newEvent = Event(
-        calendarCourse=calCourse,
-        created_at= datetime.now(),
-        date = nextEventsStartDate
-        )
-        newEvent.save()
-        nextEventsStartDate += timedelta(days=7)
+        while nextEventsStartDate <= calSemEndDate:
+            newEvent = Event(
+            calendarCourse=calCourse,
+            created_at= datetime.now(),
+            date = nextEventsStartDate
+            )
+            newEvent.save()
+            nextEventsStartDate += timedelta(days=7)
+
+        calCourse.onCalendar = True
+        calCourse.save()
     
     return redirect('course:calendarcourse_list')
 

@@ -17,9 +17,9 @@ class CalendarSeminar(models.Model):
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
+    onCalendar = models.BooleanField(null=True)
 
 
 class EnrolledStudentToCalendarSeminars(models.Model):
     calendarSeminar = models.ForeignKey(CalendarSeminar, on_delete=models.DO_NOTHING)
     students = models.ManyToManyField(Student)
-    onCalendar = models.BooleanField()
