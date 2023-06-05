@@ -17,6 +17,13 @@ def dissertation_list(request):
     }
     return render(request, 'dissertation_list.html', context)
 
+def student_dissertation_list(request):
+    student = request.user.student
+    dissertations = Dissertation.objects.filter(student=student)
+    context = {
+        'dissertations': dissertations
+    }
+    return render(request, 'dissertation_list.html', context)
 
 def dissertation_detail(request, dissertation_id):
     dissertation = get_object_or_404(Dissertation, id=dissertation_id)

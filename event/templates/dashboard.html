@@ -20,6 +20,7 @@
 					<li><a href="{% url 'seminar:calendarseminar_list' %}">Seminars</a></li>
 					<li><a href="{% url 'seminar:enroll_to_calendar_seminar' %}">My Seminars</a></li>
 					<li><a href="{% url 'dissertation:dissertation_create' %}">Apply To Get Date For Your Dissertation</a></li>
+					<li><a href="{% url 'dissertation:student_dissertation_list' %}">My Dissertations</a></li>
 				{% endif %}
 				{% if professor %}
 				<li><a href="{% url 'professor:get_cal_courses' %}">My Calendar Courses</a></li>
