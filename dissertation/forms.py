@@ -1,6 +1,7 @@
 from django import forms
 from .models import Dissertation, CalendarDissertation
 from professor.models import Professor
+from student.models import Student
 
 
 class DissertationForm(forms.ModelForm):
@@ -11,10 +12,24 @@ class DissertationForm(forms.ModelForm):
     supervisor = forms.ModelChoiceField(queryset=Professor.objects.all())
     board = forms.ModelMultipleChoiceField(queryset=Professor.objects.all())
     location = forms.CharField(max_length=1000, required=False)
+    is_approved = forms.BooleanField(required=False)
+    student = forms.ModelChoiceField(Student.objects.all())
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['student'].widget.attrs['disabled'] = True
+
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        if 'student' in self._errors:
+            del self._errors['student']
 
     class Meta:
         model = Dissertation
-        fields = ['title', 'is_online', 'is_open_to_public', 'url', 'supervisor', 'board', 'location']
+        fields = ['title', 'is_online', 'is_open_to_public', 'url', 'supervisor', 'board', 'location', 'is_approved', 'student']
+
 
 
 class CalendarDissertationForm(forms.ModelForm):

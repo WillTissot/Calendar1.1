@@ -22,6 +22,8 @@
     {% endfor %}
   </ul>
 
+  <p>Student: {{dissertation.student}}</p>
+
   {% if user.is_superuser %}
     <a href="{% url 'dissertation:dissertation_update' dissertation.id %}">Edit</a>
     <a href="{% url 'dissertation:dissertation_list' %}" class="btn btn-secondary">Back</a>

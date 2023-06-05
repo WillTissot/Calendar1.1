@@ -17,6 +17,9 @@
         <th>Supervisor</th>
         <th>Board</th>
         <th>Approved</th>
+        {% if user.is_superuser %}
+          <th>Student</th>
+        {% endif %}
       </tr>
     </thead>
     <tbody>
@@ -38,10 +41,14 @@
             </ul>
           </td>
           <td>{% if dissertation.is_approved %}Yes{% else %}No{% endif %}</td>
+          {% if user.is_superuser %}
+            <td>{{ dissertation.student }}</td>
+          {% endif %}
           <td><a href="{% url 'dissertation:dissertation_detail' dissertation.id %}">View</a></td>
           {% if user.is_superuser %}
             <td><a href="{% url 'dissertation:dissertation_update' dissertation.id %}">Edit</a></td>
             <td><a href="{% url 'dissertation:dissertation_delete' dissertation.id %}">Delete</a></td>
+            <td>{% if not dissertation.is_approved %}Needs Approval{% endif %}</td>
           {% endif %}
         </tr>
       {% empty %}
