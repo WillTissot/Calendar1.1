@@ -1,4 +1,4 @@
-from .forms import DissertationForm, CalendarDissertationForm
+from .forms import DissertationForm, CalendarDissertationForm, DissertationStudentForm
 from .models import Dissertation, CalendarDissertation
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import user_passes_test
@@ -48,18 +48,26 @@ def dissertation_delete(request, dissertation_id):
     }
     return render(request, 'dissertation_delete.html', context)
 
-@user_passes_test(lambda u: u.is_superuser)
 def dissertation_create(request):
     if request.method == 'POST':
-        form = DissertationForm(request.POST)
+        if request.user.is_superuser:
+            form = DissertationForm(request.POST)
+        else:
+            form = DissertationStudentForm(request.POST)
 
         if form.is_valid():
             dissertation = form.save()
+            dissertation.student = request.user.student
+            dissertation.is_approved = False
+            dissertation.save()
             return redirect('dissertation:dissertation_detail', dissertation_id=dissertation.pk)
         else:
             print(form.errors)
     else:
-        form = DissertationForm()
+        if request.user.is_superuser:
+            form = DissertationForm(request.POST)
+        else:
+            form = DissertationStudentForm(request.POST)
 
     context = {
                 'form': form

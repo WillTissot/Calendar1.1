@@ -1,5 +1,6 @@
 from django.db import models
 from professor.models import Professor
+from student.models import Student
 
 # Create your models here.
 
@@ -11,6 +12,8 @@ class Dissertation(models.Model):
     supervisor = models.ForeignKey(Professor, on_delete=models.DO_NOTHING, related_name='supervisor_professor')
     board = models.ManyToManyField(Professor, related_name='board_professors')
     location = models.CharField(max_length=1000, null=True)
+    is_approved = models.BooleanField(null=True)
+    student = models.ForeignKey(Student, on_delete=models.DO_NOTHING, null=True)
 
     def __str__(self):
         return f"{self.title}"

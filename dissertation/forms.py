@@ -26,3 +26,13 @@ class CalendarDissertationForm(forms.ModelForm):
     class Meta:
         model = CalendarDissertation
         fields = ['dissertation', 'start_time', 'end_time', 'date']
+
+
+class DissertationStudentForm(forms.ModelForm):
+    title = forms.CharField(max_length=500, required=True)
+    supervisor = forms.ModelChoiceField(queryset=Professor.objects.all())
+    board = forms.ModelMultipleChoiceField(queryset=Professor.objects.all())
+
+    class Meta:
+        model = Dissertation
+        fields = ['title', 'supervisor']
