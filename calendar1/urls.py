@@ -23,5 +23,6 @@ urlpatterns = [
     path('', include('account.urls')),
     path('', include('course.urls')),
     path('', include('seminar.urls')),
+    path('', include('dissertation.urls')),
     path('', include('event.urls', namespace="event")),
 ]

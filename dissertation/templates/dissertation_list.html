@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Dissertations</title>
+</head>
+<body>
+  <h1>All Dissertations</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>URL</th>
+        <th>Location</th>
+        <th>Online</th>
+        <th>Open to Public</th>
+        <th>Supervisor</th>
+        <th>Board</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for dissertation in dissertations %}
+        <tr>
+          <td>{{ dissertation.title }}</td>
+          <td>{{ dissertation.url }}</td>
+          <td>{{ dissertation.location }}</td>
+          <td>{% if dissertation.is_online %}Yes{% else %}No{% endif %}</td>
+          <td>{% if dissertation.is_open_to_public %}Yes{% else %}No{% endif %}</td>
+          <td>{{ dissertation.supervisor }}</td>
+          <td>
+            <ul>
+              {% for professor in dissertation.board.all %}
+                <li>{{ professor }}</li>
+              {% empty %}
+                <li>No board members assigned</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td><a href="{% url 'dissertation:dissertation_detail' dissertation.id %}">View</a></td>
+          <td><a href="{% url 'dissertation:dissertation_update' dissertation.id %}">Edit</a></td>
+          <td><a href="{% url 'dissertation:dissertation_delete' dissertation.id %}">Delete</a></td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="8">No dissertations found</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'dissertation:dissertation_create' %}" class="btn btn-primary">Create Dissertation</a>
+
+</body>
+</html>

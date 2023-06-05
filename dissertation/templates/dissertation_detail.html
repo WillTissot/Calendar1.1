@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dissertation Detail</title>
+</head>
+<body>
+  <h1>Dissertation Detail</h1>
+  <p><strong>Title:</strong> {{ dissertation.title }}</p>
+  <p><strong>Url:</strong> {{ dissertation.url }}</p>
+  <p><strong>Location:</strong> {{ dissertation.location }}</p>
+  <p>Online: {% if dissertation.is_online %}Yes{% else %}No{% endif %}</p>
+  <p>Open to Public: {% if dissertation.is_open_to_public %}Yes{% else %}No{% endif %}</p>
+  
+  <p><strong>Supervisor:</strong> {{ dissertation.supervisor }}</p>
+  
+  <p><strong>Board:</strong></p>
+  <ul>
+    {% for professor in dissertation.board.all %}
+      <li>{{ professor }}</li>
+    {% empty %}
+      <li>No board members assigned</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'dissertation:dissertation_update' dissertation.id %}">Edit</a>
+  <a href="{% url 'dissertation:dissertation_list' %}" class="btn btn-secondary">Back</a>
+
+</body>
+</html>
