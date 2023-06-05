@@ -9,18 +9,19 @@
   <p>Thank you for logging in as an administrator. You have access to the administrative panel.</p>
   <p>Please use the navigation links to manage the website's content:</p>
   <ul>
-    <li><a href="{% url 'student:student_list' %}">See All Students</a></li>
-    <li><a href="{% url 'professor:professor_list' %}">See All Professors</a></li>
-    <li><a href="{% url 'course:course_list' %}">See All Courses</a></li>
-    <li><a href="{% url 'course:calendarSemester_list' %}">See All Calendar Semesters</a></li>
-    <li><a href="{% url 'course:semester_list' %}">See All Semesters</a></li>
-    <li><a href="{% url 'course:calendarcourse_list' %}">See All Calendar Courses</a></li>
-    <li><a href="{% url 'event:sec_event_list' %}">See All Events</a></li>
-    <li><a href="{% url 'event:get_all_requests' %}">See Change Events Request</a></li>
+    <li><a href="{% url 'student:student_list' %}">Students</a></li>
+    <li><a href="{% url 'professor:professor_list' %}">Professors</a></li>
+    <li><a href="{% url 'course:course_list' %}">Courses</a></li>
+    <li><a href="{% url 'course:calendarSemester_list' %}">Calendar Semesters</a></li>
+    <li><a href="{% url 'course:semester_list' %}">Semesters</a></li>
+    <li><a href="{% url 'course:calendarcourse_list' %}">Calendar Courses</a></li>
+    <li><a href="{% url 'event:sec_event_list' %}">Events</a></li>
+    <li><a href="{% url 'event:get_all_requests' %}">Manage Events Request</a></li>
     <li><a href="{% url 'event:users_approve' %}">Approve Users</a></li>
-    <li><a href="{% url 'seminar:seminar_list' %}">See Seminars</a></li>
-    <li><a href="{% url 'seminar:calendarseminar_list' %}">See Calendar Seminars</a></li>
+    <li><a href="{% url 'seminar:seminar_list' %}">Seminars</a></li>
+    <li><a href="{% url 'seminar:calendarseminar_list' %}">Calendar Seminars</a></li>
     <li><a href="{% url 'dissertation:dissertation_list' %}">Dissertations</a></li>
+    <li><a href="{% url 'dissertation:calendardissertation_list' %}">Calendar Dissertations</a></li>
   </ul>
   {% if user.is_authenticated %}
     <a href="{% url 'accounts:logout' %}">Logout</a>

@@ -12,6 +12,9 @@ class Dissertation(models.Model):
     board = models.ManyToManyField(Professor, related_name='board_professors')
     location = models.CharField(max_length=1000, null=True)
 
+    def __str__(self):
+        return f"{self.title}"
+
 class CalendarDissertation(models.Model):
     dissertation = models.ForeignKey(Dissertation, on_delete=models.DO_NOTHING)
     date = models.DateField()

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>calendardissertation Detail</title>
+</head>
+<body>
+  <h1>calendardissertation Detail</h1>
+  <p><strong>Title:</strong> {{ calendardissertation.dissertation.title }}</p>
+  <p><strong>Url:</strong> {{ calendardissertation.dissertation.url }}</p>
+  <p><strong>Location:</strong> {{ calendardissertation.dissertation.location }}</p>
+  <p>Online: {% if calendardissertation.dissertation.is_online %}Yes{% else %}No{% endif %}</p>
+  <p>Open to Public: {% if calendardissertation.dissertation.is_open_to_public %}Yes{% else %}No{% endif %}</p>
+  
+  <p><strong>Supervisor:</strong> {{ calendardissertation.dissertation.supervisor }}</p>
+  
+  <p><strong>Board:</strong></p>
+  <ul>
+    {% for professor in calendardissertation.dissertation.board.all %}
+      <li>{{ professor }}</li>
+    {% empty %}
+      <li>No board members assigned</li>
+    {% endfor %}
+  </ul>
+
+  <p><strong>Date:</strong> {{ calendardissertation.date }}</p>
+  <p><strong>StartTime:</strong> {{ calendardissertation.start_time }}</p>
+  <p><strong>EndTime:</strong> {{ calendardissertation.end_time }}</p>
+
+  <a href="{% url 'dissertation:calendardissertation_update' calendardissertation.id %}">Edit</a>
+  <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn btn-secondary">Back</a>
+
+</body>
+</html>

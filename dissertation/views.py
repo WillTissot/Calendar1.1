@@ -91,9 +91,9 @@ def calendardissertation_update(request, calendardissertation_id):
         form = CalendarDissertationForm(request.POST, instance=calendardissertation)
         if form.is_valid():
             form.save()
-            return redirect('calendardissertation:calendardissertation_detail', calendardissertation_id=calendardissertation_id)
+            return redirect('dissertation:calendardissertation_detail', calendardissertation_id=calendardissertation_id)
     else:
-        form = calendardissertationForm(instance=calendardissertation)
+        form = CalendarDissertationForm(instance=calendardissertation)
     return render(request, 'calendardissertation_update.html', {'form': form})
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -102,7 +102,7 @@ def calendardissertation_delete(request, calendardissertation_id):
 
     if request.method == 'POST':
         calendardissertation.delete()
-        return redirect('calendardissertation:calendardissertation_list')
+        return redirect('dissertation:calendardissertation_list')
 
     context = {
         'calendardissertation': calendardissertation
@@ -116,7 +116,7 @@ def calendardissertation_create(request):
 
         if form.is_valid():
             calendardissertation = form.save()
-            return redirect('calendardissertation:calendardissertation_detail', calendardissertation_id=calendardissertation.pk)
+            return redirect('dissertation:calendardissertation_detail', calendardissertation_id=calendardissertation.pk)
         else:
             print(form.errors)
     else:
