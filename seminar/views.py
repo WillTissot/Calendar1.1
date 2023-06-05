@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
 from .forms import SeminarForm, CalendarSeminarForm
-from .models import Seminar, CalendarSeminar
+from .models import Seminar, CalendarSeminar, EnrolledStudentToCalendarSeminars
 
 
 # Seminar CRUD.
@@ -70,9 +70,13 @@ def seminar_create(request):
 # Calendar Seminar CRUD.
 
 
-@user_passes_test(lambda u: u.is_superuser)
 def calendarseminar_list(request):
-    calendarseminars = CalendarSeminar.objects.all()
+    if request.user.is_superuser:
+        calendarseminars = CalendarSeminar.objects.all()
+    else:
+        enrolled_seminars = EnrolledStudentToCalendarSeminars.objects.filter(students=request.user.student)
+        calendarseminars = CalendarSeminar.objects.exclude(enrolledstudenttocalendarseminars__in=enrolled_seminars)
+        
     context = {
         'calendarseminars': calendarseminars
     }
@@ -125,3 +129,29 @@ def calendarseminar_create(request):
                 'form': form
             }
     return render(request, 'calendarseminar_create.html', context)
+
+def enroll_to_calendar_seminar(request):
+    student = request.user.student
+    method = request.POST.get('_method')
+    calendarseminar_id = request.POST.get('calendarseminar_id')
+    if request.method == 'POST' and not method:
+        calendarSeminar = get_object_or_404(CalendarSeminar, id=calendarseminar_id)
+        newEntryStudentEntry = EnrolledStudentToCalendarSeminars(
+            calendarSeminar=calendarSeminar,
+            onCalendar=False
+        )
+        newEntryStudentEntry.save()
+        newEntryStudentEntry.students.add(student)
+    elif method == 'DELETE':
+        calendarSeminar = get_object_or_404(CalendarSeminar, id = calendarseminar_id)
+        enrollmentToCalSeminar = EnrolledStudentToCalendarSeminars.objects.filter(calendarSeminar=calendarSeminar, students=student)
+        enrollmentToCalSeminar.delete()
+
+    studentsCalSeminars = CalendarSeminar.objects.filter(enrolledstudenttocalendarseminars__students=student)
+    context = {
+        'calendarseminars' : studentsCalSeminars
+    }
+    return render(request, 'attending_seminars.html', context)
+
+
+

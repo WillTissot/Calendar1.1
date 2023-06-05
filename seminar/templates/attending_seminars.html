@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Calendar Seminars List</title>
+    <title>Seminars To Attend</title>
 </head>
 <body>
-  <h1>Calendar Seminars</h1>
+  <h1>Seminars To Attend</h1>
   <table>
     <thead>
       <tr>
@@ -16,7 +16,6 @@
         <th>Date</th>
         <th>Start Time</th>
         <th>End Time</th>
-        <th>Edit</th>
       </tr>
     </thead>
     <tbody>
@@ -30,21 +29,15 @@
         <td>{{ calendarseminar.date }}</td>
         <td>{{ calendarseminar.start_time }}</td>
         <td>{{ calendarseminar.end_time }}</td>
-        {% if user.is_superuser %}
+        <td><a href="{% url 'seminar:calendarseminar_detail' calendarseminar.id %}">View</a></td>
         <td>
-            <a href="{% url 'seminar:calendarseminar_detail' calendarseminar.id %}">View</a>
-            <a href="{% url 'seminar:calendarseminar_update' calendarseminar.id %}">Edit</a>
-            <a href="{% url 'seminar:calendarseminar_delete' calendarseminar.id %}">Delete</a>
-        </td>
-        {% else %}
-          <td>
             <form method="post" action="{% url 'seminar:enroll_to_calendar_seminar' %}">
               {% csrf_token %}
               <input type="hidden" name="calendarseminar_id" value="{{ calendarseminar.pk }}">
-              <button type="submit">Attend</button>
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit">Delete</button>
             </form>
           </td>
-        {% endif %}
       </tr>
       {% endfor %}
     </tbody>

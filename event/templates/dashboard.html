@@ -17,6 +17,8 @@
 				{% if student %}
 					<li><a href="{% url 'student:enroll_to_courses' %}">Enroll to a Course</a></li>
 					<li><a href="{% url 'student:get_enrolled_cal_courses' %}">See Enrolled Cal Courses</a></li>
+					<li><a href="{% url 'seminar:calendarseminar_list' %}">Seminars</a></li>
+					<li><a href="{% url 'seminar:enroll_to_calendar_seminar' %}">My Seminars</a></li>
 				{% endif %}
 				{% if professor %}
 				<li><a href="{% url 'professor:get_cal_courses' %}">My Calendar Courses</a></li>

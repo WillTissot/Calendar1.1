@@ -24,11 +24,14 @@
         <td>{{ seminar.speaker_fullname }}</td>
         <td>{{ seminar.location }}</td>
         <td>{% if seminar.is_online %}Yes{% else %}No{% endif %}</td>
-        <td>
-          <a href="{% url 'seminar:seminar_detail' seminar.id %}">View</a>
-          <a href="{% url 'seminar:seminar_update' seminar.id %}">Edit</a>
-          <a href="{% url 'seminar:seminar_delete' seminar.id %}">Delete</a>
-        </td>
+        {% if user.is_superuser %}
+          <td>
+            <a href="{% url 'seminar:seminar_detail' seminar.id %}">View</a>
+            <a href="{% url 'seminar:seminar_update' seminar.id %}">Edit</a>
+            <a href="{% url 'seminar:seminar_delete' seminar.id %}">Delete</a>
+          </td>
+        {% endif %}
+
       </tr>
       {% endfor %}
     </tbody>

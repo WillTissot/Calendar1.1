@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import seminar_create, seminar_delete, seminar_detail, seminar_list, seminar_update
-from .views import calendarseminar_create, calendarseminar_delete, calendarseminar_detail, calendarseminar_list, calendarseminar_update
+from .views import calendarseminar_create, calendarseminar_delete, calendarseminar_detail, calendarseminar_list, calendarseminar_update, enroll_to_calendar_seminar
 
 app_name="seminar"
 
@@ -15,4 +15,6 @@ urlpatterns = [
     path('calendarseminar/update/<int:calSeminar_id>/', calendarseminar_update, name='calendarseminar_update'),
     path('calendarseminar/create/', calendarseminar_create, name='calendarseminar_create'),
     path('calendarseminar/delete/<int:calSeminar_id>/', calendarseminar_delete, name='calendarseminar_delete'),
+    path('calendarseminar/attend/', enroll_to_calendar_seminar, name='enroll_to_calendar_seminar'),
+    
 ]
