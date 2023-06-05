@@ -103,8 +103,12 @@ def event_delete(request, ev_id):
     event = get_object_or_404(Event, id=ev_id)
 
     if request.method == 'POST':
+        if event.calendarSeminar:
+            calSeminar  = event.calendarSeminar
+            calSeminar.onCalendar = False
+            calSeminar.save()
         event.delete()
-        return redirect('event:event_list')
+        return redirect('event:sec_event_list')
 
     context = {
         'event': event
