@@ -38,6 +38,12 @@ class CalendarDissertationForm(forms.ModelForm):
     end_time = forms.TimeInput()
     date = forms.DateInput()
 
+    def __init__(self, *args, dissertation=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if dissertation:
+            self.fields['dissertation'].initial = dissertation
+            self.fields['dissertation'].widget.attrs['readonly'] = True
+
     class Meta:
         model = CalendarDissertation
         fields = ['dissertation', 'start_time', 'end_time', 'date']

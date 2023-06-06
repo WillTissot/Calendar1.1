@@ -25,6 +25,7 @@
   <p>Student: {{dissertation.student}}</p>
 
   {% if user.is_superuser %}
+    <p>Approved: {% if dissertation.is_approved %}Yes{% else %}No{% endif %}</p>
     <a href="{% url 'dissertation:dissertation_update' dissertation.id %}">Edit</a>
     <a href="{% url 'dissertation:dissertation_list' %}" class="btn btn-secondary">Back</a>
   {% else %}

@@ -4,7 +4,11 @@
     <title>All Dissertations</title>
 </head>
 <body>
-  <h1>All Dissertations</h1>
+  {% if createCalendarEvent %}
+    <h1>Approved Disseration Needing Calendar Event</h1>
+  {% else %}
+    <h1>All Dissertations</h1>
+  {% endif %}
 
   <table>
     <thead>
@@ -49,6 +53,15 @@
             <td><a href="{% url 'dissertation:dissertation_update' dissertation.id %}">Edit</a></td>
             <td><a href="{% url 'dissertation:dissertation_delete' dissertation.id %}">Delete</a></td>
             <td>{% if not dissertation.is_approved %}Needs Approval{% endif %}</td>
+            {% if createCalendarEvent %}
+              <td>
+                <form method="get" action="{% url 'dissertation:calendardissertation_create' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="diss_id" value="{{ dissertation.pk }}">
+                    <button type="submit">Create Calendar Dissertation</button>
+                </form>
+            </td>
+          {% endif %}
           {% endif %}
         </tr>
       {% empty %}
@@ -59,7 +72,9 @@
     </tbody>
   </table>
   {% if user.is_superuser %}
-  <a href="{% url 'dissertation:dissertation_create' %}" class="btn btn-primary">Create Dissertation</a>
+  {% if createCalendarEvent %}
+  <a href="{% url 'dissertation:calendardissertation_create' %}" class="btn btn-primary">Create Calendar Dissertation</a>
+  {% endif %}
   <a href="{% url 'event:adminpage' %}" class="btn btn-primary">Back</a>
   {% else %}
   <a href="{% url 'event:dashboard' %}" class="btn btn-primary">Back</a>

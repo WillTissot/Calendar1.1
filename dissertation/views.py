@@ -17,10 +17,20 @@ def dissertation_list(request):
     }
     return render(request, 'dissertation_list.html', context)
 
+@user_passes_test(lambda u: u.is_superuser)
+def dissertation_pending_calendar_event_list(request):
+    dissertations_without_calendar = Dissertation.objects.filter(calendardissertation__isnull=True, is_approved=True)
+    createCalendarEvent = True
+    context = {
+        'dissertations': dissertations_without_calendar,
+        'createCalendarEvent' : createCalendarEvent
+    }
+    return render(request, 'dissertation_list.html', context)
+
 def student_dissertation_list(request):
     student = request.user.student
     dissertations = Dissertation.objects.filter(student=student)
-    context = {
+    context = { 
         'dissertations': dissertations
     }
     return render(request, 'dissertation_list.html', context)
@@ -71,8 +81,11 @@ def dissertation_create(request):
         else:
             print(form.errors)
     else:
+
         if request.user.is_superuser:
-            form = DissertationForm(request.POST)
+
+
+                form = DissertationForm(request.POST)
         else:
             form = DissertationStudentForm(request.POST)
 
@@ -135,9 +148,19 @@ def calendardissertation_create(request):
         else:
             print(form.errors)
     else:
-        form = CalendarDissertationForm()
+        diss_id = request.GET.get('diss_id')
+        if diss_id:
+            dissertation = get_object_or_404(Dissertation, id = diss_id)
+            initial_values = {
+                'dissertation': dissertation
+            }
+            form = CalendarDissertationForm(dissertation = dissertation)
+            isFromDissFlow = True
+        else:
+            form = CalendarDissertationForm()
 
     context = {
-                'form': form
+                'form': form,
+                'isFromDissFlow' : isFromDissFlow
             }
     return render(request, 'calendardissertation_create.html', context)

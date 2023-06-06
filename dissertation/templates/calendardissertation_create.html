@@ -11,6 +11,10 @@
     <button type="submit">Submit</button>
   </form>
   
+  {% if isFromDissFlow %}
+  <a href="{% url 'dissertation:dissertation_calendar_create_list' %}" class="btn btn-secondary">Back</a>
+  {% else %}
   <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn btn-secondary">Back</a>
+  {% endif %}
 </body>
 </html>
