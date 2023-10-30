@@ -13,7 +13,7 @@
 	<nav>
 		<ul>
 			{% if user.is_active %}
-				<li><a href="{% url 'event:my_event_list' %}">See My Events</a></li>
+				<li><a href="{% url 'event:calX' %}">See My Events</a></li>
 				{% if student %}
 					<li><a href="{% url 'student:enroll_to_courses' %}">Enroll to a Course</a></li>
 					<li><a href="{% url 'student:get_enrolled_cal_courses' %}">See Enrolled Cal Courses</a></li>

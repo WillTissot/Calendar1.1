@@ -11,6 +11,26 @@ from django import template
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
+def get_events(request):
+    user= request.user
+    #events = Event.objects.all()  # Assuming you have a model called 'Event' with appropriate fields
+    events = Event.objects.filter(calendarCourse__enrolledstudentsoncalendarcourse__student=user.student)
+    data = []
+    for event in events:
+        data.append({
+            'title': event.calendarCourse.course.title,
+            'start': event.date.isoformat(),
+            'end': event.date.isoformat()  # If your events have end dates
+            # Add other necessary fields for the events
+        })
+    return JsonResponse(data, safe=False)
+
+def calendar_view(request):
+    return render(request, 'calX.html')
+
+
+
+
 @login_required
 def event_list(request):
     user= request.user
