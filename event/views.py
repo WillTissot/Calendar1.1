@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Count
 from django import template
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 @login_required
 def event_list(request):
@@ -19,6 +20,7 @@ def event_list(request):
         events = Event.objects.filter(calendarCourse__course__professor__user_id=user.id)
     else:
         events = []
+
     return render(request, 'my_event_list.html', {'events': events})
 
 @login_required

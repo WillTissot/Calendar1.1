@@ -189,6 +189,7 @@ def Add_Course_To_Calendar(request):
             'calendarCourses' : calendarCourses
         }
         return render(request, 'calendarCourseListStudent.html', context)
+        #return render(request, 'calendarNew.html', context)
 
 
 @user_passes_test(lambda u: u.is_active)
