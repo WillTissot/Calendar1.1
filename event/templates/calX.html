@@ -15,10 +15,25 @@
       // Your FullCalendar settings here
       // For example:
       initialView: 'dayGridMonth',
+      // events: function (fetchInfo, successCallback, failureCallback) {
+      //   fetch('/xxx/ad')
+      //     .then(response => response.json())
+      //     .then(data => {
+      //       // Assuming the response contains an array of events
+      //       successCallback(data);
+      //     })
+      //     .catch(error => {
+      //       console.error('Error fetching events:', error);
+      //       failureCallback(error);
+      //     });
+      // },
+      // Other FullCalendar configurations
+    
       events: '{% url "event:get_events" %}', // URL to fetch events from Django view
       // Other FullCalendar configurations
     });
     calendar.render();
+    //console.log('{% url "event:get_events" %}');
   });
 </script>
 

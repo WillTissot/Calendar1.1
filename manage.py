@@ -2,7 +2,13 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+import asyncio
+import concurrent.futures
+# from event.scheduledJobs import tick
+# from datetime import datetime
+# from apscheduler.schedulers.asyncio import AsyncIOScheduler
+# from asgiref.sync import sync_to_async
+#import scheduledJobCommand
 
 def main():
     """Run administrative tasks."""
@@ -16,7 +22,6 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
-
 
 if __name__ == '__main__':
     main()
