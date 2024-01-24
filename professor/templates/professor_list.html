@@ -1,40 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>All Professors</title>
+    <meta charset="UTF-8">
+    <title>All Professors</title>
+    <!-- Add Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Replace the above link with the latest version if available -->
+
+    <style>
+        /* Add some styles to make it more visually appealing */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #2980b9;
+        }
+
+        a i {
+            margin-right: 5px;
+        }
+
+        .btn-secondary, .btn-create {
+            display: inline-block;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            margin-top: 20px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-secondary:hover, .btn-create:hover {
+            background-color: #c0392b;
+        }
+    </style>
 </head>
 <body>
-  <h1>All Professors</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Department</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for professor in professors %}
-        <tr>
-          <td>{{ professor.user.get_full_name }}</td>
-          <td>{{ professor.department.name }}</td>
-          <td>
-            <a href="{% url 'professor:professor_detail' prof_id=professor.pk %}">View</a>
-            <a href="{% url 'professor:professor_update' prof_id=professor.pk %}">Edit</a>
-            <a href="{% url 'professor:professor_delete' prof_id=professor.pk %}">Delete</a>
-          </td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="4">No professors found.</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
-  <a href="{% url 'professor:professor_create' %}">Create New Professor</a>
+    <h1>All Professors</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for professor in professors %}
+                <tr>
+                    <td>{{ professor.user.get_full_name }}</td>
+                    <td>{{ professor.department.name }}</td>
+                    <td>
+                        <a href="{% url 'professor:professor_detail' prof_id=professor.pk %}">View</a>
+                        <a href="{% url 'professor:professor_update' prof_id=professor.pk %}">Edit</a>
+                        <a href="{% url 'professor:professor_delete' prof_id=professor.pk %}">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No professors found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+    <a href="{% url 'professor:professor_create' %}" class="btn btn-create"><i class="fas fa-plus"></i> Create New Professor</a>
 </body>
 </html>
-
-
-

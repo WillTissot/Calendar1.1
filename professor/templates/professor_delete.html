@@ -1,18 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Delete Professor</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Delete Professor</title>
+    <!-- Add Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Replace the above link with the latest version if available -->
+    
+    <!-- Use Bootstrap styles for buttons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        /* Add some styles to make it more visually appealing */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .btn-danger, .btn-secondary {
+            margin: 0 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-secondary {
+            background-color: #3498db;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Delete Professor</h1>
-    <p>Are you sure you want to delete {{ professor.name }}?</p>
-    <form action="{% url 'professor_delete' prof_id=professor.id %}" method="post">
-      {% csrf_token %}
-      <input type="submit" value="Delete" class="btn btn-danger">
-      <a href="{% url 'professor:professor_list' %}" class="btn btn-secondary">Back</a>
-    </form>
-  </div>
+    <div class="container">
+        <h1>Delete Professor</h1>
+        <p>Are you sure you want to delete {{ professor.name }}?</p>
+        <form action="{% url 'professor:professor_delete' prof_id=professor.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete" class="btn btn-danger">
+            <a href="{% url 'professor:professor_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        </form>
+    </div>
 </body>
 </html>
