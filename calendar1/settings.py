@@ -49,6 +49,18 @@ INSTALLED_APPS = [
     'django_apscheduler'
 ]
 
+
+#email config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465 #587
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = 'shopwaresync@gmail.com'
+EMAIL_HOST_PASSWORD = 'hkgrtglvwxiyrilc'
+EMAIL_USE_SSL = True
+
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
