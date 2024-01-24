@@ -4,17 +4,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Homepage of the lost</title>
+    <title>Academic Calendar</title>
+
+    <!-- Add Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Replace the above link with the latest version if available -->
+
+    <style>
+        /* Add some styles to make it more visually appealing */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h4 {
+            color: #666;
+        }
+
+        img {
+            width: 300px;
+            border-radius: 8px;
+            margin: 20px;
+        }
+
+        div {
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-  <h1>Welcome to my application.</h1>
-  <h4>I am Xena The Warrior Princess. Let me guide you through you semesters.</h4>
-  <img src="{% static 'xena.jpg' %}">
-  <p>Thank you for visiting my academic calendar(lame)!</p>
-  <div>
-    <a href="{% url 'accounts:signin' %}"><button>Sign In</button></a>
-    <a href="{% url 'accounts:studentsignup' %}"><button>Sign Up As A Student</button></a>
-    <a href="{% url 'accounts:professorsignup' %}"><button>Sign Up As A Professor</button></a>
-  </div>
+    <h1>Welcome to my application.</h1>
+    <h4>This application is my dissertation written in python, and the main goal is to provide the functionality.</h4>
+    <img src="{% static 'xarokop.jpg' %}">
+    <div>
+        <a href="{% url 'accounts:signin' %}"><button><i class="fas fa-sign-in-alt"></i> Sign In</button></a>
+        <a href="{% url 'accounts:studentsignup' %}"><button><i class="fas fa-user-graduate"></i> Sign Up As A Student</button></a>
+        <a href="{% url 'accounts:professorsignup' %}"><button><i class="fas fa-chalkboard-teacher"></i> Sign Up As A Professor</button></a>
+    </div>
 </body>
 </html>

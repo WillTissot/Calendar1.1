@@ -1,19 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Create User</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Add Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Replace the above link with the latest version if available -->
+
+    <style>
+        /* Add some styles to make it more visually appealing */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            display: inline-block;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-  {% if is_stud %}
-    <h1>Signing up as student</h1>
-  {% else %}
-    <h1>Signing up as professor</h1>
-  {% endif %}
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
-  <a href="{% url 'event:homepage' %}" class="btn btn-secondary">Back</a>
+    {% if is_stud %}
+        <h1>Signing up as student</h1>
+    {% else %}
+        <h1>Signing up as professor</h1>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit"><i class="fas fa-check"></i> Submit</button>
+    </form>
+    <a href="{% url 'event:homepage' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
 </body>
 </html>
