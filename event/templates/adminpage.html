@@ -3,29 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome, Secretary/Admin!</title>
+    <!-- Add Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Replace the above link with the latest version if available -->
+
+    <style>
+        /* Add some styles to make it more visually appealing */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #2980b9;
+        }
+
+        a i {
+            margin-right: 5px;
+        }
+
+        a.logout-btn {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        a.logout-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
 </head>
 <body>
   <h1>Welcome, Admin!</h1>
   <p>Thank you for logging in as an administrator. You have access to the administrative panel.</p>
   <p>Please use the navigation links to manage the website's content:</p>
   <ul>
-    <li><a href="{% url 'student:student_list' %}">Students</a></li>
-    <li><a href="{% url 'professor:professor_list' %}">Professors</a></li>
-    <li><a href="{% url 'course:course_list' %}">Courses</a></li>
-    <li><a href="{% url 'course:calendarSemester_list' %}">Calendar Semesters</a></li>
+    <li><a href="{% url 'student:student_list' %}"><i class="fas fa-user-graduate"></i>Students</a></li>
+    <li><a href="{% url 'professor:professor_list' %}"><i class="fas fa-chalkboard-teacher"></i>Professors</a></li>
+    <li><a href="{% url 'course:course_list' %}"><i class="fas fa-book"></i>Courses</a></li>
+    <li><a href="{% url 'course:calendarSemester_list' %}"><i class="far fa-calendar"></i>Calendar Semesters</a></li>
     <li><a href="{% url 'course:semester_list' %}">Semesters</a></li>
-    <li><a href="{% url 'course:calendarcourse_list' %}">Calendar Courses</a></li>
+    <li><a href="{% url 'course:calendarcourse_list' %}"><i class="far fa-calendar"></i>Calendar Courses</a></li>
     <li><a href="{% url 'event:sec_event_list' %}">Events</a></li>
-    <li><a href="{% url 'event:get_all_requests' %}">Manage Events Request</a></li>
-    <li><a href="{% url 'event:users_approve' %}">Approve Users</a></li>
+    <li><a href="{% url 'event:get_all_requests' %}"><i class="fas fa-clipboard-check"></i>Manage Events Request</a></li>
+    <li><a href="{% url 'event:users_approve' %}"><i class="fas fa-user"></i>Approve Users</a></li>
     <li><a href="{% url 'seminar:seminar_list' %}">Seminars</a></li>
-    <li><a href="{% url 'seminar:calendarseminar_list' %}">Calendar Seminars</a></li>
+    <li><a href="{% url 'seminar:calendarseminar_list' %}"><i class="far fa-calendar"></i>Calendar Seminars</a></li>
     <li><a href="{% url 'dissertation:dissertation_list' %}">Dissertations</a></li>
-    <li><a href="{% url 'dissertation:calendardissertation_list' %}">Calendar Dissertations</a></li>
+    <li><a href="{% url 'dissertation:calendardissertation_list' %}"><i class="far fa-calendar"></i>Calendar Dissertations</a></li>
     <li><a href="{% url 'dissertation:dissertation_calendar_create_list' %}">Pending Dissertations</a></li>
   </ul>
   {% if user.is_authenticated %}
-    <a href="{% url 'accounts:logout' %}">Logout</a>
+    <a href="{% url 'accounts:logout' %}" class="logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</a>
   {% endif %}
 </body>
 </html>

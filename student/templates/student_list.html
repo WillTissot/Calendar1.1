@@ -1,39 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>All Students</title>
+    <meta charset="UTF-8">
+    <title>All Students</title>
+    <!-- Add Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Replace the above link with the latest version if available -->
+
+    <style>
+        /* Add some styles to make it more visually appealing */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #2980b9;
+        }
+
+        a i {
+            margin-right: 5px;
+        }
+
+        a.logout-btn {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        a.logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            margin-top: 20px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #c0392b;
+        }
+    </style>
 </head>
 <body>
-  <h1>All Students</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Date of Birth</th>
-        <th>Department</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for student in students %}
-        <tr>
-          <td>{{ student.user.get_full_name }}</td>
-          <td>{{ student.date_of_birth }}</td>
-          <td>{{ student.department.name }}</td>
-          <td>
-            <a href="{% url 'student:student_detail' det_id=student.pk %}">View</a>
-            <a href="{% url 'student:student_update' up_id=student.pk %}">Edit</a>
-            <a href="{% url 'student:student_delete' del_id=student.pk %}">Delete</a>
-          </td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="4">No students found.</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
-  <a href="{% url 'student:student_create' %}">Create New Student</a>
+    <h1>All Students</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date of Birth</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.user.get_full_name }}</td>
+                    <td>{{ student.date_of_birth }}</td>
+                    <td>{{ student.department.name }}</td>
+                    <td>
+                        <a href="{% url 'student:student_detail' det_id=student.pk %}">View</a>
+                        <a href="{% url 'student:student_update' up_id=student.pk %}">Edit</a>
+                        <a href="{% url 'student:student_delete' del_id=student.pk %}">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No students found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'student:student_create' %}" class="btn btn-secondary"><i class="fas fa-plus"></i> Create New Student</a>
+    <a href="{% url 'event:adminpage' %}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Back</a>
 </body>
 </html>
