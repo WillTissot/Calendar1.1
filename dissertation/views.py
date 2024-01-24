@@ -139,6 +139,7 @@ def calendardissertation_delete(request, calendardissertation_id):
 
 @user_passes_test(lambda u: u.is_superuser)
 def calendardissertation_create(request):
+    isFromDissFlow = False
     if request.method == 'POST':
         form = CalendarDissertationForm(request.POST)
 

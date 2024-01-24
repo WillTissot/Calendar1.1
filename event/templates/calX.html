@@ -1,15 +1,35 @@
-
 <style>
   /* Add some styles to make the calendar smaller and visually appealing */
   #calendar {
     max-width: 800px; /* Adjust the maximum width as needed */
     margin: 0 auto;
   }
+
+  .btn-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .btn-secondary {
+    background-color: #95a5a6;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+
+  .btn-secondary:hover {
+    background-color: #7f8c8d;
+  }
 </style>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
 
 <!-- In your HTML template -->
 <div id='calendar'></div>
+<div class="btn-container">
+  <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
+</div>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');

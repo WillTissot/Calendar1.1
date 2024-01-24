@@ -1,63 +1,110 @@
 {% load static %}
 
-
 {% load myfilters %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Changes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4285f4;
+            color: #fff;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #4285f4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background-color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4285f4;
+            margin: 0 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Changes</h1>
     <table>
-        <thead>
+        {% for event in events %}
             <tr>
-                <th>Professor</th>
-                <th>Course</th>
-                <th>Semester</th>
-                <th>Room Number</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Is Online</th>
-                <th>Action</th>
-                <th>Change</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for event in events %}
-                <tr>
-                    <td>{{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</td>
-                    <td>{{ event.calendarCourse.course.title }}</td>
-                    <td>{{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</td>
-                    {% with recentChange=event|filter_changes %}
-                        {% if recentChange %}
-                            <td>{{ recentChange.room_number }}</td>
-                            <td>{{ recentChange.date }}</td>
-                            <td>{{ recentChange.start_time }}</td>
-                            <td>{{ recentChange.end_time }}</td>
-                            <td>{{ recentChange.is_online }}</td>
-                        {% else %}
-                            <td>{{ event.calendarCourse.room_number }}</td>
-                            <td>{{ event.date }}</td>
-                            <td>{{ event.calendarCourse.start_time }}</td>
-                            <td>{{ event.calendarCourse.end_time }}</td>
-                            <td>{{ event.calendarCourse.is_online }}</td>
-                            <td></td>
-                        {% endif %}
-                    {% endwith %}
+                <td>{{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</td>
+                <td>{{ event.calendarCourse.course.title }}</td>
+                <td>{{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</td>
+                {% with recentChange=event|filter_changes %}
+                    {% if recentChange %}
+                        <td>{{ recentChange.room_number }}</td>
+                        <td>{{ recentChange.date }}</td>
+                        <td>{{ recentChange.start_time }}</td>
+                        <td>{{ recentChange.end_time }}</td>
+                        <td>{{ recentChange.is_online }}</td>
+                    {% else %}
+                        <td>{{ event.calendarCourse.room_number }}</td>
+                        <td>{{ event.date }}</td>
+                        <td>{{ event.calendarCourse.start_time }}</td>
+                        <td>{{ event.calendarCourse.end_time }}</td>
+                        <td>{{ event.calendarCourse.is_online }}</td>
+                        <td></td>
+                    {% endif %}
+                {% endwith %}
 
-                    {% if user.professor %}
-                        <td><a href="{% url 'professor:request_event_change' ev_id=event.pk %}">Change Event</a></td>
-                        <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes</button></td>
-                    {% endif %}
-                    {% if user.is_superuser %}
-                        <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes To Approve</button></td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-        </tbody>
+                {% if user.professor %}
+                    <td><a href="{% url 'professor:request_event_change' ev_id=event.pk %}">Change Event</a></td>
+                    <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes</button></td>
+                {% endif %}
+                {% if user.is_superuser %}
+                    <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes To Approve</button></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
     </table>
 
     {% if user.is_superuser %}
@@ -66,10 +113,11 @@
         <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
     {% endif %}
     {% if user.is_authenticated %}
-        <a href="{% url 'accounts:logout' %}">Logout</a>
+        <a href="{% url 'accounts:logout' %}" class="btn btn-secondary">Logout</a>
     {% endif %}
 </body>
 </html>
+
 
 <script>
 

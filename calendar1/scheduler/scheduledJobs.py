@@ -12,7 +12,6 @@ from datetime import datetime, timedelta
 from event.models import Event
 from student.models import EnrolledStudentsOnCalendarCourse
 
-#existingJob = False
 
 def sendEmails(studentMails, lesson, roomnumber, starttime):
     #print('Tick! The time is: %s' % datetime.now())
