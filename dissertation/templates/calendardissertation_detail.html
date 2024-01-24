@@ -1,33 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>calendardissertation Detail</title>
+    <title>Calendar Dissertation Detail</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            margin-bottom: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            margin: 5px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        a.btn-secondary {
+            background-color: #95a5a6;
+        }
+
+        a:hover {
+            background-color: #2980b9;
+        }
+
+        a.btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+    </style>
 </head>
 <body>
-  <h1>calendardissertation Detail</h1>
-  <p><strong>Title:</strong> {{ calendardissertation.dissertation.title }}</p>
-  <p><strong>Url:</strong> {{ calendardissertation.dissertation.url }}</p>
-  <p><strong>Location:</strong> {{ calendardissertation.dissertation.location }}</p>
-  <p>Online: {% if calendardissertation.dissertation.is_online %}Yes{% else %}No{% endif %}</p>
-  <p>Open to Public: {% if calendardissertation.dissertation.is_open_to_public %}Yes{% else %}No{% endif %}</p>
+    <h1>Calendar Dissertation Detail</h1>
+    <p><strong>Title:</strong> {{ calendardissertation.dissertation.title }}</p>
+    <p><strong>Url:</strong> {{ calendardissertation.dissertation.url }}</p>
+    <p><strong>Location:</strong> {{ calendardissertation.dissertation.location }}</p>
+    <p>Online: {% if calendardissertation.dissertation.is_online %}Yes{% else %}No{% endif %}</p>
+    <p>Open to Public: {% if calendardissertation.dissertation.is_open_to_public %}Yes{% else %}No{% endif %}</p>
   
-  <p><strong>Supervisor:</strong> {{ calendardissertation.dissertation.supervisor }}</p>
+    <p><strong>Supervisor:</strong> {{ calendardissertation.dissertation.supervisor }}</p>
   
-  <p><strong>Board:</strong></p>
-  <ul>
-    {% for professor in calendardissertation.dissertation.board.all %}
-      <li>{{ professor }}</li>
-    {% empty %}
-      <li>No board members assigned</li>
-    {% endfor %}
-  </ul>
+    <p><strong>Board:</strong></p>
+    <ul>
+        {% for professor in calendardissertation.dissertation.board.all %}
+        <li>{{ professor }}</li>
+        {% empty %}
+        <li>No board members assigned</li>
+        {% endfor %}
+    </ul>
 
-  <p><strong>Date:</strong> {{ calendardissertation.date }}</p>
-  <p><strong>StartTime:</strong> {{ calendardissertation.start_time }}</p>
-  <p><strong>EndTime:</strong> {{ calendardissertation.end_time }}</p>
+    <p><strong>Date:</strong> {{ calendardissertation.date }}</p>
+    <p><strong>Start Time:</strong> {{ calendardissertation.start_time }}</p>
+    <p><strong>End Time:</strong> {{ calendardissertation.end_time }}</p>
 
-  <a href="{% url 'dissertation:calendardissertation_update' calendardissertation.id %}">Edit</a>
-  <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'dissertation:calendardissertation_update' calendardissertation.id %}">Edit</a>
+    <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn-secondary">Back</a>
 
 </body>
 </html>

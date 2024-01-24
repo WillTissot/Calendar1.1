@@ -1,13 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Delete dissertation</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Delete Dissertation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+    </style>
 </head>
 <body>
   <div class="container">
-    <h1>Delete dissertation</h1>
-    <p>Are you sure you want to delete {{ course.title }}?</p>
+    <h1>Delete Dissertation</h1>
+    <p>Are you sure you want to delete {{ dissertation.title }}?</p>
     <form action="{% url 'dissertation:dissertation_delete' dissertation_id=dissertation.id %}" method="post">
       {% csrf_token %}
       <input type="submit" value="Delete" class="btn btn-danger">

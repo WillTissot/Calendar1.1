@@ -1,46 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>User Details</title>
+    <!-- Add Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Replace the above link with the latest version if available -->
+
+    <!-- Use Bootstrap styles for tables and buttons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        /* Add some styles to make it more visually appealing */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #5bc0de; /* Blue color for emphasis */
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #5bc0de;
+            color: #fff;
+        }
+
+        button {
+            background-color: #5bc0de;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #46b8da;
+        }
+
+        a.btn-secondary {
+            background-color: #d9534f;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        a.btn-secondary:hover {
+            background-color: #c9302c;
+        }
+    </style>
 </head>
 <body>
-  <h1>User Details</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Role</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for user in users %}
-        <tr>
-          <td>{{ user.username }}</td>
-          <td>{{ user.first_name }}</td>
-          <td>{{ user.last_name }}</td>
-          <td>
-            {% if user.student %}
-              Student
-            {% elif user.professor %}
-              Professor
-            {% else %}
-              N/A
-            {% endif %}
-          </td>
-          <td>
-            <form method="post" action="{% url 'event:users_approve' %}">
-                {% csrf_token %}
-                <input type="hidden" name="user_id" value="{{ user.pk }}">
-                <button type="submit">Approve</button>
-            </form>
-           </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+    <h1>User Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>
+                    {% if user.student %}
+                    Student
+                    {% elif user.professor %}
+                    Professor
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="post" action="{% url 'event:users_approve' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user.pk }}">
+                        <button type="submit">Approve</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
 </body>
 </html>

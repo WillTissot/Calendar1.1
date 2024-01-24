@@ -1,21 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Seminar Calendar Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            margin: 0 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+    </style>
 </head>
 <body>
-  <h1>Seminar Calendar Detail</h1>
-  <p><strong>Title:</strong> {{ calendarseminar.seminar.title }}</p>
-  <p><strong>Url:</strong> {{ calendarseminar.seminar.url }}</p>
-  <p><strong>Speaker:</strong> {{ calendarseminar.seminar.speaker_fullname }}</p>
-  <p><strong>Location:</strong> {{ calendarseminar.seminar.location }}</p>
-  <p>Online: {% if calendarseminar.seminar.is_online %}Yes{% else %}No{% endif %}</p>
-  <p><strong>Date:</strong> {{ calendarseminar.date }}</p>
-  <p><strong>StartTime:</strong> {{ calendarseminar.start_time }}</p>
-  <p><strong>EndTime:</strong> {{ calendarseminar.end_time }}</p>
+    <h1>Seminar Calendar Detail</h1>
+    <p><strong>Title:</strong> {{ calendarseminar.seminar.title }}</p>
+    <p><strong>Url:</strong> {{ calendarseminar.seminar.url }}</p>
+    <p><strong>Speaker:</strong> {{ calendarseminar.seminar.speaker_fullname }}</p>
+    <p><strong>Location:</strong> {{ calendarseminar.seminar.location }}</p>
+    <p><strong>Online:</strong> {% if calendarseminar.seminar.is_online %}Yes{% else %}No{% endif %}</p>
+    <p><strong>Date:</strong> {{ calendarseminar.date }}</p>
+    <p><strong>StartTime:</strong> {{ calendarseminar.start_time }}</p>
+    <p><strong>EndTime:</strong> {{ calendarseminar.end_time }}</p>
 
-  <a href="{% url 'seminar:calendarseminar_update' calendarseminar.id %}">Edit</a>
-  <a href="{% url 'seminar:calendarseminar_list' %}" class="btn btn-secondary">Back</a>
-
+    <a href="{% url 'seminar:calendarseminar_update' calendarseminar.id %}">Edit</a>
+    <a href="{% url 'seminar:calendarseminar_list' %}" class="btn-secondary">Back</a>
 </body>
 </html>

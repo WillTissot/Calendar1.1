@@ -1,10 +1,12 @@
 
-
-<!-- In your HTML template -->
-<!-- <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css' rel='stylesheet' /> -->
-<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.js'></script> -->
+<style>
+  /* Add some styles to make the calendar smaller and visually appealing */
+  #calendar {
+    max-width: 800px; /* Adjust the maximum width as needed */
+    margin: 0 auto;
+  }
+</style>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
-
 
 <!-- In your HTML template -->
 <div id='calendar'></div>
@@ -12,28 +14,10 @@
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      // Your FullCalendar settings here
-      // For example:
       initialView: 'dayGridMonth',
-      // events: function (fetchInfo, successCallback, failureCallback) {
-      //   fetch('/xxx/ad')
-      //     .then(response => response.json())
-      //     .then(data => {
-      //       // Assuming the response contains an array of events
-      //       successCallback(data);
-      //     })
-      //     .catch(error => {
-      //       console.error('Error fetching events:', error);
-      //       failureCallback(error);
-      //     });
-      // },
-      // Other FullCalendar configurations
-    
-      events: '{% url "event:get_events" %}', // URL to fetch events from Django view
-      // Other FullCalendar configurations
+      events: '{% url "event:get_events" %}', 
     });
     calendar.render();
-    //console.log('{% url "event:get_events" %}');
   });
 </script>
 

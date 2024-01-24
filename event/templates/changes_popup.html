@@ -1,7 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Requested Changes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
     <h1>INITIAL ENTRY</h1>
@@ -42,6 +89,10 @@
                 <th>Is Online</th>
                 <th>Is Approved</th>
                 <th>Is Pending</th>
+                {% if user.is_superuser %}
+                    <th>Approve</th>
+                    <th>Reject</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -80,5 +131,3 @@
     </table>
 </body>
 </html>
-
-

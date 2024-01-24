@@ -1,62 +1,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All calendardissertations</title>
+    <title>All Calendar Dissertations</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            margin-bottom: 5px;
+        }
+
+        .btn-primary, .btn-secondary {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 5px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+    </style>
 </head>
 <body>
-  <h1>All calendardissertations</h1>
+    <h1>All Calendar Dissertations</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>URL</th>
-        <th>Location</th>
-        <th>Online</th>
-        <th>Open to Public</th>
-        <th>Supervisor</th>
-        <th>Board</th>
-        <th>Date</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Edit</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for calendardissertation in calendardissertations %}
-        <tr>
-          <td>{{ calendardissertation.dissertation.title }}</td>
-          <td>{{ calendardissertation.dissertation.url }}</td>
-          <td>{{ calendardissertation.dissertation.location }}</td>
-          <td>{% if calendardissertation.dissertation.is_online %}Yes{% else %}No{% endif %}</td>
-          <td>{% if calendardissertation.dissertation.is_open_to_public %}Yes{% else %}No{% endif %}</td>
-          <td>{{ calendardissertation.dissertation.supervisor }}</td>
-          <td>
-            <ul>
-              {% for professor in calendardissertation.dissertation.board.all %}
-                <li>{{ professor }}</li>
-              {% empty %}
-                <li>No board members assigned</li>
-              {% endfor %}
-            </ul>
-          </td>
-          <td>{{ calendardissertation.date }}</td>
-          <td>{{ calendardissertation.start_time }}</td>
-          <td>{{ calendardissertation.end_time }}</td>
-          <td><a href="{% url 'dissertation:calendardissertation_detail' calendardissertation.id %}">View</a></td>
-          <td><a href="{% url 'dissertation:calendardissertation_update' calendardissertation.id %}">Edit</a></td>
-          <td><a href="{% url 'dissertation:calendardissertation_delete' calendardissertation.id %}">Delete</a></td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="8">No calendardissertations found</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>URL</th>
+                <th>Location</th>
+                <th>Online</th>
+                <th>Open to Public</th>
+                <th>Supervisor</th>
+                <th>Board</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for calendardissertation in calendardissertations %}
+            <tr>
+                <td>{{ calendardissertation.dissertation.title }}</td>
+                <td>{{ calendardissertation.dissertation.url }}</td>
+                <td>{{ calendardissertation.dissertation.location }}</td>
+                <td>{% if calendardissertation.dissertation.is_online %}Yes{% else %}No{% endif %}</td>
+                <td>{% if calendardissertation.dissertation.is_open_to_public %}Yes{% else %}No{% endif %}</td>
+                <td>{{ calendardissertation.dissertation.supervisor }}</td>
+                <td>
+                    <ul>
+                        {% for professor in calendardissertation.dissertation.board.all %}
+                        <li>{{ professor }}</li>
+                        {% empty %}
+                        <li>No board members assigned</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ calendardissertation.date }}</td>
+                <td>{{ calendardissertation.start_time }}</td>
+                <td>{{ calendardissertation.end_time }}</td>
+                <td><a href="{% url 'dissertation:calendardissertation_detail' calendardissertation.id %}">View</a></td>
+                <td><a href="{% url 'dissertation:calendardissertation_update' calendardissertation.id %}">Edit</a></td>
+                <td><a href="{% url 'dissertation:calendardissertation_delete' calendardissertation.id %}">Delete</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No calendardissertations found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-  <a href="{% url 'dissertation:calendardissertation_create' %}" class="btn btn-primary">Create calendardissertation</a>
-  <a href="{% url 'event:adminpage' %}" class="btn btn-primary">Back</a>
+    <a href="{% url 'dissertation:calendardissertation_create' %}" class="btn btn-primary">Create Calendar Dissertation</a>
+    <a href="{% url 'event:adminpage' %}" class="btn btn-primary">Back</a>
 
 </body>
 </html>

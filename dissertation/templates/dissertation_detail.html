@@ -2,6 +2,54 @@
 <html>
 <head>
     <title>Dissertation Detail</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        a:hover {
+            color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+    </style>
 </head>
 <body>
   <h1>Dissertation Detail</h1>
@@ -27,9 +75,9 @@
   {% if user.is_superuser %}
     <p>Approved: {% if dissertation.is_approved %}Yes{% else %}No{% endif %}</p>
     <a href="{% url 'dissertation:dissertation_update' dissertation.id %}">Edit</a>
-    <a href="{% url 'dissertation:dissertation_list' %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'dissertation:dissertation_list' %}" class="btn-secondary">Back</a>
   {% else %}
-    <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'event:dashboard' %}" class="btn-secondary">Back</a>
   {% endif %}
 
 </body>

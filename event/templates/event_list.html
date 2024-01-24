@@ -2,14 +2,79 @@
 {% load myfilters %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>All Admin Events</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/students_pop_up.css' %}">
     <script src="{% static 'js/students_pop_up.js' %}"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #444;
+        }
+    </style>
 </head>
 <body>
     <h1>All Admin Events</h1>
+
     <h2>Calendar Courses</h2>
     <table>
         <thead>
@@ -25,8 +90,10 @@
                 <th>Is Active</th>
                 <th>Is Deleted</th>
                 <th>Is Online</th>
+                <th>Is Pending</th>
                 <th>Created At</th>
                 <th>Updated At</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -66,8 +133,7 @@
         </tbody>
     </table>
 
-
-    <h2>Calendar Courses</h2>
+    <h2>Calendar Seminars</h2>
     <table>
         <thead>
             <tr>
@@ -81,6 +147,7 @@
                 <th>Is Online</th>
                 <th>Created At</th>
                 <th>Updated At</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -116,10 +183,6 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <div id="popup-container">
-        <p>This is the pop-up content.</p>
-    </div>
 
     <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
     {% if user.is_authenticated %}

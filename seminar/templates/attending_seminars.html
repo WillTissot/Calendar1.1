@@ -1,55 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Seminars To Attend</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        td {
+            text-align: left;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            background-color: #3498db;
+            color: #fff;
+            margin: 2px;
+        }
+
+        a:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+
+        form {
+            display: inline-block;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+    </style>
 </head>
 <body>
-  <h1>Seminars To Attend</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>URL</th>
-        <th>Speaker</th>
-        <th>Location</th>
-        <th>Online</th>
-        <th>Date</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for calendarseminar in calendarseminars %}
-      <tr>
-        <td>{{ calendarseminar.seminar.title }}</td>
-        <td>{{ calendarseminar.seminar.url }}</td>
-        <td>{{ calendarseminar.seminar.speaker_fullname }}</td>
-        <td>{{ calendarseminar.seminar.location }}</td>
-        <td>{% if calendarseminar.seminar.is_online %}Yes{% else %}No{% endif %}</td>
-        <td>{{ calendarseminar.date }}</td>
-        <td>{{ calendarseminar.start_time }}</td>
-        <td>{{ calendarseminar.end_time }}</td>
-        <td><a href="{% url 'seminar:calendarseminar_detail' calendarseminar.id %}">View</a></td>
-        <td>
-            <form method="post" action="{% url 'seminar:enroll_to_calendar_seminar' %}">
-              {% csrf_token %}
-              <input type="hidden" name="calendarseminar_id" value="{{ calendarseminar.pk }}">
-              <input type="hidden" name="_method" value="DELETE">
-              <button type="submit">Delete</button>
-            </form>
-          </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <h1>Seminars To Attend</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>URL</th>
+                <th>Speaker</th>
+                <th>Location</th>
+                <th>Online</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for calendarseminar in calendarseminars %}
+                <tr>
+                    <td>{{ calendarseminar.seminar.title }}</td>
+                    <td>{{ calendarseminar.seminar.url }}</td>
+                    <td>{{ calendarseminar.seminar.speaker_fullname }}</td>
+                    <td>{{ calendarseminar.seminar.location }}</td>
+                    <td>{% if calendarseminar.seminar.is_online %}Yes{% else %}No{% endif %}</td>
+                    <td>{{ calendarseminar.date }}</td>
+                    <td>{{ calendarseminar.start_time }}</td>
+                    <td>{{ calendarseminar.end_time }}</td>
+                    <td>
+                        <a href="{% url 'seminar:calendarseminar_detail' calendarseminar.id %}">View</a>
+                        <form method="post" action="{% url 'seminar:enroll_to_calendar_seminar' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="calendarseminar_id" value="{{ calendarseminar.pk }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-  
-  {% if user.is_superuser %}
-    <a href="{% url 'seminar:calendarseminar_create' %}">Add New Calendar Seminar</a>
-    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
-  {% else %}
-    <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
-  {% endif %}
-
+    {% if user.is_superuser %}
+        <a href="{% url 'seminar:calendarseminar_create' %}">Add New Calendar Seminar</a>
+        <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+    {% else %}
+        <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
+    {% endif %}
 </body>
 </html>
