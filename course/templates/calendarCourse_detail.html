@@ -1,11 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Calendar Course Details</title>
+    <!-- Add Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Replace the above link with the latest version if available -->
+
+    <!-- Use Bootstrap styles for buttons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        /* Add some styles to make it more visually appealing */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #5bc0de; /* Blue color for emphasis */
+        }
+
+        p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        a.btn-secondary {
+            background-color: #3498db;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        a.btn-secondary:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
     <h1>Calendar Course Details</h1>
-    
+
     <p>Course: {{ calendarCourse.course.title }}</p>
     <p>Term: {{ calendarCourse.calendarSemester.semester.term }}</p>
     <p>Year: {{ calendarCourse.calendarSemester.semester.year }}</p>
@@ -18,6 +61,7 @@
     <p>Is Active: {% if calendarCourse.is_active %}Yes{% else %}No{% endif %}</p>
     <p>Is Online: {% if calendarCourse.is_online %}Yes{% else %}No{% endif %}</p>
     <p>Is Deleted: {% if calendarCourse.is_deleted %}Yes{% else %}No{% endif %}</p>
+    
     <a href="{% url 'course:calendarcourse_list' %}" class="btn btn-secondary">Back</a>
 </body>
 </html>

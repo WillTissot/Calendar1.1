@@ -1,18 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Delete CalendarSemester</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Delete CalendarSemester</title>
+    <!-- Add Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Replace the above link with the latest version if available -->
+    
+    <!-- Use Bootstrap styles for buttons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        /* Add some styles to make it more visually appealing */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #d9534f; /* Red color for emphasis */
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input.btn-danger {
+            background-color: #d9534f;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        input.btn-danger:hover {
+            background-color: #c9302c;
+        }
+
+        a.btn-secondary {
+            background-color: #3498db;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        a.btn-secondary:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Delete CalendarSemester</h1>
-    <p>Are you sure you want to delete {{ calendarSemester.semester.term }} {{ calendarSemester.semester.year }}?</p>
-    <form action="{% url 'course:calendarSemester_delete' sem_id=calendarSemester.id %}" method="post">
-      {% csrf_token %}
-      <input type="submit" value="Delete" class="btn btn-danger">
-      <a href="{% url 'course:calendarSemester_list' %}" class="btn btn-secondary">Back</a>
-    </form>
-  </div>
+    <div class="container">
+        <h1>Delete CalendarSemester</h1>
+        <p>Are you sure you want to delete {{ calendarSemester.semester.term }} {{ calendarSemester.semester.year }}?</p>
+        <form action="{% url 'course:calendarSemester_delete' sem_id=calendarSemester.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete" class="btn btn-danger">
+            <a href="{% url 'course:calendarSemester_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        </form>
+    </div>
 </body>
 </html>

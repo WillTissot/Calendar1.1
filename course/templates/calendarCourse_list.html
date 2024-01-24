@@ -1,13 +1,74 @@
-<!-- calendar_semesters.html -->
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Calendar Courses</title>
+    <!-- Add Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Replace the above link with the latest version if available -->
+
+    <!-- Use Bootstrap styles for tables and buttons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        /* Add some styles to make it more visually appealing */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #5bc0de; /* Blue color for emphasis */
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #5bc0de;
+            color: #fff;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        a.btn-secondary {
+            background-color: #3498db;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+            color: #fff;
+        }
+
+        a.btn-secondary:hover {
+            background-color: #2980b9;
+        }
+
+        .create-btn {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Calendar Courses</h1>
-    
+
     <table>
         <thead>
             <tr>
@@ -19,10 +80,12 @@
                 <th>Room Number</th>
                 <th>Start Time</th>
                 <th>End Time</th>
+                <th>Day</th>
                 <th>Is Online</th>
                 {% if user.is_superuser %}
                     <th>Is Active</th>
                     <th>Is Deleted</th>
+                    <th>Actions</th>
                 {% endif %}
             </tr>
         </thead>
@@ -55,7 +118,7 @@
     </table>
     {% if user.is_superuser %}
         <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
-        <a href="{% url 'course:calendarcourse_create' %}" class="btn btn-secondary">Create New CalendaCourse</a>
+        <a href="{% url 'course:calendarcourse_create' %}" class="btn btn-secondary create-btn">Create New Calendar Course</a>
     {% else %}
         <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
     {% endif %}
