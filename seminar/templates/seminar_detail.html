@@ -48,6 +48,9 @@
 </head>
 <body>
     <h1>Seminar Detail</h1>
+    {% if message %}
+        <h4>{{message}}</h4>
+    {% endif %}
     <p><strong>Title:</strong> {{ seminar.title }}</p>
     <p><strong>Url:</strong> {{ seminar.url }}</p>
     <p><strong>Speaker:</strong> {{ seminar.speaker_fullname }}</p>

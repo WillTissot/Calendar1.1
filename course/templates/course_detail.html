@@ -63,6 +63,9 @@
 </head>
 <body>
     <h1>Course Detail</h1>
+    {% if message %}
+        <h4>{{message}}</h4>
+    {% endif %}
     <p><strong>Code:</strong> {{ course.code }}</p>
     <p><strong>Title:</strong> {{ course.title }}</p>
     <p><strong>Department:</strong> {{ course.department.name }}</p>

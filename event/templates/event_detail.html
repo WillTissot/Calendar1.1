@@ -43,6 +43,9 @@
 </head>
 <body>
     <h1>Event Details</h1>
+    {% if message %}
+        <h4>{{message}}</h4>
+    {% endif %}
     <p><strong>Professor:</strong> {{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</p>
     <p><strong>Course:</strong> {{ event.calendarCourse.course.title }}</p>
     <p><strong>Semester:</strong> {{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</p>

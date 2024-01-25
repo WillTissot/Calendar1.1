@@ -51,6 +51,9 @@
 </head>
 <body>
     <h1>Seminar Calendar Detail</h1>
+    {% if message %}
+        <h4>{{message}}</h4>
+    {% endif %}
     <p><strong>Title:</strong> {{ calendarseminar.seminar.title }}</p>
     <p><strong>Url:</strong> {{ calendarseminar.seminar.url }}</p>
     <p><strong>Speaker:</strong> {{ calendarseminar.seminar.speaker_fullname }}</p>

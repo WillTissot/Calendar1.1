@@ -64,6 +64,9 @@
 </head>
 <body>
     <h1>Student Detail</h1>
+    {% if message %}
+        <h4>{{message}}</h4>
+    {% endif %}
     <p><strong>Name:</strong> {{ student.user.get_full_name }}</p>
     <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
     <p><strong>Username:</strong> {{ student.user.username }}</p>

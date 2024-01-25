@@ -124,18 +124,25 @@ def event_update(request, ev_id):
 def event_delete(request, ev_id):
     event = get_object_or_404(Event, id=ev_id)
 
-    if request.method == 'POST':
-        if event.calendarSeminar:
-            calSeminar  = event.calendarSeminar
-            calSeminar.onCalendar = False
-            calSeminar.save()
-        event.delete()
-        return redirect('event:sec_event_list')
+    try:
+        if request.method == 'POST':
+            if event.calendarSeminar:
+                calSeminar  = event.calendarSeminar
+                calSeminar.onCalendar = False
+                calSeminar.save()
+            event.delete()
+            return redirect('event:sec_event_list')
 
-    context = {
-        'event': event
-    }
-    return render(request, 'event_delete.html', context)
+        context = {
+            'event': event
+        }
+        return render(request, 'event_delete.html', context)
+    except Exception as e:
+        context = {
+            'event': event,
+            'message' : 'Event can not be deleted. People are participating in.'
+        }
+        return render(request, 'event_detail.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
 def event_create(request):

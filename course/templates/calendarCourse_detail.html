@@ -48,7 +48,9 @@
 </head>
 <body>
     <h1>Calendar Course Details</h1>
-
+    {% if message %}
+        <h4>{{message}}</h4>
+    {% endif %}
     <p>Course: {{ calendarCourse.course.title }}</p>
     <p>Term: {{ calendarCourse.calendarSemester.semester.term }}</p>
     <p>Year: {{ calendarCourse.calendarSemester.semester.year }}</p>

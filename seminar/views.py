@@ -41,14 +41,21 @@ def seminar_update(request, seminar_id):
 def seminar_delete(request, seminar_id):
     seminar = get_object_or_404(Seminar, id=seminar_id)
 
-    if request.method == 'POST':
-        seminar.delete()
-        return redirect('seminar:seminar_list')
+    try:
+        if request.method == 'POST':
+            seminar.delete()
+            return redirect('seminar:seminar_list')
 
-    context = {
-        'seminar': seminar
-    }
-    return render(request, 'seminar_delete.html', context)
+        context = {
+            'seminar': seminar
+        }
+        return render(request, 'seminar_delete.html', context)
+    except Exception as e:
+        context = {
+            'message':'Seminar can not be deleted. People are participating in it.',
+            'seminar': seminar
+        }   
+        return render(request, 'seminar_detail.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
 def seminar_create(request):
@@ -106,14 +113,22 @@ def calendarseminar_update(request, calSeminar_id):
 @user_passes_test(lambda u: u.is_superuser)
 def calendarseminar_delete(request, calSeminar_id):
     calendarseminar = get_object_or_404(CalendarSeminar, id=calSeminar_id)
-    if request.method == 'POST':
-        calendarseminar.delete()
-        return redirect('seminar:calendarseminar_list')
 
-    context = {
-        'calendarseminar': calendarseminar
-    }
-    return render(request, 'calendarseminar_delete.html', context)
+    try:
+        if request.method == 'POST':
+            calendarseminar.delete()
+            return redirect('seminar:calendarseminar_list')
+
+        context = {
+            'calendarseminar': calendarseminar
+        }
+        return render(request, 'calendarseminar_delete.html', context)
+    except Exception as e:
+        context = {
+            'message' : 'Calendar seminar can not be deleted. People are participating in.',
+            'calendarseminar': calendarseminar
+        }
+        return render(request, 'calendarseminar_detail.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
 def calendarseminar_create(request):

@@ -36,14 +36,21 @@ def course_update(request, cou_id):
 def course_delete(request, cou_id):
     course = get_object_or_404(Course, id=cou_id)
 
-    if request.method == 'POST':
-        course.delete()
-        return redirect('course:course_list')
+    try:
+        if request.method == 'POST':
+            course.delete()
+            return redirect('course:course_list')
 
-    context = {
-        'course': course
-    }
-    return render(request, 'course_delete.html', context)
+        context = {
+            'course': course
+        }
+        return render(request, 'course_delete.html', context)
+    except Exception as e:
+        context = {
+            'course': course,
+            'message' : 'Course can not be deleted. Students are participating.'
+        }
+        return render(request, 'course_detail.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
 def course_create(request):
@@ -119,15 +126,21 @@ def calendarcourse_create(request):
 def calendarcourse_delete(request, cal_id):
     calCourse = get_object_or_404(CalendarCourse, id=cal_id)
 
-    if request.method == 'POST':
-        calCourse.delete()
-        return redirect('course:calendarcourse_list')
+    try:
+        if request.method == 'POST':
+            calCourse.delete()
+            return redirect('course:calendarcourse_list')
 
-    context = {
-        'calendarCourse': calCourse
-    }
-    return render(request, 'calendarCourse_delete.html', context)
-
+        context = {
+            'calendarCourse': calCourse
+        }
+        return render(request, 'calendarCourse_delete.html', context)
+    except Exception as e:
+        context = {
+            'calendarCourse': calCourse,
+            'message' : 'Calendar course can not be deleted. Students are participating.'
+        }
+        return render(request, 'calendarCourse_detail.html', context)   
 
 #semester CRUD
 
@@ -177,14 +190,21 @@ def semester_create(request):
 def semester_delete(request, sem_id):
     semester = get_object_or_404(Semester, id=sem_id)
 
-    if request.method == 'POST':
-        semester.delete()
-        return redirect('course:semester_list')
+    try:
+        if request.method == 'POST':
+            semester.delete()
+            return redirect('course:semester_list')
 
-    context = {
-        'semester': semester
-    }
-    return render(request, 'semester_delete.html', context)
+        context = {
+            'semester': semester
+        }
+        return render(request, 'semester_delete.html', context)
+    except Exception as e:
+        context = {
+            'semester': semester,
+            'message' : 'Semester can not be deleted. Students are participating.'
+        }
+        return render(request, 'semester_detail.html', context)
 
 
 #calendar semesters CRUD
@@ -239,11 +259,18 @@ def calendarsemester_create(request):
 def calendarsemester_delete(request, sem_id):
     calSemester = get_object_or_404(CalendarSemester, id=sem_id)
 
-    if request.method == 'POST':
-        calSemester.delete()
-        return redirect('course:calendarSemester_list')
+    try:
+        if request.method == 'POST':
+            calSemester.delete()
+            return redirect('course:calendarSemester_list')
 
-    context = {
-        'calendarSemester': calSemester
-    }
-    return render(request, 'calendarSemester_delete.html', context)
+        context = {
+            'calendarSemester': calSemester
+        }
+        return render(request, 'calendarSemester_delete.html', context)
+    except Exception as e:
+        context = {
+            'calendarSemester': calSemester,
+            'message' : 'Calendar Semester can not deleted. Students are participating.'
+        }
+        return render(request, 'calendarSemester_detail.html', context)

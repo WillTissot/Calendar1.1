@@ -41,14 +41,21 @@ def professor_update(request, prof_id):
 def professor_delete(request, prof_id):
     professor = get_object_or_404(Professor, id=prof_id)
 
-    if request.method == 'POST':
-        professor.delete()
-        return redirect('student_list')
+    try:
+        if request.method == 'POST':
+            professor.delete()
+            return redirect('student_list')
 
-    context = {
-        'professor': professor
-    }
-    return render(request, 'professor_delete.html', context)
+        context = {
+            'professor': professor
+        }
+        return render(request, 'professor_delete.html', context)
+    except Exception as e:
+        context = {
+            'message' : 'Proffesor can not be deleted because he is participating in classes. You can deactivate him instead.',
+            'professor': professor
+        }
+        return render(request, 'professor_detail.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
 def professor_create(request):

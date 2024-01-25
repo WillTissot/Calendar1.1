@@ -57,6 +57,9 @@
 </head>
 <body>
     <h1>Professor Detail</h1>
+    {% if message %}
+        <h4>{{message}}</h4>
+    {% endif %}
     <p><strong>Name:</strong> {{ professor.user.get_full_name }}</p>
     <p><strong>Department:</strong> {{ professor.department.name }}</p>
     {% if user.is_superuser %}
