@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from course.models import Department, CalendarCourse
 from course.forms import CalendarCourseProfForm
-from professor.forms import ProfessorForm
+from professor.forms import  ProfessorForm
 from event.models import Event, Change
 from professor.models import Professor
 from datetime import datetime

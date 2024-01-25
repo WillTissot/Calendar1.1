@@ -57,9 +57,26 @@
             margin-right: 5px;
         }
 
-        .btn-secondary, .btn-create {
-            display: inline-block;
+        a.logout-btn {
             background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        a.logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background-color: #04AA6D;
             color: #fff;
             border: none;
             border-radius: 4px;
@@ -71,8 +88,8 @@
             transition: background-color 0.3s ease;
         }
 
-        .btn-secondary:hover, .btn-create:hover {
-            background-color: #c0392b;
+        .btn-secondary:hover {
+            background-color: #04AA6D;
         }
     </style>
 </head>
@@ -92,9 +109,9 @@
                     <td>{{ professor.user.get_full_name }}</td>
                     <td>{{ professor.department.name }}</td>
                     <td>
-                        <a href="{% url 'professor:professor_detail' prof_id=professor.pk %}">View</a>
-                        <a href="{% url 'professor:professor_update' prof_id=professor.pk %}">Edit</a>
-                        <a href="{% url 'professor:professor_delete' prof_id=professor.pk %}">Delete</a>
+                        <a href="{% url 'professor:professor_detail' prof_id=professor.pk %}"><i class="fas fa-eye"></i>View</a>
+                        <a href="{% url 'professor:professor_update' prof_id=professor.pk %}"><i class="fas fa-edit"></i>Edit</a>
+                        <a href="{% url 'professor:professor_delete' prof_id=professor.pk %}"><i class="fas fa-trash"></i>Delete</a>
                     </td>
                 </tr>
             {% empty %}
@@ -104,7 +121,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
-    <a href="{% url 'professor:professor_create' %}" class="btn btn-create"><i class="fas fa-plus"></i> Create New Professor</a>
+    <a href="{% url 'event:adminpage' %}" class="logout-btn"><i class="fas fa-arrow-left"></i> Back</a>
+    <a href="{% url 'professor:professor_create' %}" class="btn btn-secondary"><i class="fas fa-plus"></i> Create New Professor</a>
 </body>
 </html>

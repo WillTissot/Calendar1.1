@@ -76,7 +76,7 @@
 
         .btn-secondary {
             display: inline-block;
-            background-color: #e74c3c;
+            background-color: #04AA6D;
             color: #fff;
             border: none;
             border-radius: 4px;
@@ -89,7 +89,7 @@
         }
 
         .btn-secondary:hover {
-            background-color: #c0392b;
+            background-color: #04AA6D;
         }
     </style>
 </head>
@@ -111,9 +111,9 @@
                     <td>{{ student.date_of_birth }}</td>
                     <td>{{ student.department.name }}</td>
                     <td>
-                        <a href="{% url 'student:student_detail' det_id=student.pk %}">View</a>
-                        <a href="{% url 'student:student_update' up_id=student.pk %}">Edit</a>
-                        <a href="{% url 'student:student_delete' del_id=student.pk %}">Delete</a>
+                        <a href="{% url 'student:student_detail' det_id=student.pk %}"><i class="fas fa-eye"></i>View</a>
+                        <a href="{% url 'student:student_update' up_id=student.pk %}"><i class="fas fa-edit"></i>Edit</a>
+                        <a href="{% url 'student:student_delete' del_id=student.pk %}"><i class="fas fa-trash"></i>Delete</a>
                     </td>
                 </tr>
             {% empty %}
@@ -123,7 +123,7 @@
             {% endfor %}
         </tbody>
     </table>
+    <a href="{% url 'event:adminpage' %}" class="logout-btn"><i class="fas fa-arrow-left"></i> Back</a>
     <a href="{% url 'student:student_create' %}" class="btn btn-secondary"><i class="fas fa-plus"></i> Create New Student</a>
-    <a href="{% url 'event:adminpage' %}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Back</a>
 </body>
 </html>

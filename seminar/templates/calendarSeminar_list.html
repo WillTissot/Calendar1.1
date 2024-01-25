@@ -63,7 +63,7 @@
         }
 
         .btn-secondary {
-            background-color: #95a5a6;
+            background-color: #e74c3c;
             color: #fff;
             text-decoration: none;
             padding: 10px 20px;
@@ -74,7 +74,22 @@
         }
 
         .btn-secondary:hover {
-            background-color: #7f8c8d;
+            background-color: #e74c3c;
+        }
+
+        .btn-create {
+            background-color: #04AA6D;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .btn-create:hover {
+            background-color: #04AA6D;
         }
     </style>
 </head>
@@ -127,7 +142,7 @@
     </table>
 
     {% if user.is_superuser %}
-    <a href="{% url 'seminar:calendarseminar_create' %}" class="btn-secondary">Add New Calendar Seminar</a>
+    <a href="{% url 'seminar:calendarseminar_create' %}" class="btn-create">Add New Calendar Seminar</a>
     <a href="{% url 'event:adminpage' %}" class="btn-secondary">Back</a>
     {% else %}
     <a href="{% url 'event:dashboard' %}" class="btn-secondary">Back</a>

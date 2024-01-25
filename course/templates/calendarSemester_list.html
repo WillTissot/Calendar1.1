@@ -45,7 +45,7 @@
         }
 
         a.btn-secondary {
-            background-color: #3498db;
+            background-color: #e74c3c;
             border: none;
             border-radius: 4px;
             padding: 10px 20px;
@@ -56,11 +56,11 @@
         }
 
         a.btn-secondary:hover {
-            background-color: #2980b9;
+            background-color: #e74c3c;
         }
 
         a.btn-primary {
-            background-color: #5bc0de;
+            background-color: #04AA6D;
             border: none;
             border-radius: 4px;
             padding: 10px 20px;
@@ -71,7 +71,7 @@
         }
 
         a.btn-primary:hover {
-            background-color: #46b8da;
+            background-color: #04AA6D;
         }
     </style>
 </head>
@@ -94,9 +94,9 @@
                 <td>{{ calendarSemester.startDate }}</td>
                 <td>{{ calendarSemester.endDate }}</td>
                 <td>
-                    <a href="{% url 'course:calendarSemester_detail' sem_id=calendarSemester.pk %}" class="btn btn-primary"><i class="fas fa-eye"></i> View</a>
-                    <a href="{% url 'course:calendarSemester_update' sem_id=calendarSemester.pk %}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                    <a href="{% url 'course:calendarSemester_delete' sem_id=calendarSemester.pk %}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                    <a href="{% url 'course:calendarSemester_detail' sem_id=calendarSemester.pk %}"><i class="fas fa-eye"></i> View</a>
+                    <a href="{% url 'course:calendarSemester_update' sem_id=calendarSemester.pk %}"><i class="fas fa-edit"></i> Edit</a>
+                    <a href="{% url 'course:calendarSemester_delete' sem_id=calendarSemester.pk %}"><i class="fas fa-trash-alt"></i> Delete</a>
                 </td>
             </tr>
             {% endfor %}

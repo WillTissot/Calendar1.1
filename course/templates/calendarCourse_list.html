@@ -45,7 +45,7 @@
         }
 
         a.btn-secondary {
-            background-color: #3498db;
+            background-color: #e74c3c;
             border: none;
             border-radius: 4px;
             padding: 10px 20px;
@@ -58,11 +58,21 @@
         }
 
         a.btn-secondary:hover {
-            background-color: #2980b9;
+            background-color: #e74c3c;
         }
 
         .create-btn {
             margin-top: 20px;
+            background-color: #04AA6D;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+            color: #fff;
         }
     </style>
 </head>
@@ -106,9 +116,9 @@
                     <td>{% if calendarCourse.is_active %}Yes{% else %}No{% endif %}</td>
                     <td>{% if calendarCourse.is_deleted %}Yes{% else %}No{% endif %}</td>
                     <td>
-                        <a href="{% url 'course:calendarcourse_detail' cal_id=calendarCourse.pk %}">View</a>
-                        <a href="{% url 'course:calendarcourse_update' cal_id=calendarCourse.pk %}">Edit</a>
-                        <a href="{% url 'course:calendarcourse_delete' cal_id=calendarCourse.pk %}">Delete</a>
+                        <a href="{% url 'course:calendarcourse_detail' cal_id=calendarCourse.pk %}"><i class="fas fa-eye"></i>View</a>
+                        <a href="{% url 'course:calendarcourse_update' cal_id=calendarCourse.pk %}"><i class="fas fa-edit"></i>Edit</a>
+                        <a href="{% url 'course:calendarcourse_delete' cal_id=calendarCourse.pk %}"><i class="fas fa-trash"></i>Delete</a>
                         <a href="{% url 'event:create_calendar_event' cal_id=calendarCourse.pk %}">Create Events</a>
                     </td>
                 {% endif %}
@@ -118,7 +128,7 @@
     </table>
     {% if user.is_superuser %}
         <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
-        <a href="{% url 'course:calendarcourse_create' %}" class="btn btn-secondary create-btn">Create New Calendar Course</a>
+        <a href="{% url 'course:calendarcourse_create' %}" class="btn create-btn">Create New Calendar Course</a>
     {% else %}
         <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
     {% endif %}

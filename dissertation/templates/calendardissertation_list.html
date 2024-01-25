@@ -57,11 +57,46 @@
         }
 
         .btn-secondary {
-            background-color: #95a5a6;
+            background-color: #c0392b;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 5px;
         }
 
         .btn-secondary:hover {
-            background-color: #7f8c8d;
+            background-color: #c0392b;
+        }
+
+        .btn-create {
+            background-color: #04AA6D;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .btn-create:hover {
+            background-color: #04AA6D;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #2980b9;
+        }
+
+        a i {
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -117,8 +152,8 @@
         </tbody>
     </table>
 
-    <a href="{% url 'dissertation:calendardissertation_create' %}" class="btn btn-primary">Create Calendar Dissertation</a>
-    <a href="{% url 'event:adminpage' %}" class="btn btn-primary">Back</a>
+    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'dissertation:calendardissertation_create' %}" class="btn btn-create">Create Calendar Dissertation</a>
 
 </body>
 </html>

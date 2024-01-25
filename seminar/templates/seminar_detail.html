@@ -34,7 +34,7 @@
         }
 
         .btn-secondary {
-            background-color: #95a5a6;
+            background-color: #c0392b;
             color: #fff;
             padding: 10px 20px;
             border-radius: 4px;
@@ -42,7 +42,19 @@
         }
 
         .btn-secondary:hover {
-            background-color: #7f8c8d;
+            background-color: #c0392b;
+        }
+
+        .btn-edit {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .btn-edit:hover {
+            background-color: #3498db;
         }
     </style>
 </head>
@@ -57,7 +69,7 @@
     <p><strong>Location:</strong> {{ seminar.location }}</p>
     <p>Online: {% if seminar.is_online %}Yes{% else %}No{% endif %}</p>
 
-    <a href="{% url 'seminar:seminar_update' seminar.id %}">Edit</a>
     <a href="{% url 'seminar:seminar_list' %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'seminar:seminar_update' seminar.id %}" class="btn btn-edit">Edit</a>
 </body>
 </html>

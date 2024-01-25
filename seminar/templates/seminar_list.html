@@ -3,6 +3,7 @@
 <head>
     <title>All Seminars</title>
     <style>
+        /* Add some styles to make it more visually appealing */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
@@ -15,12 +16,10 @@
         }
 
         table {
-            width: 100%;
+            width: 80%;
+            margin: 20px auto;
             border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
         }
 
         th, td {
@@ -34,34 +33,63 @@
             color: #fff;
         }
 
-        tr:hover {
+        tbody tr:hover {
             background-color: #f5f5f5;
         }
 
         a {
-            display: inline-block;
-            padding: 8px 15px;
             text-decoration: none;
-            color: #fff;
-            border-radius: 4px;
-            margin: 5px;
+            color: #3498db;
+            font-weight: bold;
+            transition: color 0.3s ease;
         }
 
-        .btn-primary {
-            background-color: #3498db;
+        a:hover {
+            color: #2980b9;
+        }
+
+        a i {
+            margin-right: 5px;
+        }
+
+        a.logout-btn {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        a.logout-btn:hover {
+            background-color: #c0392b;
         }
 
         .btn-secondary {
-            background-color: #95a5a6;
+            display: inline-block;
+            background-color: #04AA6D;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            margin-top: 20px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
         }
 
-        .btn-secondary:hover, .btn-primary:hover {
-            background-color: #2c3e50;
+        .btn-secondary:hover {
+            background-color: #04AA6D;
         }
     </style>
 </head>
 <body>
-    <h1>All Seminars</h1>
+    <h1>Seminars</h1>
     <table>
         <thead>
             <tr>
@@ -83,9 +111,9 @@
                 <td>{% if seminar.is_online %}Yes{% else %}No{% endif %}</td>
                 {% if user.is_superuser %}
                 <td>
-                    <a href="{% url 'seminar:seminar_detail' seminar.id %}" class="btn-primary">View</a>
-                    <a href="{% url 'seminar:seminar_update' seminar.id %}" class="btn-primary">Edit</a>
-                    <a href="{% url 'seminar:seminar_delete' seminar.id %}" class="btn-primary">Delete</a>
+                    <a href="{% url 'seminar:seminar_detail' seminar.id %}"><i class="fas fa-eye"></i>View</a>
+                    <a href="{% url 'seminar:seminar_update' seminar.id %}"><i class="fas fa-edit"></i>Edit</a>
+                    <a href="{% url 'seminar:seminar_delete' seminar.id %}"><i class="fas fa-trash"></i>Delete</a>
                 </td>
                 {% endif %}
             </tr>
@@ -94,8 +122,8 @@
     </table>
 
     {% if user.is_superuser %}
-    <a href="{% url 'seminar:seminar_create' %}" class="btn btn-primary">Create Seminar</a>
-    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'event:adminpage' %}" class="btn logout-btn">Back</a>
+    <a href="{% url 'seminar:seminar_create' %}" class="btn btn-secondary">Create Seminar</a>
     {% endif %}
 
 </body>

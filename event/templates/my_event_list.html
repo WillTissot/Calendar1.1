@@ -61,7 +61,11 @@
         }
 
         .btn-secondary {
-            background-color: #333;
+            background-color: #e74c3c;
+        }
+
+        .btn-changes {
+            background-color: #4285f4;
         }
 
         a {
@@ -101,7 +105,7 @@
                     <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes</button></td>
                 {% endif %}
                 {% if user.is_superuser %}
-                    <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes To Approve</button></td>
+                    <td><button class="btn btn-changes" data-ev-id="{{ event.pk }}">See Changes To Approve</button></td>
                 {% endif %}
             </tr>
         {% endfor %}
@@ -111,9 +115,6 @@
         <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
     {% else %}
         <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
-    {% endif %}
-    {% if user.is_authenticated %}
-        <a href="{% url 'accounts:logout' %}" class="btn btn-secondary">Logout</a>
     {% endif %}
 </body>
 </html>

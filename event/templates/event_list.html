@@ -61,14 +61,14 @@
             font-size: 16px;
             margin: 5px;
             cursor: pointer;
-            background-color: #555;
+            background-color: #e74c3c;
             color: #fff;
             border: none;
             border-radius: 4px;
         }
 
         .btn-secondary:hover {
-            background-color: #444;
+            background-color: #e74c3c;
         }
     </style>
 </head>
@@ -185,9 +185,6 @@
     </table>
 
     <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
-    {% if user.is_authenticated %}
-        <a href="{% url 'accounts:logout' %}">Logout</a>
-    {% endif %}
 </body>
 </html>
 

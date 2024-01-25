@@ -42,7 +42,7 @@
 
         a {
             text-decoration: none;
-            color: #fff;
+            color: #3498db;
             font-weight: bold;
             display: inline-block;
             margin-top: 20px;
@@ -72,6 +72,7 @@
     </style>
 </head>
 <body>
+    <h1>Semester</h1>
     <table>
         <thead>
             <tr>
@@ -86,9 +87,9 @@
                 <td>{{ semester.term }}</td>
                 <td>{{ semester.year }}</td>
                 <td>
-                    <a href="{% url 'course:semester_detail' sem_id=semester.pk %}" class="btn btn-secondary"><i class="fas fa-eye"></i> View</a>
-                    <a href="{% url 'course:semester_update' sem_id=semester.pk %}" class="btn btn-secondary"><i class="fas fa-edit"></i> Edit</a>
-                    <a href="{% url 'course:semester_delete' sem_id=semester.pk %}" class="btn btn-secondary"><i class="fas fa-trash-alt"></i> Delete</a>
+                    <a href="{% url 'course:semester_detail' sem_id=semester.pk %}"><i class="fas fa-eye"></i> View</a>
+                    <a href="{% url 'course:semester_update' sem_id=semester.pk %}"><i class="fas fa-edit"></i> Edit</a>
+                    <a href="{% url 'course:semester_delete' sem_id=semester.pk %}"><i class="fas fa-trash-alt"></i> Delete</a>
                 </td>
             </tr>
             {% endfor %}
