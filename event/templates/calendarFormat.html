@@ -1,8 +1,13 @@
 <style>
   /* Add some styles to make the calendar smaller and visually appealing */
   #calendar {
-    max-width: 800px; /* Adjust the maximum width as needed */
+    max-height: 800px; /* Adjust the maximum width as needed */
     margin: 0 auto;
+  }
+
+  .fc-day {
+    width: 200px; /* Adjust the width of day cells as needed */
+    height: 80px; /* Adjust the height of day cells as needed */
   }
 
   .btn-container {
@@ -11,7 +16,7 @@
   }
 
   .btn-secondary {
-    background-color: #95a5a6;
+    background-color: #e74c3c;
     color: #fff;
     padding: 10px 20px;
     text-decoration: none;
@@ -20,7 +25,7 @@
   }
 
   .btn-secondary:hover {
-    background-color: #7f8c8d;
+    background-color: #e74c3c;
   }
 </style>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>

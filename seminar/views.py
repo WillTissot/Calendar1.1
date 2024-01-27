@@ -156,7 +156,6 @@ def enroll_to_calendar_seminar(request):
         calendarSeminar = get_object_or_404(CalendarSeminar, id=calendarseminar_id)
         newEntryStudentEntry = EnrolledStudentToCalendarSeminars(
             calendarSeminar=calendarSeminar,
-            onCalendar=False
         )
         newEntryStudentEntry.save()
         newEntryStudentEntry.students.add(student)

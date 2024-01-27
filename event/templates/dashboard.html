@@ -65,7 +65,7 @@
     <nav>
         <ul>
             {% if user.is_active %}
-                <li><a href="{% url 'event:calX' %}">My Events</a></li>
+                <li><a href="{% url 'event:calendarFormat' %}">My Events</a></li>
                 <li><a href="{% url 'event:get_events_list' %}">Events List</a></li>
                 {% if student %}
                     <li><a href="{% url 'student:enroll_to_courses' %}">Enroll to a Course</a></li>

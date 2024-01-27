@@ -17,7 +17,7 @@ urlpatterns = [
     path('event/create/calendar/event/<int:cal_id>/', views.create_calendar_event, name='create_calendar_event'),
     path('secretary/events/changes/action/', views.get_all_requests, name='get_all_requests'),
     path('secretary/users/approve', views.validate_user, name='users_approve'),
-    path('xxx/as', views.calendar_view, name='calX'),
+    path('myevents/calerdar/format', views.calendar_view, name='calendarFormat'),
     path('xxx/ad', views.get_events, name='get_events'),
     path('event/my-event-list', views.event_list, name='get_events_list')
 ]

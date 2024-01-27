@@ -10,25 +10,64 @@ from django.db.models import Count
 from django import template
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+from seminar.models import EnrolledStudentToCalendarSeminars
+from dissertation.models import Dissertation, CalendarDissertation
 
 def get_events(request):
     user= request.user
-    #events = Event.objects.all()  # Assuming you have a model called 'Event' with appropriate fields
-    events = Event.objects.filter(calendarCourse__enrolledstudentsoncalendarcourse__student=user.student)
+
+    if hasattr(request.user, 'student'):
+        coursesEvents = Event.objects.filter(calendarCourse__enrolledstudentsoncalendarcourse__student=user.student).order_by('calendarCourse__start_time')
+        seminarsEvents = Event.objects.filter(calendarSeminar__enrolledstudenttocalendarseminars__students=user.student)
+        dissertationEvent = Event.objects.get(calendarDissertation__dissertation__student=user.student)
+    if hasattr(request.user, 'professor'):
+        coursesEvents = Event.objects.filter(calendarCourse__course__professor=user.professor)
+        dissertationEventsAsSupervisor = Event.objects.filter(calendarDissertation__dissertation__supervisor=user.professor)
+        dissertationEventsAsSBoardMember = Event.objects.filter(calendarDissertation__dissertation__board=user.professor)
     data = []
-    for event in events:
-        data.append({
-            'title': event.calendarCourse.course.title,
-            'start': event.date.isoformat(),
-            'end': event.date.isoformat()  # If your events have end dates
-            # Add other necessary fields for the events
-        })
-    return JsonResponse(data, safe=False)
+    if hasattr(request.user, 'student'):
+        for coursesEvent in coursesEvents:
+            data.append({
+                'title': coursesEvent.calendarCourse.course.title + ' ' + coursesEvent.calendarCourse.start_time.strftime('%H:%M') + ' - ' + coursesEvent.calendarCourse.end_time.strftime('%H:%M'),
+                'start': coursesEvent.date.isoformat(),
+                'end': coursesEvent.date.isoformat()  
+            })
+        for seminarsEvent in seminarsEvents:
+            data.append({
+                'title': seminarsEvent.calendarSeminar.seminar.title,
+                'start': seminarsEvent.date.isoformat(),
+                'end': seminarsEvent.date.isoformat()  
+            })
+        if dissertationEvent is not None:
+            data.append({
+                'title': dissertationEvent.calendarDissertation.dissertation.title,
+                'start': dissertationEvent.date.isoformat(),
+                'end': dissertationEvent.date.isoformat()  
+            })
+        return JsonResponse(data, safe=False)
+    if hasattr(request.user, 'professor'):
+        for coursesEvent in coursesEvents:
+            data.append({
+                'title': coursesEvent.calendarCourse.course.title + ' ' + coursesEvent.calendarCourse.start_time.strftime('%H:%M') + ' - ' + coursesEvent.calendarCourse.end_time.strftime('%H:%M'),
+                'start': coursesEvent.date.isoformat(),
+                'end': coursesEvent.date.isoformat()  
+            })
+        for eventAsSupervisor in dissertationEventsAsSupervisor:
+            data.append({
+                'title': eventAsSupervisor.calendarSeminar.seminar.title,
+                'start': eventAsSupervisor.date.isoformat(),
+                'end': eventAsSupervisor.date.isoformat()  
+            })
+        for eventAsBoardMember in dissertationEventsAsSBoardMember:
+            data.append({
+                'title': eventAsBoardMember.calendarSeminar.seminar.title,
+                'start': eventAsBoardMember.date.isoformat(),
+                'end': eventAsBoardMember.date.isoformat()  
+            })
+        return JsonResponse(data, safe=False)
 
 def calendar_view(request):
-    return render(request, 'calX.html')
-
-
+    return render(request, 'calendarFormat.html')
 
 
 @login_required
@@ -275,18 +314,3 @@ def event_create(request):
                 'professors' : professors
             }
     return render(request, 'event_create.html', context)
-
-# @user_passes_test(lambda u: u.is_superuser)
-# def create_calendar_seminar_event(request, sem_id):
-#     calSeminar = get_object_or_404(CalendarCourse, id = sem_id )
-#     if not calSeminar.onCalendar:
-#         newEvent = Event(
-#         calendarSeminar=calSeminar,
-#         created_at= datetime.now(),
-#         date = calSeminar.date
-#         )
-#         newEvent.save()
-#         calSeminar.onCalendar = True
-#         calSeminar.save()
-    
-#     return redirect('course:calendarcourse_list')
