@@ -69,11 +69,13 @@ def adminpage(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def sec_event_list(request):
-    calCourseEvents = Event.objects.filter(calendarSeminar__isnull=True)
-    calSeminarEvents = Event.objects.filter(calendarCourse__isnull=True)
+    calCourseEvents = Event.objects.filter(calendarSeminar__isnull=True, calendarDissertation__isnull=True)
+    calSeminarEvents = Event.objects.filter(calendarCourse__isnull=True, calendarDissertation__isnull=True)
+    calDissertationEvents = Event.objects.filter(calendarSeminar__isnull=True, calendarCourse__isnull=True)
     context = {
         'calCourseEvents': calCourseEvents,
-        'calSeminarEvents' : calSeminarEvents
+        'calSeminarEvents' : calSeminarEvents,
+        'calDissertationEvents' : calDissertationEvents
     }
     return render(request, 'event_list.html', context)
 
@@ -243,3 +245,48 @@ def validate_user(request):
             'users' : users
         }
         return render(request, 'users.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def event_create(request):
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request
+        form = EventForm(request.POST)
+
+        if form.is_valid():
+            # create a new student object from the form data
+            event = form.save()
+
+            # redirect to the student detail page for the new student object
+            return redirect('event:event_detail', ev_id=event.pk)
+        else:
+            # If the form is not valid, print the form errors for debugging
+            print(form.errors)
+    else:
+        # display a blank form
+        form = EventForm()
+
+    # render the create student form template with the form instance
+    courses = Course.objects.all()
+    professors = Professor.objects.all()
+    context = {
+                'form': form,
+                'departments': courses,
+                'professors' : professors
+            }
+    return render(request, 'event_create.html', context)
+
+# @user_passes_test(lambda u: u.is_superuser)
+# def create_calendar_seminar_event(request, sem_id):
+#     calSeminar = get_object_or_404(CalendarCourse, id = sem_id )
+#     if not calSeminar.onCalendar:
+#         newEvent = Event(
+#         calendarSeminar=calSeminar,
+#         created_at= datetime.now(),
+#         date = calSeminar.date
+#         )
+#         newEvent.save()
+#         calSeminar.onCalendar = True
+#         calSeminar.save()
+    
+#     return redirect('course:calendarcourse_list')

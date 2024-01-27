@@ -79,7 +79,6 @@
     <table>
         <thead>
             <tr>
-                <th>Students</th>
                 <th>Professor</th>
                 <th>Course</th>
                 <th>Semester</th>
@@ -100,7 +99,7 @@
             {% for event in calCourseEvents %}
                 <tr>
                     <td>{{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</td>
-                    <td>{{ event.calendarCourse.course.title }}<td>
+                    <td>{{ event.calendarCourse.course.title }}</td>
                     <td>{{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</td>
                     {% with recentChange=event|filter_changes %}
                     {% if recentChange %}
@@ -154,7 +153,7 @@
             {% for event in calSeminarEvents %}
                 <tr>
                     <td>{{ event.calendarSeminar.seminar.title }}</td>
-                    <td>{{ event.calendarSeminar.seminar.url }}<td>
+                    <td>{{ event.calendarSeminar.seminar.url }}</td>
                     <td>{{ event.calendarSeminar.seminar.speaker_fullname }}</td>
                     <td>{{ event.calendarSeminar.seminar.location }}</td>
                     {% with recentChange=event|filter_changes %}
@@ -165,10 +164,9 @@
                             <td>{{ recentChange.is_online }}</td>
                         {% else %}
                             <td>{{ event.calendarSeminar.seminar.date }}</td>
-                            <td>{{ event.calendarCourse.start_time }}</td>
-                            <td>{{ event.calendarCourse.end_time }}</td>
+                            <td>{{ event.calendarSeminar.start_time }}</td>
+                            <td>{{ event.calendarSeminar.end_time }}</td>
                             <td>{{ event.calendarSeminar.seminar.is_online }}</td>
-                            <td></td>
                         {% endif %}
                             <td>{{ event.created_at }}</td>
                             <td>{{ event.updated_at }}</td>
@@ -179,6 +177,71 @@
                         <a href="{% url 'event:event_delete' ev_id=event.pk %}">Delete</a>
                     </td>
                     <td><button class="btn-show-students" data-ev-id="{{ event.pk }}" data-ev-kind="calendarseminar">Show Enrolled Students</button></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Calendar Dissertations</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Student</th>
+                <th>Supervisor</th>
+                <th>Url</th>
+                <th>Location</th>
+                <th>Open to public</th>
+                <th>Board</th>
+                <th>Date</th>
+                <th>Start time</th>
+                <th>End time</th>
+                <th>Online</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in calDissertationEvents %}
+                <tr>
+                    <td>{{ event.calendarDissertation.dissertation.title }}</td>
+                    <td>{{ event.calendarDissertation.dissertation.student.user.get_full_name }}</td>
+                    <td>{{ event.calendarDissertation.dissertation.supervisor }}</td>
+                    <td>{{ event.calendarDissertation.dissertation.url }}</td>
+                    <td>{{ event.calendarDissertation.dissertation.location }}</td>
+                    <td>{{ event.calendarDissertation.dissertation.is_open_to_public }}</td>
+                    <td>
+                        <ul>
+                            {% if event.calendarDissertation.dissertation.board.exists %}
+                                {% for professor in event.calendarDissertation.dissertation.board.all %}
+                                    <li>{{ professor }}</li>
+                                {% endfor %}
+                            {% else %}
+                                <li>No board members assigned</li>
+                            {% endif %}
+                        </ul>
+                    </td>
+                    {% with recentChange=event|filter_changes %}
+                        {% if recentChange %}
+                            <td>{{ recentChange.date }}</td>
+                            <td>{{ recentChange.start_time }}</td>
+                            <td>{{ recentChange.end_time }}</td>
+                            <td>{{ recentChange.is_online }}</td>
+                        {% else %}
+                            <td>{{ event.calendarDissertation.date }}</td>
+                            <td>{{ event.calendarDissertation.start_time }}</td>
+                            <td>{{ event.calendarDissertation.end_time }}</td>
+                            <td>{{ event.calendarDissertation.dissertation.is_online }}</td>
+                        {% endif %}
+                            <td>{{ event.created_at }}</td>
+                            <td>{{ event.updated_at }}</td>
+                    {% endwith %}
+                    <td>
+                        <a href="{% url 'event:event_detail' ev_id=event.pk %}">View</a>
+                        <a href="{% url 'event:event_update' ev_id=event.pk %}">Edit</a>
+                        <a href="{% url 'event:event_delete' ev_id=event.pk %}">Delete</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

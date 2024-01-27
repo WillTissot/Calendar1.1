@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from dataclasses import dataclass
 from enum import Enum
 from seminar.models import CalendarSeminar
+from dissertation.models import CalendarDissertation
 
 
 
@@ -25,6 +26,7 @@ class Change(models.Model):
 class Event(models.Model):
     calendarCourse = models.ForeignKey(CalendarCourse, on_delete=models.DO_NOTHING, null=True)
     calendarSeminar = models.ForeignKey(CalendarSeminar, on_delete=models.DO_NOTHING, null=True)
+    calendarDissertation = models.ForeignKey(CalendarDissertation, on_delete=models.DO_NOTHING, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     date = models.DateField(null=True)

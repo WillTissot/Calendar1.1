@@ -143,6 +143,7 @@
                 <td><a href="{% url 'dissertation:calendardissertation_detail' calendardissertation.id %}">View</a></td>
                 <td><a href="{% url 'dissertation:calendardissertation_update' calendardissertation.id %}">Edit</a></td>
                 <td><a href="{% url 'dissertation:calendardissertation_delete' calendardissertation.id %}">Delete</a></td>
+                <td><a href="{% url 'dissertation:create_calendar_dissertation_event' calendardissertation.id %}">Create Calendar Event</a></td>
             </tr>
             {% empty %}
             <tr>

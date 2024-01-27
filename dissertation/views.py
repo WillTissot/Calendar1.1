@@ -3,10 +3,8 @@ from .models import Dissertation, CalendarDissertation
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.
-
-# Dissertation CRUD.
+from event.models import Event
+from datetime import datetime
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -165,3 +163,18 @@ def calendardissertation_create(request):
                 'isFromDissFlow' : isFromDissFlow
             }
     return render(request, 'calendardissertation_create.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def create_calendar_dissertation_event(request, calDissertation_id):
+    calendarDissertation = get_object_or_404(CalendarDissertation, id = calDissertation_id)
+    if not calendarDissertation.onCalendar:
+        newEvent = Event(
+            calendarDissertation=calendarDissertation,
+            created_at= datetime.now(),
+            date=calendarDissertation.date
+        )
+        newEvent.save()
+        calendarDissertation.onCalendar = True
+        calendarDissertation.save()
+    return redirect('dissertation:calendardissertation_list')

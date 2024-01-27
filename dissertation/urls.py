@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import dissertation_create, dissertation_delete, dissertation_detail, dissertation_list, dissertation_update, student_dissertation_list, dissertation_pending_calendar_event_list
-from .views import calendardissertation_create, calendardissertation_delete,calendardissertation_detail,calendardissertation_list,calendardissertation_update
+from .views import calendardissertation_create, calendardissertation_delete,calendardissertation_detail,calendardissertation_list,calendardissertation_update, create_calendar_dissertation_event
 
 app_name="dissertation"
 
@@ -17,4 +17,5 @@ urlpatterns = [
     path('calendardissertation/update/<int:calendardissertation_id>/', calendardissertation_update, name='calendardissertation_update'),
     path('calendardissertation/create/', calendardissertation_create, name='calendardissertation_create'),
     path('calendardissertation/delete/<int:calendardissertation_id>/', calendardissertation_delete, name='calendardissertation_delete'),
+    path('calendardissertation/create/event/<int:calDissertation_id>/', create_calendar_dissertation_event, name='create_calendar_dissertation_event'),
 ]
