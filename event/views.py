@@ -348,3 +348,16 @@ def delete_calendar_seminar_event(request, sem_id):
             event.delete()
     
     return redirect('seminar:calendarseminar_list')
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def delete_calendar_dissertation_event(request, dis_id):
+    calDissertation = get_object_or_404(CalendarDissertation, id = dis_id )
+    if  calDissertation.onCalendar:
+        events = Event.objects.filter(calendarDissertation = calDissertation)
+        calDissertation.onCalendar = False
+        calDissertation.save()
+        for event in events:
+            event.delete()
+    
+    return redirect('dissertation:calendardissertation_list')

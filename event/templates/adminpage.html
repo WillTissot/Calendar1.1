@@ -85,7 +85,7 @@
     <li><a href="{% url 'seminar:calendarseminar_list' %}"><i class="far fa-calendar"></i>Calendar Seminars</a></li>
     <li><a href="{% url 'dissertation:dissertation_list' %}">Dissertations</a></li>
     <li><a href="{% url 'dissertation:calendardissertation_list' %}"><i class="far fa-calendar"></i>Calendar Dissertations</a></li>
-    <li><a href="{% url 'dissertation:dissertation_calendar_create_list' %}">Pending Dissertations</a></li>
+    <li><a href="{% url 'dissertation:dissertation_pending_calendar_event_list' %}">Pending Dissertations</a></li>
   </ul>
   {% if user.is_authenticated %}
     <a href="{% url 'accounts:logout' %}" class="logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</a>

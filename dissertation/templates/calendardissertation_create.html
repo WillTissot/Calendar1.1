@@ -35,13 +35,17 @@
         }
 
         .btn-secondary {
-            background-color: #95a5a6;
+            background-color: #c0392b;
             color: #fff;
-            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 5px;
         }
 
         .btn-secondary:hover {
-            background-color: #7f8c8d;
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -50,13 +54,14 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        {% if isFromDissFlow %}
+            <a href="{% url 'dissertation:dissertation_calendar_create_list' %}" class="btn-secondary">Back</a>
+        {% else %}
+            <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn-secondary">Back</a>
+        {% endif %}
         <button type="submit">Submit</button>
     </form>
   
-    {% if isFromDissFlow %}
-        <a href="{% url 'dissertation:dissertation_calendar_create_list' %}" class="btn btn-secondary">Back</a>
-    {% else %}
-        <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn btn-secondary">Back</a>
-    {% endif %}
+
 </body>
 </html>
