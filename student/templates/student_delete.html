@@ -86,7 +86,7 @@
         <form action="{% url 'student:student_delete' del_id=student.id %}" method="post">
             {% csrf_token %}
             <input type="submit" value="Delete" class="btn btn-danger">
-            <a href="{% url 'student:student_list' %}" class="btn btn-secondary">Back</a>
+            <a href="{% url 'student:student_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
         </form>
     </div>
 </body>

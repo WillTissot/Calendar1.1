@@ -69,7 +69,7 @@
     <p><strong>Location:</strong> {{ seminar.location }}</p>
     <p>Online: {% if seminar.is_online %}Yes{% else %}No{% endif %}</p>
 
-    <a href="{% url 'seminar:seminar_list' %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'seminar:seminar_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
     <a href="{% url 'seminar:seminar_update' seminar.id %}" class="btn btn-edit">Edit</a>
 </body>
 </html>

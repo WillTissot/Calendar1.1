@@ -142,9 +142,9 @@
   </table>
 
   {% if user.is_superuser %}
-    <a href="{% url 'event:adminpage' %}" class="btn-primary">Back</a>
+    <a href="{% url 'event:adminpage' %}" class="btn-primary"><i class="fas fa-arrow-left"></i>Back</a>
   {% else %}
-    <a href="{% url 'event:dashboard' %}" class="btn-primary">Back</a>
+    <a href="{% url 'event:dashboard' %}" class="btn-primary"><i class="fas fa-arrow-left"></i>Back</a>
   {% endif %}
 
 </body>

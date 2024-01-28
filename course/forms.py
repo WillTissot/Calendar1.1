@@ -19,19 +19,32 @@ class CourseForm(forms.ModelForm):
 class CalendarCourseForm(forms.ModelForm):
     course = forms.ModelChoiceField(queryset=Course.objects.all())
     calendarSemester = forms.ModelChoiceField(queryset=CalendarSemester.objects.all())
-    start_time = forms.TimeInput()
-    end_time = forms.TimeInput()
     day = forms.ChoiceField(choices=DayChoices.choices)
     is_active = forms.BooleanField(required=False, initial=True)
     is_deleted = forms.BooleanField(required=False, initial=False)
     is_online = forms.BooleanField(required=False, initial=False)
+
+
+    start_time = forms.TimeField(
+        label='Start Time',
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+    )
+
+    end_time = forms.TimeField(
+        label='End Time',
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+    )
 
     class Meta:
         model = CalendarCourse
         fields = ['course', 'calendarSemester', 'room_number', 'start_time', 'end_time', 'day', 'is_active', 'is_deleted', 'is_online']
 
 class CalendarCourseProfForm(CalendarCourseForm):
-        date = forms.DateField(required=False)
+        date = forms.DateField(
+        label='Date',
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=False
+    )
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
@@ -57,9 +70,16 @@ class CalendarCourseProfForm(CalendarCourseForm):
 
 class CalendarSemesterForm(forms.ModelForm):
     semester = forms.ModelChoiceField(queryset=Semester.objects.all(), required=True)
-    startDate = forms.DateField()
-    endDate = forms.DateField()
 
+    startDate = forms.DateField(
+        label='Start Date',
+        widget=forms.DateInput(attrs={'type': 'date'}),
+    )
+
+    endDate = forms.DateField(
+        label='End Date',
+        widget=forms.DateInput(attrs={'type': 'date'}),
+    )
     class Meta:
         model = CalendarSemester
         fields = ['semester', 'startDate', 'endDate']

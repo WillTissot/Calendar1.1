@@ -15,9 +15,21 @@ class SeminarForm(forms.ModelForm):
 
 class CalendarSeminarForm(forms.ModelForm):
     seminar = forms.ModelChoiceField(queryset=Seminar.objects.all())
-    start_time = forms.TimeInput()
-    end_time = forms.TimeInput()
-    date = forms.DateInput()
+
+    start_time = forms.TimeField(
+        label='Start Time',
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+    )
+
+    end_time = forms.TimeField(
+        label='End Time',
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+    )
+
+    date = forms.DateField(
+        label='Date',
+        widget=forms.DateInput(attrs={'type': 'date'}),
+    )
 
     class Meta:
         model = CalendarSeminar

@@ -88,10 +88,10 @@
 
   {% if user.is_superuser %}
     <p>Approved: {% if dissertation.is_approved %}Yes{% else %}No{% endif %}</p>
-    <a href="{% url 'dissertation:dissertation_list' %}" class="btn-secondary">Back</a>
+    <a href="{% url 'dissertation:dissertation_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
     <a href="{% url 'dissertation:dissertation_update' dissertation.id %}" class="btn-edit">Edit</a>
   {% else %}
-    <a href="{% url 'event:dashboard' %}" class="btn-secondary">Back</a>
+    <a href="{% url 'event:dashboard' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
   {% endif %}
 
 </body>

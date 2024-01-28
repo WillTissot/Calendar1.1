@@ -117,9 +117,9 @@
 
     {% if user.is_superuser %}
         <a href="{% url 'seminar:calendarseminar_create' %}">Add New Calendar Seminar</a>
-        <a href="{% url 'event:adminpage' %}" class="btn btn-secondary">Back</a>
+        <a href="{% url 'event:adminpage' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
     {% else %}
-        <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
+        <a href="{% url 'event:dashboard' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
     {% endif %}
 </body>
 </html>

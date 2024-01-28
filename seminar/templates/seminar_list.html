@@ -123,7 +123,7 @@
 
     {% if user.is_superuser %}
     <a href="{% url 'event:adminpage' %}" class="btn logout-btn">Back</a>
-    <a href="{% url 'seminar:seminar_create' %}" class="btn btn-secondary">Create Seminar</a>
+    <a href="{% url 'seminar:seminar_create' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Create Seminar</a>
     {% endif %}
 
 </body>

@@ -62,7 +62,7 @@
     <form action="{% url 'event:event_delete' ev_id=event.id %}" method="post">
       {% csrf_token %}
       <input type="submit" value="Delete" class="btn btn-danger">
-      <a href="{% url 'event:sec_event_list' %}" class="btn btn-secondary">Back</a>
+      <a href="{% url 'event:sec_event_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
     </form>
   </div>
 </body>

@@ -58,7 +58,7 @@
     <form action="{% url 'dissertation:dissertation_delete' dissertation_id=dissertation.id %}" method="post">
       {% csrf_token %}
       <input type="submit" value="Delete" class="btn btn-danger">
-      <a href="{% url 'dissertation:dissertation_list' %}" class="btn btn-secondary">Back</a>
+      <a href="{% url 'dissertation:dissertation_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
     </form>
   </div>
 </body>

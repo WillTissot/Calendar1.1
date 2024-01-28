@@ -73,7 +73,7 @@
     <form action="{% url 'course:calendarcourse_delete' cal_id=calendarCourse.id %}" method="post">
       {% csrf_token %}
       <input type="submit" value="Delete" class="btn btn-danger">
-      <a href="{% url 'course:calendarcourse_list' %}" class="btn btn-secondary">Back</a>
+      <a href="{% url 'course:calendarcourse_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
     </form>
   </div>
 </body>

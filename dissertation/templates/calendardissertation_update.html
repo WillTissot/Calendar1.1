@@ -54,7 +54,7 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn-secondary">Back</a>
+    <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
     <button type="submit">Update</button>
   </form>
 </body>

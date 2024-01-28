@@ -36,12 +36,18 @@
         }
 
         .btn-secondary {
-            background-color: #95a5a6;
+            background-color: #e74c3c;
             color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            display: inline-block;
         }
 
         .btn-secondary:hover {
-            background-color: #7f8c8d;
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -50,8 +56,8 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <a href="{% url 'seminar:calendarseminar_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
         <button type="submit">Submit</button>
     </form>
-    <a href="{% url 'seminar:calendarseminar_list' %}" class="btn btn-secondary">Back</a>
 </body>
 </html>

@@ -44,7 +44,7 @@
         }
 
         a.btn-secondary {
-            background-color: #d9534f;
+            background-color: #c9302c;
             border: none;
             border-radius: 4px;
             padding: 10px 20px;
@@ -66,9 +66,9 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <a href="{% url 'course:calendarcourse_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
         <button type="submit">Submit</button>
     </form>
   
-    <a href="{% url 'course:calendarcourse_list' %}" class="btn btn-secondary">Back</a>
 </body>
 </html>
