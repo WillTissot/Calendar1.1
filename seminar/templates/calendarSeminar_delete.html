@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Delete Calendar Seminar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -44,12 +45,12 @@
         }
 
         .btn-secondary {
-            background-color: #95a5a6;
+            background-color: #c0392b;
             color: #fff;
         }
 
         .btn-secondary:hover {
-            background-color: #7f8c8d;
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -58,8 +59,8 @@
         <h1>Delete Calendar Seminar</h1>
         <form action="{% url 'seminar:calendarseminar_delete' calSeminar_id=calendarseminar.id %}" method="post">
             {% csrf_token %}
-            <input type="submit" value="Delete" class="btn btn-danger">
             <a href="{% url 'seminar:calendarseminar_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
+            <input type="submit" value="Delete" class="btn btn-danger">
         </form>
     </div>
 </body>

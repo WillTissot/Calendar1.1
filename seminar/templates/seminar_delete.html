@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Delete Seminar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -36,7 +37,7 @@
         }
 
         .btn-secondary {
-            background-color: #95a5a6;
+            background-color: #e74c3c;
             color: #fff;
             padding: 10px 20px;
             border: none;
@@ -50,7 +51,7 @@
         }
 
         .btn-secondary:hover {
-            background-color: #7f8c8d;
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -60,8 +61,8 @@
         <p>Are you sure you want to delete {{ seminar.title }}?</p>
         <form action="{% url 'seminar:seminar_delete' seminar_id=seminar.id %}" method="post">
             {% csrf_token %}
-            <input type="submit" value="Delete" class="btn btn-danger">
             <a href="{% url 'seminar:seminar_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
+            <input type="submit" value="Delete" class="btn btn-danger">
         </form>
     </div>
 </body>

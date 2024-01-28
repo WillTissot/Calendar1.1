@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Seminar Calendar Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -34,7 +35,7 @@
         }
 
         .btn-secondary {
-            background-color: #95a5a6;
+            background-color: #c0392b;
             color: #fff;
             text-decoration: none;
             padding: 10px 20px;
@@ -45,7 +46,7 @@
         }
 
         .btn-secondary:hover {
-            background-color: #7f8c8d;
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -63,7 +64,6 @@
     <p><strong>StartTime:</strong> {{ calendarseminar.start_time }}</p>
     <p><strong>EndTime:</strong> {{ calendarseminar.end_time }}</p>
 
-    <a href="{% url 'seminar:calendarseminar_update' calendarseminar.id %}">Edit</a>
     <a href="{% url 'seminar:calendarseminar_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
 </body>
 </html>

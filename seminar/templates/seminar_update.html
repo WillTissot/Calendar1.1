@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Edit Seminar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -53,8 +54,8 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <a href="{% url 'seminar:seminar_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
         <button type="submit">Update</button>
     </form>
-    <a href="{% url 'seminar:seminar_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
 </body>
 </html>

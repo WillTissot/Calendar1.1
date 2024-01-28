@@ -73,7 +73,6 @@
     <p><strong>Email:</strong> {{ student.user.email }}</p>
     <p><strong>Department:</strong> {{ student.department.name }}</p>
     {% if user.is_superuser %}
-        <a href="{% url 'student:student_update' student.id %}"><i class="fas fa-edit"></i> Edit</a>
         <a href="{% url 'student:student_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
     {% else %}
         <a href="{% url 'event:dashboard' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>

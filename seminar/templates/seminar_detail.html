@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Seminar Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -67,9 +68,8 @@
     <p><strong>Url:</strong> {{ seminar.url }}</p>
     <p><strong>Speaker:</strong> {{ seminar.speaker_fullname }}</p>
     <p><strong>Location:</strong> {{ seminar.location }}</p>
-    <p>Online: {% if seminar.is_online %}Yes{% else %}No{% endif %}</p>
+    <p><strong>Online:</strong> {% if seminar.is_online %}Yes{% else %}No{% endif %}</p>
 
     <a href="{% url 'seminar:seminar_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
-    <a href="{% url 'seminar:seminar_update' seminar.id %}" class="btn btn-edit">Edit</a>
 </body>
 </html>
