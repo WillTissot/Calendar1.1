@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>All Seminars</title>
     <style>
         /* Add some styles to make it more visually appealing */
@@ -122,8 +123,8 @@
     </table>
 
     {% if user.is_superuser %}
-    <a href="{% url 'event:adminpage' %}" class="btn logout-btn">Back</a>
-    <a href="{% url 'seminar:seminar_create' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Create Seminar</a>
+    <a href="{% url 'event:adminpage' %}" class="btn logout-btn"><i class="fas fa-arrow-left"></i>Back</a>
+    <a href="{% url 'seminar:seminar_create' %}" class="btn btn-secondary">Create Seminar</a>
     {% endif %}
 
 </body>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Delete Event</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -46,7 +47,7 @@
         }
 
         .btn-secondary {
-            background-color: #3498db;
+            background-color: #e74c3c;
             color: #fff;
         }
 
@@ -61,8 +62,8 @@
     <p>Are you sure you want to delete {{ student.name }}?</p>
     <form action="{% url 'event:event_delete' ev_id=event.id %}" method="post">
       {% csrf_token %}
-      <input type="submit" value="Delete" class="btn btn-danger">
       <a href="{% url 'event:sec_event_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
+      <input type="submit" value="Delete" class="btn btn-danger">
     </form>
   </div>
 </body>

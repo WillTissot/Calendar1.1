@@ -71,9 +71,7 @@
     <p><strong>Term:</strong> {{ semester.term }}</p>
     <p><strong>Year:</strong> {{ semester.year }}</p>
 
-    <a href="{% url 'course:semester_update' semester.id %}" class="btn btn-secondary"><i class="fas fa-edit"></i> Edit</a>
-    <a href="{% url 'course:semester_create' %}" class="btn btn-create"><i class="fas fa-plus"></i> Create New Course</a>
-
     <a href="{% url 'course:semester_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+
 </body>
 </html>

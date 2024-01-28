@@ -86,8 +86,8 @@
         <p>Are you sure you want to delete {{ professor.name }}?</p>
         <form action="{% url 'professor:professor_delete' prof_id=professor.id %}" method="post">
             {% csrf_token %}
-            <input type="submit" value="Delete" class="btn btn-danger">
             <a href="{% url 'professor:professor_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+            <input type="submit" value="Delete" class="btn btn-danger">
         </form>
     </div>
 </body>

@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Delete Semester</title>
-    <!-- Add Font Awesome stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- Replace the above link with the latest version if available -->
-    
-    <!-- Use Bootstrap styles for buttons -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <style>
@@ -38,7 +34,7 @@
         }
 
         .btn-danger {
-            background-color: #e74c3c;
+            background-color: #c0392b;
             border: none;
             border-radius: 4px;
             padding: 10px 20px;
@@ -53,7 +49,7 @@
         }
 
         .btn-secondary {
-            background-color: #3498db;
+            background-color: #c0392b;
             border: none;
             border-radius: 4px;
             padding: 10px 20px;
@@ -64,7 +60,7 @@
         }
 
         .btn-secondary:hover {
-            background-color: #2980b9;
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -74,8 +70,8 @@
         <p>Are you sure you want to delete?</p>
         <form action="{% url 'course:semester_delete' sem_id=semester.id %}" method="post">
             {% csrf_token %}
-            <input type="submit" value="Delete" class="btn btn-danger">
             <a href="{% url 'course:semester_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+            <input type="submit" value="Delete" class="btn btn-danger">
         </form>
     </div>
 </body>

@@ -3,6 +3,7 @@
 <head>
     <title>Delete Calendar Dissertation</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -61,7 +62,7 @@
         <p>Are you sure you want to delete {{ calendardissertation.dissertation.title }}?</p>
         <form action="{% url 'dissertation:calendardissertation_delete' calendardissertation_id=calendardissertation.id %}" method="post">
             {% csrf_token %}
-            <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
+            <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
             <input type="submit" value="Delete" class="btn-danger">
         </form>
     </div>

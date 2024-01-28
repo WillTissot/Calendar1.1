@@ -68,8 +68,8 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <a href="{% url 'course:course_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
         <button type="submit"><i class="fas fa-edit"></i> Update</button>
     </form>
-    <a href="{% url 'course:course_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
 </body>
 </html>

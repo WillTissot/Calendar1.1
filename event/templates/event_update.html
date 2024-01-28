@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Event Update</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -34,14 +35,14 @@
             font-size: 16px;
             margin: 5px;
             cursor: pointer;
-            background-color: #555;
+            background-color: #e74c3c;
             color: #fff;
             border: none;
             border-radius: 4px;
         }
 
         .btn-secondary:hover {
-            background-color: #444;
+            background-color: #e74c3c;
         }
     </style>
 </head>
@@ -50,8 +51,8 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <a href="{% url 'event:sec_event_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
         <button type="submit">Update</button>
     </form>
-    <a href="{% url 'event:sec_event_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
 </body>
 </html>

@@ -33,7 +33,7 @@
         }
 
         input.btn-danger {
-            background-color: #d9534f;
+            background-color: #c9302c;
             border: none;
             border-radius: 4px;
             padding: 10px 20px;
@@ -47,7 +47,7 @@
         }
 
         a.btn-secondary {
-            background-color: #3498db;
+            background-color: #c9302c;
             border: none;
             border-radius: 4px;
             padding: 10px 20px;
@@ -59,7 +59,7 @@
         }
 
         a.btn-secondary:hover {
-            background-color: #2980b9;
+            background-color: #c9302c;
         }
     </style>
 </head>
@@ -69,8 +69,8 @@
         <p>Are you sure you want to delete {{ calendarSemester.semester.term }} {{ calendarSemester.semester.year }}?</p>
         <form action="{% url 'course:calendarSemester_delete' sem_id=calendarSemester.id %}" method="post">
             {% csrf_token %}
+            <a href="{% url 'course:calendarSemester_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
             <input type="submit" value="Delete" class="btn btn-danger">
-            <a href="{% url 'course:calendarSemester_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
         </form>
     </div>
 </body>

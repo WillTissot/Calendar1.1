@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Create Calendar Dissertation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -57,7 +58,7 @@
         {% if isFromDissFlow %}
             <a href="{% url 'dissertation:dissertation_calendar_create_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
         {% else %}
-            <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
+            <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
         {% endif %}
         <button type="submit">Submit</button>
     </form>
