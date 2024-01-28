@@ -44,15 +44,16 @@ class CalendarCourseProfForm(CalendarCourseForm):
         label='Date',
         widget=forms.DateInput(attrs={'type': 'date'}),
         required=False
-    )
+        )
 
-        def __init__(self, *args, **kwargs):
+        def __init__(self, *args, eventDate=None, **kwargs):
             super().__init__(*args, **kwargs)
             self.fields['course'].widget.attrs['disabled'] = True
             self.fields['calendarSemester'].widget.attrs['disabled'] = True
             self.fields['day'].widget.attrs['disabled'] = True
             self.fields['is_active'].widget = forms.HiddenInput()
             self.fields['is_deleted'].widget = forms.HiddenInput()
+            self.fields['date'].initial = eventDate
 
         def clean(self):
             cleaned_data = super().clean()

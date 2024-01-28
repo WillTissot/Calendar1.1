@@ -106,7 +106,7 @@
                     <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes</button></td>
                 {% endif %}
                 {% if user.is_superuser %}
-                    <td><button class="btn btn-changes" data-ev-id="{{ event.pk }}">See Changes To Approve</button></td>
+                    <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes To Approve</button></td>
                 {% endif %}
             </tr>
         {% endfor %}

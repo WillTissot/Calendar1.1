@@ -61,6 +61,9 @@ class CalendarCourse(models.Model):
     is_online = models.BooleanField(default=False)
     onCalendar = models.BooleanField(null=True)
 
+    def __str__(self):
+        return self.course.title
+
 
 
 

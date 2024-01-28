@@ -12,7 +12,10 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from seminar.models import EnrolledStudentToCalendarSeminars, CalendarSeminar
 from dissertation.models import Dissertation, CalendarDissertation
+from course.models import CalendarCourse
+from django.db.models import Max, F
 
+@login_required
 def get_events(request):
     user= request.user
 
@@ -109,6 +112,10 @@ def adminpage(request):
 @user_passes_test(lambda u: u.is_superuser)
 def sec_event_list(request):
     calCourseEvents = Event.objects.filter(calendarSeminar__isnull=True, calendarDissertation__isnull=True)
+    latest_changes = Change.objects.filter(event__in=calCourseEvents).values('event').annotate(latest_change=Max('date_created'))
+    calCourseEvents_with_latest_change = calCourseEvents.filter(id__in=latest_changes.values('event'))
+    calCourseEvents_approved = calCourseEvents_with_latest_change.filter(changes__is_approved=True)
+
     calSeminarEvents = Event.objects.filter(calendarCourse__isnull=True, calendarDissertation__isnull=True)
     calDissertationEvents = Event.objects.filter(calendarSeminar__isnull=True, calendarCourse__isnull=True)
     context = {
@@ -132,7 +139,7 @@ def get_students(request, ev_id):
     }
     return render(request, 'student_popup.html', context)
 
-@user_passes_test(lambda u: u.is_superuser)
+
 def get_changes(request, ev_id):
     event = get_object_or_404(Event, id=ev_id)
     context = {
@@ -151,14 +158,16 @@ def event_detail(request, ev_id):
 @user_passes_test(lambda u: u.is_superuser)
 def event_update(request, ev_id):
     event = get_object_or_404(Event, id=ev_id)
-
+    calCourse = event.calendarCourse
+    calSeminar = event.calendarSeminar
+    calDissertation = event.calendarDissertation
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
             return redirect('event:event_detail', ev_id=ev_id)
     else:
-        form = EventForm(instance=event)
+        form = EventForm(instance=event, calendarCourse=calCourse, calendarSeminar = calSeminar, calendarDissertation = calDissertation)
     return render(request, 'event_update.html', {'form': form})
 
 @user_passes_test(lambda u: u.is_superuser)

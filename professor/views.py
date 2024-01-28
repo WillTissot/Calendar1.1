@@ -75,7 +75,7 @@ def professor_create(request):
             professor = form.save()
 
             # redirect to the student detail page for the new student object
-            return redirect('professor_detail', prof_id=professor.pk)
+            return redirect('professor:professor_detail', prof_id=professor.pk)
         else:
             # If the form is not valid, print the form errors for debugging
             print(form.errors)
@@ -115,8 +115,8 @@ def request_event_change(request, ev_id):
                 event.changes.add(change)
                 return redirect('event:my_event_list')
     else:
-        form = CalendarCourseProfForm(instance=calendarCourse)
         eventDate = event.date
+        form = CalendarCourseProfForm(instance=calendarCourse, eventDate = eventDate)
         context={
             'form' : form,
             'eventDate' : eventDate

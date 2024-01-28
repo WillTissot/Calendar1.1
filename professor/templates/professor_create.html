@@ -76,8 +76,8 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <a href="{% url 'professor:professor_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
         <button type="submit"><i class="fas fa-check"></i> Submit</button>
     </form>
-    <a href="{% url 'professor:professor_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
 </body>
 </html>

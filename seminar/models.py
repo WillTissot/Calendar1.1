@@ -19,6 +19,8 @@ class CalendarSeminar(models.Model):
     end_time = models.TimeField()
     onCalendar = models.BooleanField(null=True)
 
+    def __str__(self):
+        return self.seminar.title
 
 class EnrolledStudentToCalendarSeminars(models.Model):
     calendarSeminar = models.ForeignKey(CalendarSeminar, on_delete=models.DO_NOTHING)

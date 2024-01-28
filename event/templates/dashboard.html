@@ -79,6 +79,7 @@
                 {% endif %}
                 {% if professor %}
                     <li><a href="{% url 'professor:get_cal_courses' %}">My Calendar Courses</a></li>
+                    <li><a href="{% url 'event:get_events_list' %}">My event list</a></li>
                 {% endif %}
             {% endif %}
             <li><a href="{% url 'event:myprofile' %}">My Account</a></li>

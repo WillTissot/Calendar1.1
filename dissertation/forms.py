@@ -59,6 +59,9 @@ class CalendarDissertationForm(forms.ModelForm):
     class Meta:
         model = CalendarDissertation
         fields = ['dissertation', 'start_time', 'end_time', 'date']
+    
+    def __str__(self):
+        return self.dissertation.title
 
 
 class DissertationStudentForm(forms.ModelForm):
@@ -69,3 +72,6 @@ class DissertationStudentForm(forms.ModelForm):
     class Meta:
         model = Dissertation
         fields = ['title', 'supervisor', 'board']
+
+    def __str__(self):
+        return self.title
