@@ -10,7 +10,7 @@ from django.db.models import Count
 from django import template
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from seminar.models import EnrolledStudentToCalendarSeminars
+from seminar.models import EnrolledStudentToCalendarSeminars, CalendarSeminar
 from dissertation.models import Dissertation, CalendarDissertation
 
 def get_events(request):
@@ -323,3 +323,28 @@ def see_my_profile(request):
         return redirect('student:student_detail', det_id=user.student.pk)
     else:
         return redirect('professor:professor_detail', prof_id=user.professor.pk)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def delete_calendar_course_event(request, cal_id):
+    calCourse = get_object_or_404(CalendarCourse, id = cal_id )
+    if  calCourse.onCalendar:
+        events = Event.objects.filter(calendarCourse = calCourse)
+        calCourse.onCalendar = False
+        calCourse.save()
+        for event in events:
+            event.delete()
+    
+    return redirect('course:calendarcourse_list')
+
+@user_passes_test(lambda u: u.is_superuser)
+def delete_calendar_seminar_event(request, sem_id):
+    calSeminar = get_object_or_404(CalendarSeminar, id = sem_id )
+    if  calSeminar.onCalendar:
+        events = Event.objects.filter(calendarSeminar = calSeminar)
+        calSeminar.onCalendar = False
+        calSeminar.save()
+        for event in events:
+            event.delete()
+    
+    return redirect('seminar:calendarseminar_list')

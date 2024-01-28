@@ -126,6 +126,7 @@
                     <a href="{% url 'seminar:calendarseminar_update' calendarseminar.id %}">Edit</a>
                     <a href="{% url 'seminar:calendarseminar_delete' calendarseminar.id %}">Delete</a>
                     <a href="{% url 'seminar:create_calendar_event' calendarseminar.id %}">Create Event</a>
+                    <a href="{% url 'event:delete_calendar_seminar_event' calendarseminar.id %}">Delete Event</a>
                 </td>
                 {% else %}
                 <td>
