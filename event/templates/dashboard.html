@@ -13,6 +13,7 @@
 
         h1 {
             color: #333;
+            text-align: center;
         }
 
         nav {
@@ -23,23 +24,25 @@
             list-style: none;
             padding: 0;
             display: flex;
-            flex-direction: column;  /* Updated to display vertically */
-            align-items: center;     /* Center align items */
+            flex-direction: column;
+            align-items: center; /* Center horizontally */
+            text-align: left; /* Left align text */
         }
 
         li {
-            margin: 10px 0;  /* Added margin for better spacing */
+            margin: 10px 0;
         }
 
         a {
             text-decoration: none;
             font-size: 16px;
-            color: #333;
+            color: #fff;
             padding: 10px 15px;
-            border-radius: 4px;
+            border-radius: 20px; /* Increased border-radius for a more circular vibe */
             background-color: #3498db;
             color: #fff;
             transition: background-color 0.3s;
+            display: inline-block; /* Ensures that the width and height are respected */
         }
 
         a:hover {
@@ -66,7 +69,6 @@
         <ul>
             {% if user.is_active %}
                 <li><a href="{% url 'event:calendarFormat' %}">My Events</a></li>
-                <li><a href="{% url 'event:get_events_list' %}">Events List</a></li>
                 {% if student %}
                     <li><a href="{% url 'student:enroll_to_courses' %}">Enroll to a Course</a></li>
                     <li><a href="{% url 'student:get_enrolled_cal_courses' %}">Enrolled Cal Courses</a></li>

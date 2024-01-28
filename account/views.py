@@ -43,7 +43,7 @@ def student_signup(request):
         form = StudentSignUpForm(request.POST)
         if form.is_valid():
             student = form.save()
-            return redirect('student:student_detail', det_id=student.pk)
+            return redirect('event:homepage')
     else:
         form = StudentSignUpForm()
 
@@ -58,7 +58,7 @@ def professor_signup(request):
         form = ProfessorSignUpForm(request.POST)
         if form.is_valid():
             professor = form.save()
-            return redirect('professor:professor_detail', prof_id=professor.pk)
+            return redirect('event:homepage')
     else:
         form = ProfessorSignUpForm()
 
