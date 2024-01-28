@@ -71,9 +71,9 @@
                 <li><a href="{% url 'event:calendarFormat' %}">My Events</a></li>
                 {% if student %}
                     <li><a href="{% url 'student:enroll_to_courses' %}">Enroll to a Course</a></li>
-                    <li><a href="{% url 'student:get_enrolled_cal_courses' %}">Enrolled Cal Courses</a></li>
-                    <li><a href="{% url 'seminar:calendarseminar_list' %}">Seminars</a></li>
-                    <li><a href="{% url 'seminar:enroll_to_calendar_seminar' %}">My Seminars</a></li>
+                    <li><a href="{% url 'student:get_enrolled_cal_courses' %}">My Calendar Courses</a></li>
+                    <li><a href="{% url 'seminar:calendarseminar_list' %}">Available Seminars</a></li>
+                    <li><a href="{% url 'seminar:enroll_to_calendar_seminar' %}">Enrolled to Seminars</a></li>
                     <li><a href="{% url 'dissertation:dissertation_create' %}">Apply for Dissertation Date</a></li>
                     <li><a href="{% url 'dissertation:student_dissertation_list' %}">My Dissertations</a></li>
                 {% endif %}

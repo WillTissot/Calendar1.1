@@ -59,26 +59,39 @@ class SimpleStudentForm(forms.ModelForm):
         
         return super().save(commit=commit)
 
-class StudentForm(SimpleStudentForm):
-    password = forms.CharField(max_length=30, required=False)
+class StudentForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    username = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField(max_length=254, required=True)
+    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+    department = forms.ModelChoiceField(queryset=Department.objects.all())
+    is_active = forms.BooleanField()
 
     class Meta:
         model = Student
-        fields = ('first_name', 'last_name', 'username', 'password', 'email', 'date_of_birth', 'department')
+        fields = ('first_name', 'last_name', 'username', 'email', 'date_of_birth', 'department')
 
     def __init__(self, *args, **kwargs):
-        super(StudentForm, self).__init__(*args, **kwargs)
-        # Set initial values for User fields from related User model
-        if self.instance.user_id:
-            self.initial['password'] = None
+        super().__init__(*args, **kwargs)
 
-    def clean_password(self):
-        password = self.cleaned_data['password']
-        if not password and not self.instance.pk:
-            raise forms.ValidationError('Password is required')
-        return password
+        if self.instance.user_id:
+            self.initial['first_name'] = self.instance.user.first_name
+            self.initial['last_name'] = self.instance.user.last_name
+            self.initial['username'] = self.instance.user.username
+            self.initial['email'] = self.instance.user.email
+            self.initial['is_active'] = self.instance.user.is_active
+            self.initial['department'] = self.instance.department
+        # Set initial values for User fields from related User model
+    #     if self.instance.user_id:
+    #         self.initial['password'] = None
+
+    # def clean_password(self):
+    #     password = self.cleaned_data['password']
+    #     if not password and not self.instance.pk:
+    #         raise forms.ValidationError('Password is required')
+    #     return password
     def save(self, commit=True):
-        password = self.cleaned_data['password']
         first_name = self.cleaned_data['first_name']
         last_name = self.cleaned_data['last_name']
         username = self.cleaned_data['username']
@@ -89,7 +102,6 @@ class StudentForm(SimpleStudentForm):
             user = User.objects.create_user(
                 username=username,
                 first_name=first_name,
-                password=password,
                 last_name=last_name,
                 email=email,
                 is_active=is_active
@@ -103,8 +115,8 @@ class StudentForm(SimpleStudentForm):
             user.last_name = last_name
             user.email = email
             user.is_active = is_active
-            if password:
-                user.set_password(password) 
+            # if password:
+            #     user.set_password(password) 
             user.save()
 
         

@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from course.models import Department, CalendarCourse
 from course.forms import CalendarCourseProfForm
-from professor.forms import  ProfessorForm
+from professor.forms import  ProfessorForm, ProfessorUpdateForm, ProfessorMyAccountForm
 from event.models import Event, Change
 from professor.models import Professor
 from datetime import datetime
@@ -28,13 +28,20 @@ def professor_detail(request, prof_id):
 def professor_update(request, prof_id):
     professor = get_object_or_404(Professor, id=prof_id)
 
+
     if request.method == 'POST':
-        form = ProfessorForm(request.POST, instance=professor)
+        if request.user.is_superuser:
+            form = ProfessorUpdateForm(request.POST, instance=professor)
+        else:
+            form = ProfessorMyAccountForm(request.POST, instance=professor)
         if form.is_valid():
             form.save()
-            return redirect('professor_detail', det_id=prof_id)
+            return redirect('professor:professor_detail', prof_id=prof_id)
     else:
-        form = ProfessorForm(instance=professor)
+        if request.user.is_superuser:
+            form = ProfessorUpdateForm(instance=professor)
+        else:
+            form = ProfessorMyAccountForm(instance=professor)
     return render(request, 'professor_update.html', {'form': form})
 
 @user_passes_test(lambda u: u.is_superuser)

@@ -56,4 +56,4 @@ class DissertationStudentForm(forms.ModelForm):
 
     class Meta:
         model = Dissertation
-        fields = ['title', 'supervisor']
+        fields = ['title', 'supervisor', 'board']

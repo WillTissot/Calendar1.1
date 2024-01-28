@@ -10,50 +10,66 @@
     <!-- Use Bootstrap styles for buttons -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-    <style>
-        /* Add some styles to make it more visually appealing */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            margin: 50px;
-        }
+<style>
+    /* Add some styles to make it more visually appealing */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 50px;
+    }
 
-        h1 {
-            color: #333;
-        }
+    h1 {
+        color: #333;
+    }
 
-        p {
-            color: #666;
-            margin-bottom: 20px;
-        }
+    p {
+        color: #666;
+        margin-bottom: 20px;
+    }
 
-        strong {
-            color: #3498db;
-        }
+    strong {
+        color: #3498db;
+    }
 
-        a {
-            text-decoration: none;
-            color: #fff;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 20px;
-        }
+    a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: bold;
+        display: inline-block;
+        margin-top: 20px;
+    }
 
-        .btn-secondary {
-            background-color: #e74c3c;
-            border: none;
-            border-radius: 4px;
-            padding: 10px 20px;
-            font-size: 16px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
+    .btn-secondary,
+    .btn-account {
+        display: inline-block; /* Make buttons inline-block to align horizontally */
+        margin-top: 20px; /* Apply margin to the top of both buttons */
+        margin-right: 10px; /* Adjust the margin between buttons if needed */
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
 
-        .btn-secondary:hover {
-            background-color: #c0392b;
-        }
-    </style>
+    .btn-secondary {
+        background-color: #e74c3c;
+    }
+
+    .btn-secondary:hover {
+        background-color: #c0392b;
+    }
+
+    .btn-account {
+        background-color: #3498db;
+    }
+
+    .btn-account:hover {
+        background-color: #3498db;
+    }
+</style>
+
 </head>
 <body>
     <h1>Professor Detail</h1>
@@ -63,11 +79,12 @@
     <p><strong>Name:</strong> {{ professor.user.get_full_name }}</p>
     <p><strong>Department:</strong> {{ professor.department.name }}</p>
     {% if user.is_superuser %}
-        <a href="{% url 'professor:professor_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        <a href="{% url 'professor:professor_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
     {% elif user.is_active %}
-        <a href="{% url 'event:dashboard' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        <a href="{% url 'event:dashboard' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        <a href="{% url 'professor:professor_update' professor.id %}" class="btn-account"><i class="fas fa-user-cog"></i> Change My Account</a>
     {% else %}
-        <a href="{% url 'event:homepage' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        <a href="{% url 'event:homepage' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
     {% endif %}
 </body>
 </html>

@@ -16,6 +16,12 @@
 
         form {
             margin-top: 20px;
+            display: inline-block; /* Center align the form */
+            text-align: left; /* Left-align the form elements */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         button {
@@ -35,17 +41,18 @@
         }
 
         .btn-secondary {
-            background-color: #95a5a6;
+            background-color: #e74c3c;
             color: #fff;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             text-decoration: none;
             margin: 5px;
+            transition: background-color 0.3s;
         }
 
         .btn-secondary:hover {
-            background-color: #7f8c8d;
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -54,13 +61,14 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
+    {% if user.is_superuser %}
+        <a href="{% url 'dissertation:dissertation_list' %}" class="btn btn-secondary">Back</a>
+    {% else %}
+        <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
+    {% endif %}
     <button type="submit">Submit</button>
   </form>
   
-  {% if user.is_superuser %}
-    <a href="{% url 'dissertation:dissertation_list' %}" class="btn btn-secondary">Back</a>
-  {% else %}
-    <a href="{% url 'event:dashboard' %}" class="btn btn-secondary">Back</a>
-  {% endif %}
+
 </body>
 </html>
