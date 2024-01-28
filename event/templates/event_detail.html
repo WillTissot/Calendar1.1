@@ -1,3 +1,4 @@
+{% load myfilters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,10 +50,22 @@
     {% endif %}
     <p><strong>Professor:</strong> {{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</p>
     <p><strong>Course:</strong> {{ event.calendarCourse.course.title }}</p>
-    <p><strong>Semester:</strong> {{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</p>
-    <p><strong>Room Number:</strong> {{ event.calendarCourse.room_number }}</p>
-    <p><strong>Start Time:</strong> {{ event.calendarCourse.start_time }}</p>
-    <p><strong>End Time:</strong> {{ event.calendarCourse.end_time }}</p>
+    <p><strong>Semester:</strong> {{ event.calendarCourse.calendarSemester.semester.term }} {{ event.calendarCourse.calendarSemester.semester.year }}</p>
+    {% with recentChange=event|filter_changes %}
+        {% if recentChange %}
+            <p><strong>Room Number:</strong>{{ recentChange.room_number }}</p>
+            <p><strong>Date:</strong>{{ recentChange.date }}</td>
+            <p><strong>Start Time:</strong>{{ recentChange.start_time }}</p>
+            <p><strong>End Time:</strong>{{ recentChange.end_time }}</p>
+            <p><strong>Online:</strong>{{ recentChange.is_online }}</p>
+        {% else %}
+            <p><strong>Room Number:</strong>{{ event.calendarSeminar.room_number }}</p>
+            <p><strong>Date:</strong>{{ event.calendarSeminar.date }}</p>
+            <p><strong>Start Time:</strong>{{ event.calendarSeminar.start_time }}</p>
+            <p><strong>End Time:</strong>{{ event.calendarSeminar.end_time }}</p>
+            <p><strong>Online:</strong>{{ event.calendarSeminar.seminar.is_online }}</p>
+        {% endif %}
+    {% endwith %}
     <p><strong>Is Active:</strong> {{ event.calendarCourse.is_active }}</p>
     <p><strong>Is Deleted:</strong> {{ event.calendarCourse.is_deleted }}</p>
     <p><strong>Is Online:</strong> {{ event.calendarCourse.is_online }}</p>

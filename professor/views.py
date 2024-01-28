@@ -7,6 +7,7 @@ from professor.models import Professor
 from datetime import datetime
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
+from event.forms import EventForm
 
 # Create your views here.
 
@@ -115,13 +116,14 @@ def request_event_change(request, ev_id):
                 event.changes.add(change)
                 return redirect('event:my_event_list')
     else:
-        eventDate = event.date
-        form = CalendarCourseProfForm(instance=calendarCourse, eventDate = eventDate)
+        form = EventForm(instance=event, calendarCourse=event.calendarCourse, calendarSeminar = event.calendarSeminar, calendarDissertation = event.calendarDissertation)
+        #eventDate = event.date
+        #form = CalendarCourseProfForm(instance=calendarCourse, eventDate = eventDate)
         context={
-            'form' : form,
-            'eventDate' : eventDate
+            'form' : form
+            #'eventDate' : eventDate
         }
-        return render(request, 'calendarcourse_update.html', context)
+        return render(request, 'event_update.html', context)
 
 def Get_Cal_Courses(request):
     professor = request.user.professor

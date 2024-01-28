@@ -34,13 +34,16 @@ class EventForm(forms.ModelForm):
     def __init__(self, *args, calendarCourse=None, calendarSeminar=None, calendarDissertation=None, **kwargs):
         super().__init__(*args, **kwargs)
        
+        last = self.instance.changes.filter(is_approved=True, is_pending=False).order_by('-date_created').first()
+
         if self.instance:
-            self.initial['start_time'] = self.instance.start_time
-            self.initial['end_time'] = self.instance.end_time
-            self.initial['date'] = self.instance.date
-            self.initial['room_number'] = self.instance.room_number
-            self.initial['is_online'] = self.instance.is_online
-            self.initial['room_number'] = self.instance.room_number
+            self.initial['start_time'] = last.start_time
+            self.initial['end_time'] = last.end_time
+            self.initial['date'] = last.date
+            self.initial['room_number'] = last.room_number
+            self.initial['is_online'] = last.is_online
+
+
         if calendarCourse:
             self.fields['calendarCourse'].initial = calendarCourse
             self.fields['calendarCourse'].widget.attrs['disabled'] = True

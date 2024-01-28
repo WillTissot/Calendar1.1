@@ -17,7 +17,7 @@ class Change(models.Model):
     room_number = models.CharField(max_length=10)
     start_time = models.TimeField()
     end_time = models.TimeField()
-    date = models.DateTimeField(null=True)
+    date = models.DateField(null=True)
     is_online = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
     is_pending = models.BooleanField(default=False)
@@ -32,8 +32,8 @@ class Event(models.Model):
     date = models.DateField(null=True)
     changes = models.ManyToManyField(Change)
 
-    def __str__(self):
-        return self
+    # def __str__(self):
+    #     return self
 
 @dataclass
 class DayMonth:

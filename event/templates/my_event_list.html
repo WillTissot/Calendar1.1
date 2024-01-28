@@ -65,8 +65,30 @@
             background-color: #e74c3c;
         }
 
-        .btn-changes {
+        .btn-show-changes {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
             background-color: #4285f4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-send-mail {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #4285f4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
         a {
@@ -104,9 +126,10 @@
                 {% if user.professor %}
                     <td><a href="{% url 'professor:request_event_change' ev_id=event.pk %}">Change Event</a></td>
                     <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes</button></td>
-                {% endif %}
-                {% if user.is_superuser %}
+                    {% endif %}
+                    {% if user.is_superuser %}
                     <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes To Approve</button></td>
+                    <td><a href="{% url 'event:send_mail' ev_id=event.pk %}" class="btn-send-mail">Send Mail With Change</a></td>
                 {% endif %}
             </tr>
         {% endfor %}

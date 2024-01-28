@@ -1,5 +1,6 @@
 from . import views
 from django.urls import path
+from .views import send_mail_changes
 
 app_name = 'event'
 
@@ -24,4 +25,5 @@ urlpatterns = [
     path('xxx/ad', views.get_events, name='get_events'),
     path('event/my-event-list', views.event_list, name='get_events_list'),
     path("myprofile/", views.see_my_profile, name="myprofile"),
+    path('event/<int:ev_id>/change/send/mail', send_mail_changes, name='send_mail')
 ]

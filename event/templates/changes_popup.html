@@ -62,8 +62,6 @@
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Is Online</th>
-                <th>Action</th>
-                <th>Change</th>
             </tr>
         </thead>
         <tbody>
@@ -90,6 +88,7 @@
                 <th>Is Approved</th>
                 <th>Is Pending</th>
                 {% if user.is_superuser %}
+                    <th>Created</th>
                     <th>Approve</th>
                     <th>Reject</th>
                 {% endif %}
@@ -106,6 +105,7 @@
                     <td>{{ change.is_approved}}</td>
                     <td>{{ change.is_pending}}</td>
                     {% if user.is_superuser %}
+                        <td>{{ change.date_created}}</td>
                         <td>
                             <form method="post" action="{% url 'event:get_all_requests' %}">
                                 {% csrf_token %}

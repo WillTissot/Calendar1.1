@@ -14,6 +14,7 @@ from seminar.models import EnrolledStudentToCalendarSeminars, CalendarSeminar
 from dissertation.models import Dissertation, CalendarDissertation
 from course.models import CalendarCourse
 from django.db.models import Max, F
+from django.core.mail import send_mail
 
 @login_required
 def get_events(request):
@@ -22,7 +23,7 @@ def get_events(request):
     if hasattr(request.user, 'student'):
         coursesEvents = Event.objects.filter(calendarCourse__enrolledstudentsoncalendarcourse__student=user.student).order_by('calendarCourse__start_time')
         seminarsEvents = Event.objects.filter(calendarSeminar__enrolledstudenttocalendarseminars__students=user.student)
-        dissertationEvent = Event.objects.get(calendarDissertation__dissertation__student=user.student)
+        #dissertationEvent = Event.objects.get(calendarDissertation__dissertation__student=user.student)
     if hasattr(request.user, 'professor'):
         coursesEvents = Event.objects.filter(calendarCourse__course__professor=user.professor)
         dissertationEventsAsSupervisor = Event.objects.filter(calendarDissertation__dissertation__supervisor=user.professor)
@@ -41,12 +42,12 @@ def get_events(request):
                 'start': seminarsEvent.date.isoformat(),
                 'end': seminarsEvent.date.isoformat()  
             })
-        if dissertationEvent is not None:
-            data.append({
-                'title': dissertationEvent.calendarDissertation.dissertation.title,
-                'start': dissertationEvent.date.isoformat(),
-                'end': dissertationEvent.date.isoformat()  
-            })
+        # if dissertationEvent is not None:
+        #     data.append({
+        #         'title': dissertationEvent.calendarDissertation.dissertation.title,
+        #         'start': dissertationEvent.date.isoformat(),
+        #         'end': dissertationEvent.date.isoformat()  
+        #     })
         return JsonResponse(data, safe=False)
     if hasattr(request.user, 'professor'):
         for coursesEvent in coursesEvents:
@@ -158,6 +159,7 @@ def event_detail(request, ev_id):
 @user_passes_test(lambda u: u.is_superuser)
 def event_update(request, ev_id):
     event = get_object_or_404(Event, id=ev_id)
+    eventProper = event.changes.filter(is_approved=True, is_pending=False).order_by('-date_created').first()
     calCourse = event.calendarCourse
     calSeminar = event.calendarSeminar
     calDissertation = event.calendarDissertation
@@ -370,3 +372,17 @@ def delete_calendar_dissertation_event(request, dis_id):
             event.delete()
     
     return redirect('dissertation:calendardissertation_list')
+
+def send_mail_changes(request, ev_id):
+    event = get_object_or_404(Event, id=ev_id)
+    calCourse = event.calendarCourse
+    enrolled_students = EnrolledStudentsOnCalendarCourse.objects.filter(calendarCourse=calCourse)
+    student_mails = enrolled_students.values_list('student__user__email', flat=True)
+    last = event.changes.filter(is_approved=True, is_pending=False).order_by('-date_created').first()
+    send_mail(
+        subject='Your class information has changed!',
+        message=f'Your class {calCourse.course.title} is now on {last.date}, {last.start_time} - {last.end_time} at {last.room_number}',
+        from_email='shopwaresync@gmail.com',
+        recipient_list=student_mails
+    )
+    return redirect('event:get_all_requests')
