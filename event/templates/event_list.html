@@ -9,7 +9,17 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/students_pop_up.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="{% static 'js/students_pop_up.js' %}"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('table tbody').hide();
+            $('table thead').hide();
+            $('h2').click(function () {
+                $(this).next('table').find('thead').toggle();
+                $(this).next('table').find('tbody').toggle();
+            });
+        });
+    </script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -61,6 +71,7 @@
             padding: 10px 20px;
             font-size: 16px;
             margin: 5px;
+            margin-bottom: 10px;
             cursor: pointer;
             background-color: #e74c3c;
             color: #fff;
@@ -71,6 +82,26 @@
         .btn-secondary:hover {
             background-color: #e74c3c;
         }
+
+        h2 {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #856196;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
     </style>
 </head>
 <body>
@@ -87,12 +118,11 @@
                 <th>Date</th>
                 <th>Start Time</th>
                 <th>End Time</th>
-                <th>Is Active</th>
-                <th>Is Deleted</th>
                 <th>Is Online</th>
-                <th>Is Pending</th>
+                <th>Is Active</th>
                 <th>Created At</th>
                 <th>Updated At</th>
+                <th>Show Students</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -101,7 +131,7 @@
                 <tr>
                     <td>{{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</td>
                     <td>{{ event.calendarCourse.course.title }}</td>
-                    <td>{{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</td>
+                    <td>{{ event.calendarCourse.calendarSemester.semester.term }} {{ event.calendarCourse.calendarSemester.semester.year }}</td>
                     {% with recentChange=event|filter_changes %}
                     {% if recentChange %}
                         <td>{{ recentChange.room_number }}</td>
@@ -115,18 +145,16 @@
                         <td>{{ event.calendarCourse.start_time }}</td>
                         <td>{{ event.calendarCourse.end_time }}</td>
                         <td>{{ event.calendarCourse.is_online }}</td>
-                        <td></td>
                     {% endif %}
                     <td>{{ event.calendarCourse.is_active }}</td>
-                    <td>{{ event.calendarCourse.is_deleted }}</td>
                     <td>{{ event.created_at }}</td>
                     <td>{{ event.updated_at }}</td>
                 {% endwith %}
                     <td><button class="btn-show-students" data-ev-id="{{ event.pk }}">Show Enrolled Students</button></td>
                     <td>
-                        <a href="{% url 'event:event_detail' ev_id=event.pk %}">View</a>
-                        <a href="{% url 'event:event_update' ev_id=event.pk %}">Edit</a>
-                        <a href="{% url 'event:event_delete' ev_id=event.pk %}">Delete</a>
+                        <a href="{% url 'event:event_detail' ev_id=event.pk %}"><i class="fas fa-eye"></i>View</a>
+                        <a href="{% url 'event:event_update' ev_id=event.pk %}"><i class="fas fa-edit"></i>Edit</a>
+                        <a href="{% url 'event:event_delete' ev_id=event.pk %}"><i class="fas fa-trash"></i>Delete</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -147,6 +175,7 @@
                 <th>Is Online</th>
                 <th>Created At</th>
                 <th>Updated At</th>
+                <th>Show Students</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -172,12 +201,12 @@
                             <td>{{ event.created_at }}</td>
                             <td>{{ event.updated_at }}</td>
                     {% endwith %}
-                    <td>
-                        <a href="{% url 'event:event_detail' ev_id=event.pk %}">View</a>
-                        <a href="{% url 'event:event_update' ev_id=event.pk %}">Edit</a>
-                        <a href="{% url 'event:event_delete' ev_id=event.pk %}">Delete</a>
-                    </td>
                     <td><button class="btn-show-students" data-ev-id="{{ event.pk }}" data-ev-kind="calendarseminar">Show Enrolled Students</button></td>
+                    <td>
+                        <a href="{% url 'event:event_detail' ev_id=event.pk %}"><i class="fas fa-eye"></i>View</a>
+                        <a href="{% url 'event:event_update' ev_id=event.pk %}"><i class="fas fa-edit"></i>Edit</a>
+                        <a href="{% url 'event:event_delete' ev_id=event.pk %}"><i class="fas fa-trash"></i>Delete</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -239,9 +268,9 @@
                             <td>{{ event.updated_at }}</td>
                     {% endwith %}
                     <td>
-                        <a href="{% url 'event:event_detail' ev_id=event.pk %}">View</a>
-                        <a href="{% url 'event:event_update' ev_id=event.pk %}">Edit</a>
-                        <a href="{% url 'event:event_delete' ev_id=event.pk %}">Delete</a>
+                        <a href="{% url 'event:event_detail' ev_id=event.pk %}"><i class="fas fa-eye"></i>View</a>
+                        <a href="{% url 'event:event_update' ev_id=event.pk %}"><i class="fas fa-edit"></i>Edit</a>
+                        <a href="{% url 'event:event_delete' ev_id=event.pk %}"><i class="fas fa-trash"></i>Delete</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -261,7 +290,7 @@
         showStudentsButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const evId = button.dataset.evId;
-                const evKind = button.dataset.evKind
+                const evKind = button.dataset.evKind;
                 searchStudents(evId, evKind);
             });
         });
