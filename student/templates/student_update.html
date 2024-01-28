@@ -76,12 +76,13 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        {% if user.is_superuser %}
+            <a href="{% url 'student:student_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        {% else %}
+            <a href="{% url 'event:myprofile' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        {% endif %}
         <button type="submit"><i class="fas fa-edit"></i> Update</button>
     </form>
-    {% if user.is_superuser %}
-        <a href="{% url 'student:student_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
-    {% else %}
-        <a href="{% url 'accounts:myprofile' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
-    {% endif %}
+
 </body>
 </html>

@@ -19,5 +19,6 @@ urlpatterns = [
     path('secretary/users/approve', views.validate_user, name='users_approve'),
     path('myevents/calerdar/format', views.calendar_view, name='calendarFormat'),
     path('xxx/ad', views.get_events, name='get_events'),
-    path('event/my-event-list', views.event_list, name='get_events_list')
+    path('event/my-event-list', views.event_list, name='get_events_list'),
+    path("myprofile/", views.see_my_profile, name="myprofile"),
 ]

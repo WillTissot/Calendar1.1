@@ -314,3 +314,12 @@ def event_create(request):
                 'professors' : professors
             }
     return render(request, 'event_create.html', context)
+
+
+@login_required
+def see_my_profile(request):
+    user = request.user
+    if hasattr(user, 'student'):
+        return redirect('student:student_detail', det_id=user.student.pk)
+    else:
+        return redirect('professor:professor_detail', prof_id=user.professor.pk)

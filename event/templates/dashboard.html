@@ -81,7 +81,7 @@
                     <li><a href="{% url 'professor:get_cal_courses' %}">My Calendar Courses</a></li>
                 {% endif %}
             {% endif %}
-            <li><a href="{% url 'accounts:myprofile' %}">My Account</a></li>
+            <li><a href="{% url 'event:myprofile' %}">My Account</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'accounts:logout' %}" class="logout-btn">Logout</a></li>
             {% endif %}
