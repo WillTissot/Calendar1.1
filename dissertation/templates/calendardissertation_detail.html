@@ -77,7 +77,10 @@
     <p><strong>Start Time:</strong> {{ calendardissertation.start_time }}</p>
     <p><strong>End Time:</strong> {{ calendardissertation.end_time }}</p>
 
-    <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
-
+    {% if user.is_superuser %}
+        <a href="{% url 'dissertation:calendardissertation_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
+    {% else %}
+        <a href="{% url 'dissertation:student_dissertation_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
+    {% endif %}
 </body>
 </html>
