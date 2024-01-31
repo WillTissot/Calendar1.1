@@ -22,8 +22,8 @@ def get_events(request):
 
     if hasattr(request.user, 'student'):
         coursesEvents = Event.objects.filter(calendarCourse__enrolledstudentsoncalendarcourse__student=user.student).order_by('calendarCourse__start_time')
-        seminarsEvents = Event.objects.filter(calendarSeminar__enrolledstudenttocalendarseminars__students=user.student)
-        #dissertationEvent = Event.objects.get(calendarDissertation__dissertation__student=user.student)
+        seminarsEvents = Event.objects.filter(calendarSeminar__enrolledstudenttocalendarseminars__students=user.student).order_by('calendarSeminar__start_time')
+        dissertationEvent = Event.objects.get(calendarDissertation__dissertation__student=user.student)
     if hasattr(request.user, 'professor'):
         coursesEvents = Event.objects.filter(calendarCourse__course__professor=user.professor).order_by('calendarCourse__start_time')
         dissertationEventsAsSupervisor = Event.objects.filter(calendarDissertation__dissertation__supervisor=user.professor)
@@ -38,16 +38,16 @@ def get_events(request):
             })
         for seminarsEvent in seminarsEvents:
             data.append({
-                'title': seminarsEvent.calendarSeminar.seminar.title,
+                'title': seminarsEvent.calendarSeminar.seminar.title + ' ' + seminarsEvent.calendarSeminar.start_time.strftime('%H:%M') + ' - ' + seminarsEvent.calendarSeminar.end_time.strftime('%H:%M'),
                 'start': seminarsEvent.date.isoformat(),
                 'end': seminarsEvent.date.isoformat()  
             })
-        # if dissertationEvent is not None:
-        #     data.append({
-        #         'title': dissertationEvent.calendarDissertation.dissertation.title,
-        #         'start': dissertationEvent.date.isoformat(),
-        #         'end': dissertationEvent.date.isoformat()  
-        #     })
+        if dissertationEvent is not None:
+            data.append({
+                'title': dissertationEvent.calendarDissertation.dissertation.title + ' ' + dissertationEvent.calendarDissertation.start_time.strftime('%H:%M') + ' - ' + dissertationEvent.calendarDissertation.end_time.strftime('%H:%M'),
+                'start': dissertationEvent.date.isoformat(),
+                'end': dissertationEvent.date.isoformat()  
+            })
         return JsonResponse(data, safe=False)
     if hasattr(request.user, 'professor'):
         for coursesEvent in coursesEvents:

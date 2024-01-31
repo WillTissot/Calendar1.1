@@ -108,7 +108,8 @@
                         <form method="post" action="{% url 'seminar:enroll_to_calendar_seminar' %}">
                             {% csrf_token %}
                             <input type="hidden" name="calendarseminar_id" value="{{ calendarseminar.pk }}">
-                            <button type="submit">Delete</button>
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit">Unenroll</button>
                         </form>
                     </td>
                 </tr>
