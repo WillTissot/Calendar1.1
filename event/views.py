@@ -376,13 +376,15 @@ def delete_calendar_dissertation_event(request, dis_id):
 def send_mail_changes(request, ev_id):
     event = get_object_or_404(Event, id=ev_id)
     calCourse = event.calendarCourse
+    professor = calCourse.course.professor
     enrolled_students = EnrolledStudentsOnCalendarCourse.objects.filter(calendarCourse=calCourse)
-    student_mails = enrolled_students.values_list('student__user__email', flat=True)
+    emails_to_send = list(enrolled_students.values_list('student__user__email', flat=True))
+    emails_to_send.append(professor.user.email)
     last = event.changes.filter(is_approved=True, is_pending=False).order_by('-date_created').first()
     send_mail(
         subject='Your class information has changed!',
         message=f'Your class {calCourse.course.title} is now on {last.date}, {last.start_time} - {last.end_time} at {last.room_number}',
         from_email='shopwaresync@gmail.com',
-        recipient_list=student_mails
+        recipient_list=emails_to_send
     )
     return redirect('event:get_all_requests')

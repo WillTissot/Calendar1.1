@@ -27,11 +27,13 @@ def dissertation_pending_calendar_event_list(request):
 
 def student_dissertation_list(request):
     student = request.user.student
-    dissertations = Dissertation.objects.filter(student=student)
+    #dissertations = Dissertation.objects.filter(student=student)
+    dissertations = CalendarDissertation.objects.filter(dissertation__student=student)
+
     context = { 
-        'dissertations': dissertations
+        'calendardissertations': dissertations
     }
-    return render(request, 'dissertation_list.html', context)
+    return render(request, 'calendarDissertation_list.html', context)
 
 def dissertation_detail(request, dissertation_id):
     dissertation = get_object_or_404(Dissertation, id=dissertation_id)
