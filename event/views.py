@@ -31,12 +31,21 @@ def get_events(request):
     data = []
     if hasattr(request.user, 'student'):
         for coursesEvent in coursesEvents:
-            data.append({
-                'title': coursesEvent.calendarCourse.course.title + ' ' + coursesEvent.calendarCourse.start_time.strftime('%H:%M') + ' - ' + coursesEvent.calendarCourse.end_time.strftime('%H:%M'),
-                'start': coursesEvent.date.isoformat(),
-                'end': coursesEvent.date.isoformat()  
-            })
+            lastChange = coursesEvent.changes.filter(is_approved=True, is_pending=False).order_by('-date_created').first()
+            if lastChange is None:
+                data.append({
+                    'title': coursesEvent.calendarCourse.course.title + ' ' + coursesEvent.calendarCourse.start_time.strftime('%H:%M') + ' - ' + coursesEvent.calendarCourse.end_time.strftime('%H:%M'),
+                    'start': coursesEvent.date.isoformat(),
+                    'end': coursesEvent.date.isoformat()  
+                })
+            else:
+                data.append({
+                    'title': coursesEvent.calendarCourse.course.title + ' ' + lastChange.start_time.strftime('%H:%M') + ' - ' + lastChange.end_time.strftime('%H:%M'),
+                    'start': lastChange.date.isoformat(),
+                    'end': lastChange.date.isoformat()  
+                })
         for seminarsEvent in seminarsEvents:
+            lastChange = coursesEvent.changes.filter(is_approved=True, is_pending=False).order_by('-date_created').first()
             data.append({
                 'title': seminarsEvent.calendarSeminar.seminar.title + ' ' + seminarsEvent.calendarSeminar.start_time.strftime('%H:%M') + ' - ' + seminarsEvent.calendarSeminar.end_time.strftime('%H:%M'),
                 'start': seminarsEvent.date.isoformat(),
@@ -51,11 +60,19 @@ def get_events(request):
         return JsonResponse(data, safe=False)
     if hasattr(request.user, 'professor'):
         for coursesEvent in coursesEvents:
-            data.append({
-                'title': coursesEvent.calendarCourse.course.title + ' ' + coursesEvent.calendarCourse.start_time.strftime('%H:%M') + ' - ' + coursesEvent.calendarCourse.end_time.strftime('%H:%M'),
-                'start': coursesEvent.date.isoformat(),
-                'end': coursesEvent.date.isoformat()  
-            })
+            lastChange = coursesEvent.changes.filter(is_approved=True, is_pending=False).order_by('-date_created').first()
+            if lastChange is None:
+                data.append({
+                    'title': coursesEvent.calendarCourse.course.title + ' ' + coursesEvent.calendarCourse.start_time.strftime('%H:%M') + ' - ' + coursesEvent.calendarCourse.end_time.strftime('%H:%M'),
+                    'start': coursesEvent.date.isoformat(),
+                    'end': coursesEvent.date.isoformat()  
+                })
+            else:
+                data.append({
+                    'title': coursesEvent.calendarCourse.course.title + ' ' + lastChange.start_time.strftime('%H:%M') + ' - ' + lastChange.end_time.strftime('%H:%M'),
+                    'start': lastChange.date.isoformat(),
+                    'end': lastChange.date.isoformat()  
+                })
         for eventAsSupervisor in dissertationEventsAsSupervisor:
             data.append({
                 'title': eventAsSupervisor.calendarDissertation.dissertation.title + ' ' + eventAsSupervisor.calendarDissertation.start_time.strftime('%H:%M') + ' - ' + eventAsSupervisor.calendarDissertation.end_time.strftime('%H:%M'),
