@@ -93,7 +93,6 @@
             <tr>
                 <th>Course Title</th>
                 <th>Course Code</th>
-                <th>Semester</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -102,7 +101,6 @@
                 <tr>
                     <td>{{ course.title }}</td>
                     <td>{{ course.code }}</td>
-                    <td>{{ course.semester }}</td>
                     <td>
                         <form method="POST" action="{% url 'student:enroll_to_courses' %}">
                             {% csrf_token %}
@@ -126,7 +124,6 @@
             <tr>
                 <th>Course Title</th>
                 <th>Course Code</th>
-                <th>Semester</th>
                 <th>Action</th>
                 <th>Action</th>
             </tr>
@@ -136,7 +133,6 @@
                 <tr>
                     <td>{{ course.title }}</td>
                     <td>{{ course.code }}</td>
-                    <td>{{ course.semester }}</td>
                     <td>
                         <form method="post" action="{% url 'student:enroll_to_courses' %}">
                             {% csrf_token %}

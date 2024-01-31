@@ -115,7 +115,8 @@ def enroll_To_Courses(request):
 
         return redirect('student:enroll_to_courses') 
     else:
-        courses = Course.objects.all()
+        studentDepartment = request.user.student.department
+        courses = Course.objects.filter(department=studentDepartment)
         enrolled_calendarCourses = EnrolledStudentsOnCourse.objects.filter(student=request.user.student)
         enrolled_course_ids = enrolled_calendarCourses.values_list('course_id', flat=True)
         enrolled_courses = courses.filter(id__in=enrolled_course_ids)

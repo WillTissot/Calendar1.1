@@ -38,6 +38,7 @@
         th {
             background-color: #4285f4;
             color: #fff;
+            text-align: center;
         }
 
         tbody tr:nth-child(even) {
@@ -101,11 +102,25 @@
 <body>
     <h1>Changes</h1>
     <table>
+        <thead>
+            <tr>
+                <th>Professor</th>
+                <th>Course</th>
+                <th>Semester</th>
+                <th>Room</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Online</th>
+                <th>Action</th>
+                <th>Action</th>
+            </tr>
+        </thead>
         {% for event in events %}
             <tr>
                 <td>{{ event.calendarCourse.course.professor.user.first_name }} {{ event.calendarCourse.course.professor.user.last_name }}</td>
                 <td>{{ event.calendarCourse.course.title }}</td>
-                <td>{{ event.calendarCourse.semester.term }} {{ event.calendarCourse.semester.year }}</td>
+                <td>{{ event.calendarCourse.calendarSemester.semester.term }} {{ event.calendarCourse.calendarSemester.semester.year }}</td>
                 {% with recentChange=event|filter_changes %}
                     {% if recentChange %}
                         <td>{{ recentChange.room_number }}</td>
@@ -119,15 +134,14 @@
                         <td>{{ event.calendarCourse.start_time }}</td>
                         <td>{{ event.calendarCourse.end_time }}</td>
                         <td>{{ event.calendarCourse.is_online }}</td>
-                        <td></td>
                     {% endif %}
                 {% endwith %}
 
                 {% if user.professor %}
-                    <td><a href="{% url 'professor:request_event_change' ev_id=event.pk %}">Change Event</a></td>
+                    <td><a href="{% url 'professor:request_event_change' ev_id=event.pk %}" class="btn-send-mail">Change Event</a></td>
                     <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes</button></td>
-                    {% endif %}
-                    {% if user.is_superuser %}
+                {% endif %}
+                {% if user.is_superuser %}
                     <td><button class="btn-show-changes" data-ev-id="{{ event.pk }}">See Changes To Approve</button></td>
                     <td><a href="{% url 'event:send_mail' ev_id=event.pk %}" class="btn-send-mail">Send Mail With Change</a></td>
                 {% endif %}
