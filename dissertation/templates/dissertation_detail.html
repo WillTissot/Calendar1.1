@@ -71,8 +71,8 @@
   <p><strong>Title:</strong> {{ dissertation.title }}</p>
   <p><strong>Url:</strong> {{ dissertation.url }}</p>
   <p><strong>Location:</strong> {{ dissertation.location }}</p>
-  <p>Online: {% if dissertation.is_online %}Yes{% else %}No{% endif %}</p>
-  <p>Open to Public: {% if dissertation.is_open_to_public %}Yes{% else %}No{% endif %}</p>
+  <p><strong>Online: </strong>{% if dissertation.is_online %}Yes{% else %}No{% endif %}</p>
+  <p><strong>Open to Public: </strong> {% if dissertation.is_open_to_public %}Yes{% else %}No{% endif %}</p>
   
   <p><strong>Supervisor:</strong> {{ dissertation.supervisor }}</p>
   
@@ -85,12 +85,11 @@
     {% endfor %}
   </ul>
 
-  <p>Student: {{dissertation.student}}</p>
+  <p><strong>Student: </strong>{{dissertation.student}}</p>
 
   {% if user.is_superuser %}
-    <p>Approved: {% if dissertation.is_approved %}Yes{% else %}No{% endif %}</p>
+    <p><strong>Approved:    </strong> {% if dissertation.is_approved %}Yes{% else %}No{% endif %}</p>
     <a href="{% url 'dissertation:dissertation_list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
-    <a href="{% url 'dissertation:dissertation_update' dissertation.id %}" class="btn-edit">Edit</a>
   {% else %}
     <a href="{% url 'event:dashboard' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
   {% endif %}

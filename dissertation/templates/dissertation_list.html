@@ -78,7 +78,7 @@
   {% if createCalendarEvent %}
     <h1>Approved Dissertation Needing Calendar Event</h1>
   {% else %}
-    <h1>All Dissertations</h1>
+    <h1>Dissertations</h1>
   {% endif %}
 
   <table>
@@ -94,6 +94,11 @@
         <th>Approved</th>
         {% if user.is_superuser %}
           <th>Student</th>
+        {% endif %}
+        <th>Action</th>
+        {% if user.is_superuser %}
+          <th>Action</th>
+          <th>Action</th>
         {% endif %}
       </tr>
     </thead>
@@ -119,10 +124,10 @@
           {% if user.is_superuser %}
             <td>{{ dissertation.student }}</td>
           {% endif %}
-          <td><a href="{% url 'dissertation:dissertation_detail' dissertation.id %}">View</a></td>
+          <td><a href="{% url 'dissertation:dissertation_detail' dissertation.id %}"><i class="fas fa-eye"></i>View</a></td>
           {% if user.is_superuser %}
-            <td><a href="{% url 'dissertation:dissertation_update' dissertation.id %}">Edit</a></td>
-            <td><a href="{% url 'dissertation:dissertation_delete' dissertation.id %}">Delete</a></td>
+            <td><a href="{% url 'dissertation:dissertation_update' dissertation.id %}"><i class="fas fa-edit"></i>Edit</a></td>
+            <td><a href="{% url 'dissertation:dissertation_delete' dissertation.id %}"><i class="fas fa-trash"></i>Delete</a></td>
             {% if createCalendarEvent %}
               <td>
                 <form method="get" action="{% url 'dissertation:calendardissertation_create' %}">

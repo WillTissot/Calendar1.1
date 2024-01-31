@@ -141,11 +141,13 @@
                 <td>{{ calendardissertation.date }}</td>
                 <td>{{ calendardissertation.start_time }}</td>
                 <td>{{ calendardissertation.end_time }}</td>
-                <td><a href="{% url 'dissertation:calendardissertation_detail' calendardissertation.id %}">View</a></td>
-                <td><a href="{% url 'dissertation:calendardissertation_update' calendardissertation.id %}">Edit</a></td>
-                <td><a href="{% url 'dissertation:calendardissertation_delete' calendardissertation.id %}">Delete</a></td>
-                <td><a href="{% url 'dissertation:create_calendar_dissertation_event' calendardissertation.id %}">Create Calendar Event</a></td>
-                <td><a href="{% url 'event:delete_calendar_dissertation_event' calendardissertation.id %}">Delete Calendar Event</a></td>
+                <td>
+                    <a href="{% url 'dissertation:calendardissertation_detail' calendardissertation.id %}"><i class="fas fa-eye"></i>View</a>
+                    <a href="{% url 'dissertation:calendardissertation_update' calendardissertation.id %}"><i class="fas fa-edit"></i>Edit</a>
+                    <a href="{% url 'dissertation:calendardissertation_delete' calendardissertation.id %}"><i class="fas fa-trash"></i>Delete</a>
+                    <a href="{% url 'dissertation:create_calendar_dissertation_event' calendardissertation.id %}">Create Calendar Event</a>
+                    <a href="{% url 'event:delete_calendar_dissertation_event' calendardissertation.id %}">Delete Calendar Event</a>
+                </td>
             </tr>
             {% empty %}
             <tr>
@@ -155,8 +157,8 @@
         </tbody>
     </table>
 
-    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
-    <a href="{% url 'dissertation:calendardissertation_create' %}" class="btn btn-create">Create Calendar Dissertation</a>
+    <a href="{% url 'event:adminpage' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+    <a href="{% url 'dissertation:calendardissertation_create' %}" class="btn btn-create"><i class="fas fa-plus"></i> Create Calendar Dissertation</a>
 
 </body>
 </html>
