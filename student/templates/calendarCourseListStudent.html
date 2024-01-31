@@ -53,6 +53,22 @@
         button:hover {
             background-color: #2980b9;
         }
+
+        .btn-secondary {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            background-color: #e74c3c;
+            color: #fff;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -69,6 +85,7 @@
                 <th>Room Number</th>
                 <th>Start Time</th>
                 <th>End Time</th>
+                <th>Day</th>
                 <th>Is Active</th>
                 <th>Is Online</th>
                 <th>Action</th>
@@ -82,10 +99,10 @@
                 <td>{{ calendarCourse.calendarSemester.semester.year }}</td>
                 <td>{{ calendarCourse.calendarSemester.startDate }}</td>
                 <td>{{ calendarCourse.calendarSemester.endDate }}</td>
+                <td>{{ calendarCourse.get_day_display }}</td>
                 <td>{{ calendarCourse.room_number }}</td>
                 <td>{{ calendarCourse.start_time }}</td>
                 <td>{{ calendarCourse.end_time }}</td>
-                <td>{{ calendarCourse.get_day_display }}</td>
                 <td>{% if calendarCourse.is_active %}Yes{% else %}No{% endif %}</td>
                 <td>{% if calendarCourse.is_online %}Yes{% else %}No{% endif %}</td>
                 <td>
@@ -101,6 +118,6 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'student:enroll_to_courses' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
+    <a href="{% url 'student:enroll_to_courses' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
 </body>
 </html>

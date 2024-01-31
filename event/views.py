@@ -25,7 +25,7 @@ def get_events(request):
         seminarsEvents = Event.objects.filter(calendarSeminar__enrolledstudenttocalendarseminars__students=user.student)
         #dissertationEvent = Event.objects.get(calendarDissertation__dissertation__student=user.student)
     if hasattr(request.user, 'professor'):
-        coursesEvents = Event.objects.filter(calendarCourse__course__professor=user.professor)
+        coursesEvents = Event.objects.filter(calendarCourse__course__professor=user.professor).order_by('calendarCourse__start_time')
         dissertationEventsAsSupervisor = Event.objects.filter(calendarDissertation__dissertation__supervisor=user.professor)
         dissertationEventsAsSBoardMember = Event.objects.filter(calendarDissertation__dissertation__board=user.professor)
     data = []
@@ -58,13 +58,13 @@ def get_events(request):
             })
         for eventAsSupervisor in dissertationEventsAsSupervisor:
             data.append({
-                'title': eventAsSupervisor.calendarSeminar.seminar.title,
+                'title': eventAsSupervisor.calendarDissertation.dissertation.title + ' ' + eventAsSupervisor.calendarDissertation.start_time.strftime('%H:%M') + ' - ' + eventAsSupervisor.calendarDissertation.end_time.strftime('%H:%M'),
                 'start': eventAsSupervisor.date.isoformat(),
                 'end': eventAsSupervisor.date.isoformat()  
             })
         for eventAsBoardMember in dissertationEventsAsSBoardMember:
             data.append({
-                'title': eventAsBoardMember.calendarSeminar.seminar.title,
+                'title': eventAsBoardMember.calendarDissertation.dissertation.title + ' ' + eventAsBoardMember.calendarDissertation.start_time.strftime('%H:%M') + ' - ' + eventAsBoardMember.calendarDissertation.end_time.strftime('%H:%M'),
                 'start': eventAsBoardMember.date.isoformat(),
                 'end': eventAsBoardMember.date.isoformat()  
             })
