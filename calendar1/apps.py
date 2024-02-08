@@ -10,7 +10,7 @@ class CalendarConfig(AppConfig):
     def ready(self):
         from .scheduler import scheduledJobs
         #scheduledJobs.stop()
-        scheduledJobs.start()
+        #scheduledJobs.start()
         #print(12)
 
         
