@@ -59,6 +59,7 @@
     <img src="{% static 'xarokop.jpg' %}">
     <div>
         <a href="{% url 'accounts:signin' %}"><button><i class="fas fa-sign-in-alt"></i> Sign In</button></a>
+        <a href="{% url 'accounts:signin_link' %}"><button><i class="fas fa-chalkboard-teacher"></i> Sign in with Magic Link</button></a>
         <a href="{% url 'accounts:studentsignup' %}"><button><i class="fas fa-user-graduate"></i> Sign Up As A Student</button></a>
         <a href="{% url 'accounts:professorsignup' %}"><button><i class="fas fa-chalkboard-teacher"></i> Sign Up As A Professor</button></a>
     </div>
