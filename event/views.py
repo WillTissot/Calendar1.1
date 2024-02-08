@@ -408,3 +408,7 @@ def send_mail_changes(request, ev_id):
         recipient_list=emails_to_send
     )
     return redirect('event:get_all_requests')
+
+
+
+

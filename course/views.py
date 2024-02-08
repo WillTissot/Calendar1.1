@@ -1,3 +1,4 @@
+import csv
 from django.shortcuts import get_object_or_404, redirect, render
 from course.forms import CourseForm, CalendarSemesterForm, CalendarCourseForm, SemesterForm, CalendarCourseProfForm
 from course.models import Course, Department, CalendarCourse, Semester, CalendarSemester
@@ -5,6 +6,8 @@ from professor.models import Professor
 from event.models import Change
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .forms import CSVImportForm
 
 @user_passes_test(lambda u: u.is_superuser)
 def course_list(request):
@@ -274,3 +277,33 @@ def calendarsemester_delete(request, sem_id):
             'message' : 'Calendar Semester can not deleted. Students are participating.'
         }
         return render(request, 'calendarSemester_detail.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def import_csv(request):
+    if request.method == 'POST':
+        form = CSVImportForm(request.POST, request.FILES)
+        if form.is_valid():
+            csv_file = request.FILES['csv_file'].read().decode('utf-8').splitlines()
+            #csv_reader = csv.DictReader(csv_file)
+            if csv_file[0].startswith('\ufeff'):
+                csv_file[0] = csv_file[0][1:]
+            header = csv_file[0].split(';')
+            csv_reader = csv.DictReader(csv_file[1:], fieldnames=header, delimiter=';')
+
+            for row_number, row in enumerate(csv_reader, start=2):
+                existingCourse = Course.objects.filter(title=row['title']).first()
+                if existingCourse is None:
+                    course = Course(
+                            code=row['code'],
+                            title=row['title'],
+                            department=Department.objects.filter(name=row['department']).first(),
+                            professor=Professor.objects.filter(user__email=row['professor_mail']).first(),
+                            credits=row['credits']
+                    )
+                    course.save()
+
+            return redirect('course:course_list')  # Redirect to a success page
+    else:
+        form = CSVImportForm()
+
+    return render(request, 'import_file.html', {'form': form})

@@ -93,3 +93,6 @@ class SemesterForm(forms.ModelForm):
             'term': forms.Select(choices=Semester.SEMESTER_CHOICES),
         }
 
+
+class CSVImportForm(forms.Form):
+    csv_file = forms.FileField()

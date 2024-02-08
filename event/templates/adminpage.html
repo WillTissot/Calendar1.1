@@ -86,6 +86,7 @@
     <li><a href="{% url 'event:sec_event_list' %}"><i class="far fa-calendar"></i>Events</a></li>
     <li><a href="{% url 'event:get_all_requests' %}"><i class="fas fa-clipboard-check"></i>Manage Events Request</a></li>
     <li><a href="{% url 'event:users_approve' %}"><i class="fas fa-user"></i>Approve Users</a></li>
+    <li><a href="{% url 'course:import_csv' %}"><i class="fas fa-cloud-upload-alt"></i>Import Courses from CSV</a></li>
   </ul>
   {% if user.is_authenticated %}
     <a href="{% url 'accounts:logout' %}" class="logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</a>
