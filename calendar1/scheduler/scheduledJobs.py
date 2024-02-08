@@ -9,8 +9,9 @@ from django_apscheduler.models import DjangoJobExecution
 from apscheduler.triggers.cron import CronTrigger
 from django.core.mail import send_mail
 from datetime import datetime, timedelta
-from event.models import Event
+from event.models import Event, Change
 from student.models import EnrolledStudentsOnCalendarCourse
+from django.db.models import Max, F
 
 
 def sendEmails(studentMails, lesson, roomnumber, starttime):
@@ -35,14 +36,29 @@ def MailBackgroundService():
         calendarCourse__start_time__gte=current_datetime.time(),  # Filter by events starting now or later
         calendarCourse__start_time__lt=start_time_in_30_minutes.time(),  # Filter by events starting in the next 30 minutes
     )
+
+
+
+    # allEvents = Event.objects.filter()
+    # latest_changes = Change.objects.filter(event__in=allEvents).values('event').annotate(latest_change=Max('date_created'))
+    # events_with_latest_change = allEvents.filter(id__in=latest_changes.values('event'))
+    # if events_with_latest_change is not None:
+    #     events_in_30_minutes_changed = Event.objects.filter(
+    #     changes__date=current_datetime.date(),  # Filter by today's date
+    #     changes__start_time__gte=current_datetime.time(),  # Filter by events starting now or later
+    #     changes__start_time__lt=start_time_in_30_minutes.time(),  # Filter by events starting in the next 30 minutes
+    # )
+
     #print(events_in_30_minutes)
     for event in events_in_30_minutes:
         #event = get_object_or_404(Event, id=ev_id)
         print("inside loop")
         calCourse = event.calendarCourse
+        professor = calCourse.course.professor
         enrolled_students = EnrolledStudentsOnCalendarCourse.objects.filter(calendarCourse=calCourse)
-        student_mails = enrolled_students.values_list('student__user__email', flat=True)
-        sendEmails(student_mails, calCourse.course.title, calCourse.room_number, calCourse.start_time)
+        emails_to_send = list(enrolled_students.values_list('student__user__email', flat=True))
+        emails_to_send.append(professor.user.email)
+        sendEmails(emails_to_send, calCourse.course.title, calCourse.room_number, calCourse.start_time)
 
 def start():
     # Your command logic goes here

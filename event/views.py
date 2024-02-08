@@ -156,7 +156,8 @@ def get_students(request, ev_id):
 
     context = {
         'students': students,
-        'event' : event
+        'event' : event,
+        'showButton' : False
     }
     return render(request, 'student_popup.html', context)
 
@@ -184,10 +185,22 @@ def event_update(request, ev_id):
     calSeminar = event.calendarSeminar
     calDissertation = event.calendarDissertation
     if request.method == 'POST':
-        form = EventForm(request.POST, instance=event)
-        if form.is_valid():
-            form.save()
-            return redirect('event:event_detail', ev_id=ev_id)
+        change = Change(
+            date=request.POST['date'],
+            is_online= True if request.POST['is_online'] == 'on' else False,
+            start_time=request.POST['start_time'],
+            end_time=request.POST['end_time'],
+            room_number=request.POST['room_number'],
+            is_approved=True,
+            date_created=datetime.now()
+        )
+        change.save()
+        event.changes.add(change)
+        event.save()
+        # form = EventForm(request.POST, instance=event, calendarCourse=calCourse, calendarSeminar = calSeminar, calendarDissertation = calDissertation)
+        # if form.is_valid():
+        #     form.save()
+        return redirect('event:event_detail', ev_id=ev_id)
     else:
         form = EventForm(instance=event, calendarCourse=calCourse, calendarSeminar = calSeminar, calendarDissertation = calDissertation)
     return render(request, 'event_update.html', {'form': form})
