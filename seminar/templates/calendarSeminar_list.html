@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <title>Calendar Seminars List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+          $('#calendarSeminars').DataTable();
+        });
+    </script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -13,7 +21,7 @@
         }
 
         h1 {
-            color: #333;
+            color: #2980b9;
         }
 
         table {
@@ -96,7 +104,7 @@
 </head>
 <body>
     <h1>Calendar Seminars</h1>
-    <table>
+    <table id = "calendarSeminars">
         <thead>
             <tr>
                 <th>Title</th>
