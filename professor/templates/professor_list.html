@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>All Professors</title>
-    <!-- Add Font Awesome stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- Replace the above link with the latest version if available -->
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+          $('#professors').DataTable();
+        });
+    </script>
     <style>
         /* Add some styles to make it more visually appealing */
         body {
@@ -53,6 +58,10 @@
             color: #2980b9;
         }
 
+        h1 {
+            color: #2980b9;
+        }
+
         a i {
             margin-right: 5px;
         }
@@ -94,8 +103,8 @@
     </style>
 </head>
 <body>
-    <h1>All Professors</h1>
-    <table>
+    <h1>Professors</h1>
+    <table id = "professors">
         <thead>
             <tr>
                 <th>Name</th>

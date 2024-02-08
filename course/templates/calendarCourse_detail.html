@@ -16,7 +16,7 @@
         }
 
         h1 {
-            color: #5bc0de; /* Blue color for emphasis */
+            color: #2980b9; /* Blue color for emphasis */
         }
 
         p {
@@ -40,6 +40,10 @@
         a.btn-secondary:hover {
             background-color: #c9302c;
         }
+
+        strong {
+            color: #3498db;
+        }
     </style>
 </head>
 <body>
@@ -47,19 +51,19 @@
     {% if message %}
         <h4>{{message}}</h4>
     {% endif %}
-    <p>Course: {{ calendarCourse.course.title }}</p>
-    <p>Term: {{ calendarCourse.calendarSemester.semester.term }}</p>
-    <p>Year: {{ calendarCourse.calendarSemester.semester.year }}</p>
-    <p>Semester StartDate: {{ calendarCourse.calendarSemester.startDate }}</p>
-    <p>Semester EndDate: {{ calendarCourse.calendarSemester.endDate }}</p>
-    <p>Room Number: {{ calendarCourse.room_number }}</p>
-    <p>Start Time: {{ calendarCourse.start_time }}</p>
-    <p>End Time: {{ calendarCourse.end_time }}</p>
-    <p>Day: {{ calendarCourse.get_day_display }}</p>
-    <p>Is Active: {% if calendarCourse.is_active %}Yes{% else %}No{% endif %}</p>
-    <p>Is Online: {% if calendarCourse.is_online %}Yes{% else %}No{% endif %}</p>
-    <p>Is Deleted: {% if calendarCourse.is_deleted %}Yes{% else %}No{% endif %}</p>
-    
+    <p><strong>Course:</strong> {{ calendarCourse.course.title }}</p>
+    <p><strong>Term:</strong> {{ calendarCourse.calendarSemester.semester.term }}</p>
+    <p><strong>Year:</strong> {{ calendarCourse.calendarSemester.semester.year }}</p>
+    <p><strong>Semester StartDate:</strong> {{ calendarCourse.calendarSemester.startDate }}</p>
+    <p><strong>Semester EndDate:</strong> {{ calendarCourse.calendarSemester.endDate }}</p>
+    <p><strong>Room Number:</strong> {{ calendarCourse.room_number }}</p>
+    <p><strong>Start Time:</strong> {{ calendarCourse.start_time }}</p>
+    <p><strong>End Time:</strong> {{ calendarCourse.end_time }}</p>
+    <p><strong>Day:</strong> {{ calendarCourse.get_day_display }}</p>
+    <p><strong>Is Active:</strong> {% if calendarCourse.is_active %}Yes{% else %}No{% endif %}</p>
+    <p><strong>Is Online:</strong> {% if calendarCourse.is_online %}Yes{% else %}No{% endif %}</p>
+    <p><strong>Is Deleted:</strong> {% if calendarCourse.is_deleted %}Yes{% else %}No{% endif %}</p>
     <a href="{% url 'course:calendarcourse_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>Back</a>
+
 </body>
 </html>

@@ -74,6 +74,9 @@
         .btn-secondary:hover {
             background-color: #c0392b;
         }
+        h1 {
+            color: #2980b9;
+        }
 
     </style>
 </head>
@@ -82,8 +85,8 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit"> Submit</button>
         <a href="{% url 'student:student_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        <button type="submit"> Submit</button>
     </form>
 </body>
 </html>

@@ -18,9 +18,12 @@
             text-align: center;
             margin: 50px;
         }
+        strong {
+            color: #3498db;
+        }
 
-        h1, h2 {
-            color: #5bc0de; /* Blue color for emphasis */
+        h1 {
+            color: #2980b9;
         }
 
         p {
@@ -47,9 +50,9 @@
     {% if message %}
         <h4>{{message}}</h4>
     {% endif %}
-    <h2>Semester: {{ calendarSemester.semester.term }} {{ calendarSemester.semester.year }}</h2>
-    <p>Start Date: {{ calendarSemester.startDate }}</p>
-    <p>End Date: {{ calendarSemester.endDate }}</p>
+    <p><strong>Semester:</strong> {{ calendarSemester.semester.term }} {{ calendarSemester.semester.year }}</p>
+    <p><strong>Date:</strong> {{ calendarSemester.startDate }}</p>
+    <p><strong>End Date:</strong> {{ calendarSemester.endDate }}</p>
     <a href="{% url 'course:calendarSemester_list' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
 </body>
 </html>
