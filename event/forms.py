@@ -36,12 +36,19 @@ class EventForm(forms.ModelForm):
        
         last = self.instance.changes.filter(is_approved=True, is_pending=False).order_by('-date_created').first()
 
-        if self.instance:
+        if self.instance and last is not None:
             self.initial['start_time'] = last.start_time
             self.initial['end_time'] = last.end_time
             self.initial['date'] = last.date
             self.initial['room_number'] = last.room_number
             self.initial['is_online'] = last.is_online
+
+        if self.instance and last is None and calendarCourse is not None:
+            self.initial['start_time'] = calendarCourse.start_time
+            self.initial['end_time'] = calendarCourse.end_time
+            #self.initial['calendarCourse__date'] = calendarCourse.date
+            self.initial['room_number'] = calendarCourse.room_number
+            self.initial['is_online'] = calendarCourse.is_online
 
 
         if calendarCourse:

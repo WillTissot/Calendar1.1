@@ -23,7 +23,10 @@ def get_events(request):
     if hasattr(request.user, 'student'):
         coursesEvents = Event.objects.filter(calendarCourse__enrolledstudentsoncalendarcourse__student=user.student).order_by('calendarCourse__start_time')
         seminarsEvents = Event.objects.filter(calendarSeminar__enrolledstudenttocalendarseminars__students=user.student).order_by('calendarSeminar__start_time')
-        dissertationEvent = Event.objects.get(calendarDissertation__dissertation__student=user.student)
+        try:
+            dissertationEvent = Event.objects.get(calendarDissertation__dissertation__student=user.student)
+        except:
+            dissertationEvent = None
     if hasattr(request.user, 'professor'):
         coursesEvents = Event.objects.filter(calendarCourse__course__professor=user.professor).order_by('calendarCourse__start_time')
         dissertationEventsAsSupervisor = Event.objects.filter(calendarDissertation__dissertation__supervisor=user.professor)

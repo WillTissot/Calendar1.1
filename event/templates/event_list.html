@@ -8,16 +8,23 @@
     <title>All Admin Events</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/students_pop_up.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
     <script src="{% static 'js/students_pop_up.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script>
-        $(document).ready(function () {
-            $('table tbody').hide();
-            $('table thead').hide();
-            $('h2').click(function () {
-                $(this).next('table').find('thead').toggle();
-                $(this).next('table').find('tbody').toggle();
-            });
+        $(document).ready(function() {
+          $('#eventsTableC').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+        $('#eventsTableS').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+        $('#eventsTableD').DataTable();
         });
     </script>
     <style>
@@ -108,7 +115,7 @@
     <h1>All Admin Events</h1>
 
     <h2>Calendar Courses</h2>
-    <table>
+    <table id = "eventsTableC">
         <thead>
             <tr>
                 <th>Professor</th>
@@ -162,7 +169,7 @@
     </table>
 
     <h2>Calendar Seminars</h2>
-    <table>
+    <table id = "eventsTableS">
         <thead>
             <tr>
                 <th>Title</th>
@@ -213,7 +220,7 @@
     </table>
 
     <h2>Calendar Dissertations</h2>
-    <table>
+    <table id = "eventsTableD">
         <thead>
             <tr>
                 <th>Title</th>
